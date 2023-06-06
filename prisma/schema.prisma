@@ -9,3 +9,113 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+//   Products, Orders, Buy, Sales, Employees 
+
+model User {
+  id             String   @id @default(cuid())
+  name           String
+  email          String   @unique
+  password       String
+  contact_number Int
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+  positionId     String
+  position       Position @relation(fields: [positionId], references: [id])
+  businessId     String
+  business       Business @relation(fields: [businessId], references: [id])
+  sales          Sale[]
+  toBuy          ToBuy[]
+}
+
+model Position {
+  id            String @id @default(cuid())
+  position_name String
+  users         User[]
+}
+
+model Business {
+  id             String    @id @default(cuid())
+  name           String
+  email          String    @unique
+  description    String
+  contact_number Int
+  created_at     DateTime  @default(now())
+  updated_at     DateTime  @updatedAt
+  users          User[]
+  products       Product[]
+  sales          Sale[]
+  toBuy          ToBuy[]
+  orders         Order[]
+}
+
+model Product {
+  id           String   @id @default(cuid())
+  product_name String
+  product_code String
+  quantity     Int
+  price        Int
+  description  String
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+  categoryId   String
+  category     Category @relation(fields: [categoryId], references: [id])
+  businessId   String
+  business     Business @relation(fields: [businessId], references: [id])
+  sales        Sale[]
+  orders       Order[]
+}
+
+model Category {
+  id            String    @id @default(cuid())
+  category_name String
+  products      Product[]
+}
+
+model Sale {
+  id            String   @id @default(cuid())
+  sold_price    Int
+  sold_quantity Int
+  sellerId      String
+  seller        User     @relation(fields: [sellerId], references: [id])
+  productId     String
+  product       Product  @relation(fields: [productId], references: [id])
+  created_at    DateTime @default(now())
+  soldTo        SoldTo?
+  businessId    String
+  business      Business @relation(fields: [businessId], references: [id])
+}
+
+model SoldTo {
+  id             String @id @default(cuid())
+  name           String
+  email          String @unique
+  contact_number Int
+  saleId         String @unique
+  sale           Sale   @relation(fields: [saleId], references: [id])
+}
+
+model ToBuy {
+  id            String   @id @default(cuid())
+  product_name  String
+  product_price Int
+  quantity      Int
+  buy_from      String
+  created_at    DateTime @default(now())
+  buyerId       String
+  buyer         User     @relation(fields: [buyerId], references: [id])
+  businessId    String
+  business      Business @relation(fields: [businessId], references: [id])
+}
+
+model Order {
+  id             String   @id @default(cuid())
+  productId      String
+  product        Product  @relation(fields: [productId], references: [id])
+  name           String
+  email          String   @unique
+  contact_number Int
+  created_at     DateTime @default(now())
+  businessId     String
+  business       Business @relation(fields: [businessId], references: [id])
+}
