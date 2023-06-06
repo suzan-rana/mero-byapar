@@ -1,18 +1,7 @@
 
-# Next 13 STARTER
+# Mero Byapar
 
-Just a starter template with many packages:
-- TypeScript
-- Zod
-- TailwindCSS
-- Tanstack React Query
-- Prisma
-- App Directory
-- React Hook Form
-- Nprogress
-- Class Variance Authority
-- CLSX, Tailwind Merge
-- React Loading Skeleton
+Learning how to make a inventory management system
 
 
 ## Getting Started
