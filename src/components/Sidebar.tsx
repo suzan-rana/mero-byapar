@@ -34,23 +34,22 @@ const Sidebar = (props: Props) => {
       </div>
       <div
         className={cn(
-          "px-3 pt-16 sm:pt-8 overflow-hidden transition-all",
+          "px-3 pt-16 sm:pt-6 overflow-hidden transition-all",
           showSideMenu ? "w-[15rem] opacity-100" : "w-0 h-0  opacity-0",
           "sm:w-auto sm:opacity-100"
         )}
       >
-        {" "}
-        <h1 className="hidden sm:block text-center text-2xl my-4 font-bold text-green-700">Mero Byapar</h1>
+        <h1 className="hidden sm:block text-center text-2xl mb-6 font-bold text-green-700">Mero Byapar</h1>
         <main
           className={cn(
             "opacity-0 gap-2 pt-2 sm:opacity-100 sm:flex sm:flex-col transition-all",
-            showSideMenu ? "translate-x-0 opacity-100" : "-translate-x-full"
+            showSideMenu ? "translate-x-0 opacity-100" : "-translate-x-full sm:translate-x-0"
           )}
         >
           {sidebarElements.map((item, index) => (
             <Link href={item.link}
               key={index}
-              className="px-3 block font-semibold cursor-pointer min-w-[15rem] rounded-md hover:bg-gray-100 py-2"
+              className="px-3 block font-medium  cursor-pointer min-w-[15rem]  hover:bg-green-300 py-2"
             >
               {item.name}
             </Link>
