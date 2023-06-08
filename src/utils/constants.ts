@@ -47,39 +47,82 @@ export const productRows = [
 ];
 
 export const categoryRows = [
-    { 
-      Index: 1,
-      Name: 'Category 1',
-      Code: 'CAT001',
-      'Total Products': 10,
-      Actions: 'View'
-    },
-    { 
-      Index: 2,
-      Name: 'Category 2',
-      Code: 'CAT002',
-      'Total Products': 5,
-      Actions: 'View'
-    },
-    { 
-      Index: 3,
-      Name: 'Category 3',
-      Code: 'CAT003',
-      'Total Products': 8,
-      Actions: 'View'
-    },
-    { 
-      Index: 4,
-      Name: 'Category 4',
-      Code: 'CAT004',
-      'Total Products': 2,
-      Actions: 'View'
-    },
-    { 
-      Index: 5,
-      Name: 'Category 5',
-      Code: 'CAT005',
-      'Total Products': 15,
-      Actions: 'View'
-    }
-  ];
+  {
+    Index: 1,
+    Name: "Category 1",
+    Code: "CAT001",
+    "Total Products": 10,
+    Actions: "View",
+  },
+  {
+    Index: 2,
+    Name: "Category 2",
+    Code: "CAT002",
+    "Total Products": 5,
+    Actions: "View",
+  },
+  {
+    Index: 3,
+    Name: "Category 3",
+    Code: "CAT003",
+    "Total Products": 8,
+    Actions: "View",
+  },
+  {
+    Index: 4,
+    Name: "Category 4",
+    Code: "CAT004",
+    "Total Products": 2,
+    Actions: "View",
+  },
+  {
+    Index: 5,
+    Name: "Category 5",
+    Code: "CAT005",
+    "Total Products": 15,
+    Actions: "View",
+  },
+];
+
+export const toBuyItemArray = [
+  {
+    Index: 1,
+    Name: "Item 1",
+    Category: "Category 1",
+    "Min quantity": 5,
+    "Deadline to buy": "2023-06-10",
+    Actions: "Edit / Delete",
+  },
+  {
+    Index: 2,
+    Name: "Item 2",
+    Category: "Category 2",
+    "Min quantity": 10,
+    "Deadline to buy": "2023-06-15",
+    Actions: "Edit / Delete",
+  },
+  {
+    Index: 3,
+    Name: "Item 3",
+    Category: "Category 1",
+    "Min quantity": 3,
+    "Deadline to buy": "2023-06-12",
+    Actions: "Edit / Delete",
+  },
+  {
+    Index: 4,
+    Name: "Item 4",
+    Category: "Category 3",
+    "Min quantity": 8,
+    "Deadline to buy": "2023-06-18",
+    Actions: "Edit / Delete",
+  },
+  {
+    Index: 5,
+    Name: "Item 5",
+    Category: "Category 2",
+    "Min quantity": 6,
+    "Deadline to buy": "2023-06-14",
+    Actions: "Edit / Delete",
+  },
+];
