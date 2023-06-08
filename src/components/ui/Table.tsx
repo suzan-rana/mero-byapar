@@ -1,4 +1,3 @@
-"use client";
 import { cn } from "@/lib/utils";
 import React from "react";
 
@@ -9,6 +8,7 @@ type Props = {
   >;
   renderCustomBody?: boolean;
   customBody?: React.ReactNode;
+  additionalNode?: (id?: string) => React.ReactNode;
 };
 
 const Table = ({
@@ -16,9 +16,10 @@ const Table = ({
   bodyArray,
   renderCustomBody = false,
   customBody,
+  additionalNode,
 }: Props) => {
   return (
-    <table className="table-auto px-5 overflow-x-auto border-collapse border  bg-gray-200 rounded-md my-8 border-gray-300">
+    <table className="sm:w-full  px-5 overflow-x-scroll border-collapse border  bg-gray-200 rounded-md my-8 border-gray-300">
       <thead>
         <tr>
           {headingArray.map((item, index) => (
@@ -28,7 +29,7 @@ const Table = ({
           ))}
         </tr>
       </thead>
-      <tbody className="mx-5 ">
+      <tbody className="mx-5 overflow-x-scroll ">
         {renderCustomBody ? (
           customBody
         ) : (
@@ -38,6 +39,9 @@ const Table = ({
                 {Object.keys(row).map((col, i) => (
                   <TData key={i}>{row[col]}</TData>
                 ))}
+                {additionalNode && (
+                  <>{additionalNode(row["id"]?.toString() || "1id")}</>
+                )}
               </TRow>
             ))}
           </>
@@ -71,7 +75,7 @@ interface TDataProps
 export const TData = ({ className, ...restProps }: TDataProps) => {
   return (
     <td
-      className={cn("py-4  px-2 text-center min-w-[10rem]", className)}
+      className={cn("py-4  px-2 text-center min-w-[9rem]", className)}
       {...restProps}
     ></td>
   );

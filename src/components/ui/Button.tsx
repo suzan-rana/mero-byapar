@@ -31,12 +31,14 @@ export interface ButtonProps
 const Button = ({
   variant,
   size,
+  type,
   className,
   disabled,
   ...restProps
 }: ButtonProps) => {
   return (
     <button
+      type={type ? type : "button"}
       disabled={disabled}
       className={cn(buttonVariants({ variant, size, className }))}
       {...restProps}
