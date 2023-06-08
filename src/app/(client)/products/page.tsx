@@ -3,13 +3,14 @@ import { productRows } from "@/utils/constants";
 import Link from "next/link";
 import React from "react";
 import Categories from "./categories";
+import PageTitle from "@/components/PageTitle";
 
 type Props = {};
 
 const ProductsPage = (props: Props) => {
   return (
     <main>
-      <h1 className="text-xl sm:text-2xl font-bold">Available Products</h1>
+      <PageTitle>Available Products</PageTitle>
       <Table
         bodyArray={productRows}
         headingArray={[

@@ -1,3 +1,4 @@
+import PageSubtitle from "@/components/PageSubtitle";
 import Button from "@/components/ui/Button";
 import Table from "@/components/ui/Table";
 import { categoryRows } from "@/utils/constants";
@@ -10,7 +11,7 @@ const Categories = (props: Props) => {
   return (
     <section>
       <div className="flex items-start justify-between">
-        <h2 className="text-xl sm:text-2xl font-semibold">Categories</h2>
+        <PageSubtitle>Categories</PageSubtitle>
         <Button variant={'primary'}><Link href={'/products/categories'} className="w-full block h-full">Create <span className="hidden sm:inline">new category</span></Link></Button>
       </div>
       <Table
