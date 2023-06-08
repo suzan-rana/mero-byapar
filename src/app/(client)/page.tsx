@@ -7,9 +7,8 @@ type Props = {};
 
 const Home = (props: Props) => {
   return (
-    <main className="flex">
-      <Sidebar />
-      {/* <p>Hello, world</p> */}
+    <main>
+      <h1>Hello, Dashboard</h1>
     </main>
   );
 };
