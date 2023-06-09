@@ -19,7 +19,7 @@ export default function RootLayout({
       <body className={p.className}>
         <main className="flex sm:gap-6 max-h-screen  overflow-hidden">
           <Sidebar />
-          <div className="pt-20 sm:pt-6 overflow-y-scroll overflow-x-hidden sm:overflow-x-auto grow pr-8 pb-20">
+          <div className="pt-20 sm:pt-6 overflow-y-scroll overflow-x-hidden  grow pr-8 pb-20">
             {" "}
             {children}
           </div>

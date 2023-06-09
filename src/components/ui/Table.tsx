@@ -19,35 +19,37 @@ const Table = ({
   additionalNode,
 }: Props) => {
   return (
-    <table className="sm:w-full  px-5 overflow-x-scroll border-collapse border  bg-gray-200 rounded-md my-8 border-gray-300">
-      <thead>
-        <tr>
-          {headingArray.map((item, index) => (
-            <th className="py-5 px-4  font-semibold" key={index}>
-              {item}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody className="mx-5 overflow-x-scroll ">
-        {renderCustomBody ? (
-          customBody
-        ) : (
-          <>
-            {bodyArray.map((row, idx) => (
-              <TRow key={idx}>
-                {Object.keys(row).map((col, i) => (
-                  <TData key={i}>{row[col]}</TData>
-                ))}
-                {additionalNode && (
-                  <>{additionalNode(row["id"]?.toString() || "1id")}</>
-                )}
-              </TRow>
+    <div className="overflow-x-auto">
+      <table className="w-full px-5 border-collapse border  bg-gray-200 rounded-md my-8 border-gray-300">
+        <thead>
+          <tr>
+            {headingArray.map((item, index) => (
+              <th className="py-5 px-3  font-semibold" key={index}>
+                {item}
+              </th>
             ))}
-          </>
-        )}
-      </tbody>
-    </table>
+          </tr>
+        </thead>
+        <tbody className="mx-5 overflow-x-scroll ">
+          {renderCustomBody ? (
+            customBody
+          ) : (
+            <>
+              {bodyArray.map((row, idx) => (
+                <TRow key={idx}>
+                  {Object.keys(row).map((col, i) => (
+                    <TData key={i}>{row[col]}</TData>
+                  ))}
+                  {additionalNode && (
+                    <>{additionalNode(row["id"]?.toString() || "1id")}</>
+                  )}
+                </TRow>
+              ))}
+            </>
+          )}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

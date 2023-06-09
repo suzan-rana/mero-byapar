@@ -15,7 +15,7 @@ const OrdersPage = (props: Props) => {
         bodyArray={productRows}
         headingArray={[
           "Index",
-          "Name",
+          "Produtct Name",
           "Code",
           "Quantity",
           "Price",
