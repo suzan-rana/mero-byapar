@@ -1,56 +1,26 @@
 import { type NextRequest, NextResponse } from "next/server";
 import prisma from "../../../lib/prisma";
-import { z } from "zod";
-
-const CreateRootUserSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-  name: z.string(),
-  contact_number: z.number().min(10),
-  business: z.object({
-    name: z.string(),
-    email: z.string().email(),
-    contact_number: z.number().min(10),
-    description: z.string(),
-  }),
-});
-type CreateUserType = z.infer<typeof CreateRootUserSchema>;
+import {
+  CreateNewUserSchema,
+  CreateNewUserType,
+  UpdateUserSchema,
+  UpdateUserType,
+} from "@/common/schema/UserSchema";
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  const toBeCreatedUser = CreateRootUserSchema.safeParse(body);
+  const toBeCreatedUser = CreateNewUserSchema.safeParse(body);
   if (!toBeCreatedUser.success) {
     NextResponse.json(toBeCreatedUser);
   }
 
   // we have email,
-  const { contact_number, email, name, password, business } =
-    body as CreateUserType;
+  const { contact_number, email, name, positionId, password, businessId } =
+    body as CreateNewUserType;
   const user = await prisma.user.create({
     data: {
-      position: {
-        connectOrCreate: {
-          where: {
-            position_name: "ADMIN",
-          },
-          create: {
-            position_name: "ADMIN",
-          },
-        },
-      },
-      business: {
-        connectOrCreate: {
-          create: {
-            email: business.email,
-            name: business.name,
-            contact_number: business.contact_number,
-            description: business.description,
-          },
-          where: {
-            email: business.email,
-          },
-        },
-      },
+      positionId: positionId,
+      businessId,
       contact_number,
       email,
       name,
@@ -59,12 +29,45 @@ export async function POST(request: NextRequest) {
   });
   NextResponse.json(
     {
-      message: "User and business created successfully.",
+      message: "User  created successfully.",
       data: user,
     },
     {
       status: 200,
-      statusText: "User and business created successfully.",
+      statusText: "User  created successfully.",
     }
   );
+}
+
+export async function PATCH(request: NextRequest) {
+  const body = (await request.json()) as UpdateUserType;
+  const toBeUpdatedUser = UpdateUserSchema.safeParse(body);
+  if (!toBeUpdatedUser.success) {
+    NextResponse.json(toBeUpdatedUser);
+  }
+
+  await prisma.user
+    .update({
+      data: {
+        ...body,
+      },
+      where: {
+        id: body.id,
+      },
+    })
+    .then((response) => {
+      NextResponse.json(
+        {
+          message: "User updated successfully.",
+        },
+        {
+          status: 201,
+        }
+      );
+    })
+    .catch((error) => {
+      NextResponse.json(error?.message, {
+        status: 400,
+      });
+    });
 }

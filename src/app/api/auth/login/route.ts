@@ -4,18 +4,13 @@ import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import * as jose from "jose";
 import { createToken } from "@/lib/jwt";
-
-const LoginUserSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-});
-type loginUserType = z.infer<typeof LoginUserSchema>;
+import { LoginUserSchema, loginUserType } from "@/common/schema/UserSchema";
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
   const toBeLoggedinUser = LoginUserSchema.safeParse(body);
   if (!toBeLoggedinUser.success) {
-    NextResponse.json(toBeLoggedinUser);
+    return NextResponse.json(toBeLoggedinUser);
   }
   const { email, password } = body as loginUserType;
   const userInDatabase = await prisma.user.findFirst({
@@ -41,7 +36,7 @@ export async function POST(request: NextRequest) {
     userInDatabase?.password!
   );
   if (!isPasswordSame) {
-    NextResponse.json(
+    return NextResponse.json(
       {
         message: "Invalid credentials",
       },
@@ -54,7 +49,7 @@ export async function POST(request: NextRequest) {
   const token = createToken({
     id: userInDatabase.id,
   });
-  NextResponse.json(
+  return NextResponse.json(
     {
       token,
     },

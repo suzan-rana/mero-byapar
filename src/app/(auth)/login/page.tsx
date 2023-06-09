@@ -9,6 +9,7 @@ type Props = {};
 
 const LoginPage = (props: Props) => {
   return (
+    
     <section className="ml-auto  min-h-[50vh] sm:w-[80%] sm:mx-auto">
       {" "}
       <h1 className="text-2xl text-green-700 capitalize  font-bold mt-4 mb-12 text-center">
