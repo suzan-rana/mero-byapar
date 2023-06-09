@@ -30,7 +30,7 @@ model User {
 
 model Position {
   id            String @id @default(cuid())
-  position_name String
+  position_name String @unique
   users         User[]
 }
 
@@ -38,8 +38,8 @@ model Business {
   id             String    @id @default(cuid())
   name           String
   email          String    @unique
-  description    String
-  contact_number Int
+  description    String?
+  contact_number Int?
   created_at     DateTime  @default(now())
   updated_at     DateTime  @updatedAt
   users          User[]

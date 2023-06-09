@@ -22,9 +22,9 @@ const Table = ({
     <div className="overflow-x-auto">
       <table className="w-full px-5 border-collapse border  bg-gray-200 rounded-md my-8 border-gray-300">
         <thead>
-          <tr>
+          <tr >
             {headingArray.map((item, index) => (
-              <th className="py-5 px-3  font-semibold" key={index}>
+              <th className="py-5  px-3  font-semibold" key={index}>
                 {item}
               </th>
             ))}
@@ -63,7 +63,7 @@ interface TRowProps
 export const TRow = ({ className, ...restProps }: TRowProps) => {
   return (
     <tr
-      className={cn("cursor-pointer hover:bg-green-300", className)}
+      className={cn("cursor-pointer  hover:bg-green-300", className)}
       {...restProps}
     ></tr>
   );
@@ -77,7 +77,10 @@ interface TDataProps
 export const TData = ({ className, ...restProps }: TDataProps) => {
   return (
     <td
-      className={cn("py-4  px-2 text-center min-w-[9rem]", className)}
+      className={cn(
+        " sm:table-cell   py-4  px-2 text-center min-w-[9rem]",
+        className
+      )}
       {...restProps}
     ></td>
   );
