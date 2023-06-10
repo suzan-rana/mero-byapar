@@ -50,7 +50,7 @@ const RegisterPage = (props: Props) => {
           e.preventDefault();
           handleSubmit(onSubmit);
         }}
-        className="flex flex-col gap-5"
+        className="grid grid-cols-2 gap-5"
       >
         <Label name="Name">
           <Input placeholder="suzan-rana" {...register("name")} />
