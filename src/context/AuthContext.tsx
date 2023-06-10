@@ -1,8 +1,6 @@
-'use client';
+"use client";
 import React, { SetStateAction, createContext, useState } from "react";
 import { TAccessControls, TUserRole } from "@/types";
-import { useQuery } from "@tanstack/react-query";
-import { fetchCurrentUser } from "@/common/api/user.api";
 import { TCurrentUser } from "@/common/schema/UserSchema";
 import { useFetchCurrentUser } from "./hooks";
 import { generateAccessControls } from "@/utils/accessControls";
@@ -17,10 +15,9 @@ export type TAuthContext = {
 export const AuthContext = createContext<TAuthContext | null>(null);
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const { data: user, isLoading } = useFetchCurrentUser();
-
   // a utility state
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { data: user, isLoading } = useFetchCurrentUser(isAuthenticated);
 
   if (isLoading) {
     // show a loading spinner here.

@@ -4,11 +4,11 @@ import { useContext } from "react";
 import { AuthContext, TAuthContext } from "./AuthContext";
 import Cookies from "js-cookie";
 
-export const useFetchCurrentUser = () => {
+export const useFetchCurrentUser = (isEnabled: boolean) => {
   return useQuery({
     queryKey: ["fetch-current-user"],
     queryFn: fetchCurrentUser,
-    enabled: !!Cookies.get("token"),
+    enabled: !!Cookies.get("token") && isEnabled,
     retry: false,
   });
 };
