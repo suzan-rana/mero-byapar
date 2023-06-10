@@ -21,7 +21,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   if (isLoading) {
     // show a loading spinner here.
-    return null;
+    return <p>Loading...</p>;
   }
   const accessControls = generateAccessControls(user?.role);
 

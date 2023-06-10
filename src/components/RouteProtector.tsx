@@ -7,9 +7,9 @@ function isAuth<T>(Component: React.ComponentType<T>) {
   return (props: T) => {
     const router = useRouter();
 
-    const { isAuthenticated } = useAuthContext();
+    const { isAuthenticated, user } = useAuthContext();
     useEffect(() => {
-      if (!isAuthenticated) {
+      if (!isAuthenticated || !user) {
         router.push("/login");
       }
     }, [router, isAuthenticated]);
