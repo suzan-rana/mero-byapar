@@ -3,6 +3,7 @@ import "./globals.css";
 import { Poppins } from "next/font/google";
 import ReactQueryProvider from "@/components/ReactQueryProvider";
 import ReactToastify from "@/components/ReactToastify";
+import AuthProvider from "@/context/AuthContext";
 const p = Poppins({ subsets: ["latin"], weight: "400" });
 
 export const metadata = {
@@ -17,9 +18,11 @@ const RootLayout = ({ children }: Props) => {
     <html lang="en">
       <body className={p.className}>
         <ReactToastify />
-        <ReactQueryProvider>{children}</ReactQueryProvider>
+        <ReactQueryProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </ReactQueryProvider>
       </body>
-    </html> 
+    </html>
   );
 };
 

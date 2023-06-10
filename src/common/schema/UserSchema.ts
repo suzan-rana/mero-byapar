@@ -53,6 +53,7 @@ export const CurrentUserSchema = z.object({
     name: z.string(),
   }),
 });
+export type TCurrentUser = z.infer<typeof CurrentUserSchema>
 
 export const ResponseLoginUserSchema = z.object({
   token: z.string(),

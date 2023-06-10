@@ -1,19 +1,11 @@
-import React, { createContext } from "react";
-import Cookies from "js-cookie";
-import { TAccessControls, TEntity, TUserRole } from "@/types";
-import { useQuery } from "@tanstack/react-query";
-import { fetchCurrentUser } from "@/common/api/user.api";
+import { TAccessControls, TUserRole } from "@/types";
 
-const AuthContext = createContext(null);
-
-const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const { data: user } = useFetchCurrentUser();
-
-  return <AuthContext.Provider value={null}>{children}</AuthContext.Provider>;
-};
-
-
-export function generateAccessControls(role: TUserRole): TAccessControls {
+export function generateAccessControls(
+  role: TUserRole | undefined
+): TAccessControls | null {
+  if (!role) {
+    return null;
+  }
   switch (role) {
     case "ADMIN":
       return {
@@ -37,10 +29,3 @@ export function generateAccessControls(role: TUserRole): TAccessControls {
       };
   }
 }
-
-const useFetchCurrentUser = () => {
-  return useQuery({
-    queryKey: ["fetch-current-user"],
-    queryFn: fetchCurrentUser,
-  });
-};

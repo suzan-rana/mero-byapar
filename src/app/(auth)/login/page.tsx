@@ -13,9 +13,12 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { useAuthContext } from "@/context/hooks";
 type Props = {};
 
 const LoginPage = (props: Props) => {
+  const { setIsAuthenticated } = useAuthContext();
+
   const router = useRouter()
   const { register, handleSubmit, formState } = useForm<loginUserType>({
     resolver: zodResolver(LoginUserSchema),
@@ -24,6 +27,7 @@ const LoginPage = (props: Props) => {
     mutationFn: loginUser,
     onSuccess(data, variables, context) {
       toast.success(data?.message);
+      setIsAuthenticated(true)
       Cookies.set("token", data.token);
       router.push('/')
     },
