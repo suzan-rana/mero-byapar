@@ -14,6 +14,8 @@ import {
 } from "@/common/schema/UserSchema";
 import axios from "axios";
 import { createRootUser } from "@/common/api/user.api";
+import { toast }from 'react-toastify'
+import { useRouter } from "next/navigation";
 
 type Props = {};
 
@@ -25,19 +27,25 @@ const RegisterPage = (props: Props) => {
   } = useForm<CreateRootUserType>({
     resolver: zodResolver(CreateRootUserSchema),
   });
+  const router = useRouter()
 
   // posting data to backend
   const { isLoading, mutate } = useMutation({
     mutationFn: createRootUser,
-    onSuccess(data, variables, context) {
-      console.log(data);
+   onSuccess(data, variables, context) {
+      console.log('DATA', data)
+      toast.success(data.data?.message)
+      router.push('/login')
     },
+    onError(error: any){
+      console.log('ERROR', error)
+      toast.error(error?.error)
+    }
   });
 
   const onSubmit = (data: CreateRootUserType) => {
     mutate(data)
   };
-  console.log("ERRORS...", errors);
 
   return (
     <section className="ml-auto  min-h-[50vh] max-h-[100vh] overflow-y-scroll grow sm:w-[80%] sm:mx-auto">
@@ -50,7 +58,7 @@ const RegisterPage = (props: Props) => {
           e.preventDefault();
           handleSubmit(onSubmit);
         }}
-        className="grid grid-cols-2 gap-5"
+        className="grid w-[90%] mx-auto sm:w-auto sm:mx-0 sm:grid-cols-2 gap-5"
       >
         <Label name="Name">
           <Input placeholder="suzan-rana" {...register("name")} />

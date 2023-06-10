@@ -1,5 +1,19 @@
-import { CreateRootUserType } from "../schema/UserSchema";
+import {
+  CreateRootUserType,
+  CurrentUserSchema,
+  ResponseLoginUserSchema,
+  loginUserType,
+} from "../schema/UserSchema";
 import axios from "./axios";
 
+// register the root user and business
 export const createRootUser = async (rootUserData: CreateRootUserType) =>
   await axios.post(`/api/auth/register`, rootUserData);
+
+// login user
+export const loginUser = async (userData: loginUserType) =>
+  await axios.post(`/api/auth/login`, userData).then((res) => ResponseLoginUserSchema.parse(res.data))
+
+// fetch currenlty logged in user
+export const fetchCurrentUser = async () =>
+  await axios.get("/users/me").then((res) => CurrentUserSchema.parse(res.data));

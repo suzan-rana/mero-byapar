@@ -16,10 +16,10 @@ instance.interceptors.request.use((req) => {
 instance.interceptors.response.use(
   (res) => {
     console.log('RESPONSE', res)
-    return res.data;
+    return res;
   },
   (error) => {
-    return Promise.reject(error);
+    return Promise.reject(error?.response?.data);
   }
 );
 export default instance;

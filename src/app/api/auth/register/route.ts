@@ -18,8 +18,8 @@ export async function POST(request: NextRequest) {
   let { contact_number, email, name, password, business } =
     body as CreateRootUserType;
   password = await encryptPassword(password);
-  const user = await prisma.user
-    .create({
+  try {
+    const user = await prisma.user.create({
       data: {
         position: {
           connectOrCreate: {
@@ -49,18 +49,19 @@ export async function POST(request: NextRequest) {
         name,
         password,
       },
-    })
-    .catch((error) => {
-      prismaErrorHandler(error);
     });
-  return NextResponse.json(
-    {
-      message: "User and business created successfully.",
-      data: user,
-    },
-    {
-      status: 200,
-      statusText: "User and business created successfully.",
-    }
-  );
+    console.log("HERE COMESS...");
+    return NextResponse.json(
+      {
+        message: "User and business created successfully.",
+        data: user,
+      },
+      {
+        status: 200,
+        statusText: "User and business created successfully.",
+      }
+    );
+  } catch (error) {
+    return prismaErrorHandler(error);
+  }
 }

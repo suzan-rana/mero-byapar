@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { TUserRole, UserRoleUnionSchema } from "../../types/index";
 
 export const LoginUserSchema = z.object({
   email: z.string().email(),
@@ -40,3 +41,20 @@ export const UpdateUserSchema = CreateNewUserSchema.pick({
     id: z.string(),
   });
 export type UpdateUserType = z.infer<typeof UpdateUserSchema>;
+
+export const CurrentUserSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  email: z.string(),
+  contact_number: z.string(),
+  role: UserRoleUnionSchema,
+  business: z.object({
+    id: z.string(),
+    name: z.string(),
+  }),
+});
+
+export const ResponseLoginUserSchema = z.object({
+  token: z.string(),
+  message: z.string()
+});

@@ -19,7 +19,7 @@ export const inputVariants = cva(
       },
     },
   }
-);
+); 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ type, error, className, ...restProps }, ref) => {
     return (

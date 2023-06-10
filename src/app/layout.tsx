@@ -2,6 +2,7 @@ import React from "react";
 import "./globals.css";
 import { Poppins } from "next/font/google";
 import ReactQueryProvider from "@/components/ReactQueryProvider";
+import ReactToastify from "@/components/ReactToastify";
 const p = Poppins({ subsets: ["latin"], weight: "400" });
 
 export const metadata = {
@@ -15,9 +16,10 @@ const RootLayout = ({ children }: Props) => {
   return (
     <html lang="en">
       <body className={p.className}>
+        <ReactToastify />
         <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>
-    </html>
+    </html> 
   );
 };
 
