@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const UserRoleUnionSchema = z.object({
-  role_name: z.union([z.literal("ADMIN"), z.literal("EMPLOYEE")]),
+  role_name: z.union([z.literal("ADMIN"), z.literal("EMPLOYEE"), z.literal("INTERN")]),
 });
 export type TUserRole = z.infer<typeof UserRoleUnionSchema>['role_name'];
 export type TAccessControls = {

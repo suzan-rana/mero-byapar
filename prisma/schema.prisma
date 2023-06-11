@@ -35,18 +35,19 @@ model Role {
 }
 
 model Business {
-  id             String    @id @default(cuid())
+  id             String     @id @default(cuid())
   name           String
-  email          String    @unique
+  email          String     @unique
   description    String?
   contact_number String?
-  created_at     DateTime  @default(now())
-  updated_at     DateTime  @updatedAt
+  created_at     DateTime   @default(now())
+  updated_at     DateTime   @updatedAt
   users          User[]
   products       Product[]
   sales          Sale[]
   toBuy          ToBuy[]
   orders         Order[]
+  categories     Category[]
 }
 
 model Product {
@@ -69,6 +70,9 @@ model Product {
 model Category {
   id            String    @id @default(cuid())
   category_name String
+  category_code String    @unique
+  businessId    String
+  business      Business  @relation(fields: [businessId], references: [id])
   products      Product[]
 }
 

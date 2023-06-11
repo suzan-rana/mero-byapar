@@ -9,4 +9,9 @@ export const CreateProductSchema = z.object({
   categoryId: z.string(),
   businessId: z.string(),
 });
-export type CreateProductType = z.infer<typeof CreateProductSchema>
+export type CreateProductType = z.infer<typeof CreateProductSchema>;
+
+export const GetProductSchema = z.object({
+  businessId: z.string(),
+});
+export type TGetProduct = z.infer<typeof GetProductSchema>;
