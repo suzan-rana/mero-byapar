@@ -16,4 +16,4 @@ export const loginUser = async (userData: loginUserType) =>
 
 // fetch currenlty logged in user
 export const fetchCurrentUser = async () =>
-  await axios.get("/api/users/me").then((res) => CurrentUserSchema.parse(res.data));
+  await axios.get("/api/users/me").then((res) => CurrentUserSchema.parse(res.data?.data));

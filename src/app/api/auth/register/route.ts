@@ -21,13 +21,13 @@ export async function POST(request: NextRequest) {
   try {
     const user = await prisma.user.create({
       data: {
-        position: {
+        role: {
           connectOrCreate: {
             where: {
-              position_name: "ADMIN",
+              role_name: "ADMIN",
             },
             create: {
-              position_name: "ADMIN",
+              role_name: "ADMIN",
             },
           },
         },
@@ -50,7 +50,6 @@ export async function POST(request: NextRequest) {
         password,
       },
     });
-    console.log("HERE COMESS...");
     return NextResponse.json(
       {
         message: "User and business created successfully.",

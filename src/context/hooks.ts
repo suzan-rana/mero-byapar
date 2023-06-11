@@ -8,7 +8,7 @@ export const useFetchCurrentUser = (isEnabled: boolean) => {
   return useQuery({
     queryKey: ["fetch-current-user"],
     queryFn: fetchCurrentUser,
-    // enabled: !!Cookies.get("token") && isEnabled,
+    enabled: !!Cookies.get("token") && isEnabled,
     refetchOnWindowFocus: false,
     retry: false,
   });

@@ -22,18 +22,31 @@ export async function GET(request: NextRequest) {
       id: decoded.id,
     },
     select: {
-       id: true,
-       business: true,
-       businessId: true,
-       email: true,
-       name: true,
-       contact_number: true,
-       role: true ,
-    }
+      id: true,
+      business: {
+        select: {
+          id: true,
+          name: true
+        }
+      },
+      email: true,
+      name: true,
+      contact_number: true,
+      role: {
+        select: {
+          role_name: true,
+        },
+      },
+    },
   });
+  if(!user){
+    return NextResponse.json({
+      message: "User not found",
+    });
+  }
 
   return NextResponse.json({
     message: "User found",
-    data: user
+    data: user,
   });
 }

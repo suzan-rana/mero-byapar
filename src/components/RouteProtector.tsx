@@ -7,12 +7,18 @@ function isAuth<T>(Component: React.ComponentType<T>) {
   return (props: T) => {
     const router = useRouter();
 
-    const { isAuthenticated, user } = useAuthContext();
+    const { isAuthenticated, user, isLoading } = useAuthContext();
     useEffect(() => {
-      if (!isAuthenticated || !user) {
+      if (!isLoading && (!isAuthenticated || !user)) {
+        console.log('IS LOADING...', isLoading)
+        console.log('IS authenticated...', isAuthenticated)
+        console.log('IS user...', user)
         router.push("/login");
       }
     }, [router, isAuthenticated]);
+    if (isLoading) {
+      return <p>Loading...</p>;
+    }
     return (
       <>
         <Component {...props!} />

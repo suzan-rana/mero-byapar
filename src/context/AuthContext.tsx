@@ -10,6 +10,7 @@ export type TAuthContext = {
   accessControls: TAccessControls | null;
   user: TCurrentUser | undefined;
   setIsAuthenticated: React.Dispatch<SetStateAction<boolean>>;
+  isLoading: boolean;
 };
 
 export const AuthContext = createContext<TAuthContext | null>(null);
@@ -23,8 +24,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     // show a loading spinner here.
     return <p>Loading...</p>;
   }
-  const accessControls = generateAccessControls(user?.role);
-
+  const accessControls = generateAccessControls(user?.role.role_name);
   return (
     <AuthContext.Provider
       value={{
@@ -32,6 +32,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         isAuthenticated,
         accessControls,
         user,
+        isLoading
       }}
     >
       {children}
