@@ -1,5 +1,4 @@
 import axios from "axios";
-import { error } from "console";
 import Cookies from "js-cookie";
 
 const instance = axios.create({
@@ -15,7 +14,6 @@ instance.interceptors.request.use((req) => {
 });
 instance.interceptors.response.use(
   (res) => {
-    console.log('RESPONSE', res)
     return res;
   },
   (error) => {

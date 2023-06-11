@@ -20,18 +20,18 @@ model User {
   contact_number String
   created_at     DateTime @default(now())
   updated_at     DateTime @updatedAt
-  positionId     String
-  position       Position @relation(fields: [positionId], references: [id])
+  roleId         String
+  role           Role     @relation(fields: [roleId], references: [id])
   businessId     String
   business       Business @relation(fields: [businessId], references: [id])
   sales          Sale[]
   toBuy          ToBuy[]
 }
 
-model Position {
-  id            String @id @default(cuid())
-  position_name String @unique
-  users         User[]
+model Role {
+  id        String @id @default(cuid())
+  role_name String @unique
+  users     User[]
 }
 
 model Business {

@@ -16,7 +16,7 @@ export const AuthContext = createContext<TAuthContext | null>(null);
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   // a utility state
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
   const { data: user, isLoading } = useFetchCurrentUser(isAuthenticated);
 
   if (isLoading) {
