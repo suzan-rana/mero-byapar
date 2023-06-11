@@ -1,14 +1,14 @@
-import Sidebar from "@/components/Sidebar";
-import Button from "@/components/ui/Button";
-import { cn } from "@/lib/utils";
+'use client'
+import { useAuthContext } from "@/context/hooks";
 import React from "react";
 
 type Props = {};
 
 const Home = (props: Props) => {
+  const { user } = useAuthContext()
   return (
     <main>
-      <h1>Hello, Dashboard</h1>
+      <h1>Hello, {user?.name}</h1>
     </main>
   );
 };

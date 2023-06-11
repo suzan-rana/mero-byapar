@@ -17,16 +17,23 @@ export async function POST(request: NextRequest) {
   }
   const { businessId, categoryId, ...restItems } = parsedBody.data;
   try {
-    await prisma.product.create({
-      data: {
-        ...restItems,
-        businessId: businessId,
-        categoryId,
-      },
-    });
+    await prisma.$transaction([
+      prisma.product.create({
+        data: {
+          ...restItems,
+          businessId: businessId,
+          categoryId,
+        },
+      }),
+      prisma.toBuy.delete({
+        where: {
+          id: restItems.toBuyId,
+        },
+      }),
+    ]);
     return NextResponse.json(
       {
-        message: "Category created successfully.",
+        message: "Product added successfully.",
       },
       {
         status: 201,

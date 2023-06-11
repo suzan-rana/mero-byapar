@@ -7,23 +7,19 @@ import { generateAccessControls } from "@/utils/accessControls";
 
 export type TAuthContext = {
   isAuthenticated: boolean;
-  accessControls: TAccessControls | null;
+  accessControls: TAccessControls | undefined;
   user: TCurrentUser | undefined;
   setIsAuthenticated: React.Dispatch<SetStateAction<boolean>>;
   isLoading: boolean;
+  isFetching: boolean;
 };
 
 export const AuthContext = createContext<TAuthContext | null>(null);
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   // a utility state
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
-  const { data: user, isLoading } = useFetchCurrentUser(isAuthenticated);
-
-  if (isLoading) {
-    // show a loading spinner here.
-    return <p>Loading...</p>;
-  }
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { data: user, isLoading, isFetching } = useFetchCurrentUser(isAuthenticated);
   const accessControls = generateAccessControls(user?.role.role_name);
   return (
     <AuthContext.Provider
@@ -32,7 +28,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         isAuthenticated,
         accessControls,
         user,
-        isLoading
+        isLoading,
+        isFetching
       }}
     >
       {children}

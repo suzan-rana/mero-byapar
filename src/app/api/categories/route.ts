@@ -46,9 +46,7 @@ export async function GET(request: NextRequest) {
 }
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  console.log("BODY...", body);
   const parsedBody = CreateCategorySchema.safeParse(body);
-  console.log("PARSED BODY..", parsedBody);
   if (!parsedBody.success) {
     return NextResponse.json(parsedBody.error, {
       status: 400,

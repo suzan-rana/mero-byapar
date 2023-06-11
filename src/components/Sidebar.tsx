@@ -4,6 +4,8 @@ import Icons from "./ui/Icon";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useAuthContext } from "@/context/hooks";
+import { queryClient } from "./ReactQueryProvider";
+import Cookies from "js-cookie";
 
 type Props = {};
 
@@ -12,7 +14,7 @@ const Sidebar = (props: Props) => {
   const toggleSideMenu = () => {
     setShowSideMenu((prev) => !prev);
   };
-  const { user } = useAuthContext()
+  const { user } = useAuthContext();
 
   useEffect(() => {
     const currentWidth = window.innerWidth;
@@ -20,6 +22,12 @@ const Sidebar = (props: Props) => {
       setShowSideMenu(true);
     }
   }, []);
+
+  const handleLogout = () => {
+    queryClient.clear();
+    Cookies.remove('token')
+    window.location.href = "/login";
+  };
 
   return (
     <section
@@ -41,21 +49,31 @@ const Sidebar = (props: Props) => {
           "sm:w-auto sm:opacity-100"
         )}
       >
-        <h1 className="hidden sm:block text-center text-2xl mb-6 font-bold text-green-700">{user?.business.name}</h1>
+        <h1 className="hidden sm:block text-center text-2xl mb-6 font-bold text-green-700">
+          {user?.business.name}
+        </h1>
         <main
           className={cn(
-            "opacity-0 gap-2 pt-2 sm:opacity-100 sm:flex sm:flex-col transition-all",
-            showSideMenu ? "translate-x-0 opacity-100" : "-translate-x-full sm:translate-x-0"
+            "opacity-0 justify-between h-[80vh] gap-2 pt-2 sm:opacity-100 sm:flex sm:flex-col transition-all",
+            showSideMenu
+              ? "translate-x-0 opacity-100"
+              : "-translate-x-full sm:translate-x-0"
           )}
         >
-          {sidebarElements.map((item, index) => (
-            <Link href={item.link}
-              key={index}
-              className="px-3 block font-medium  cursor-pointer min-w-[15rem]  hover:bg-green-300 py-2"
-            >
-              {item.name}
-            </Link>
-          ))}
+          <div className="sm:flex flex-col gap-2">
+            {sidebarElements.map((item, index) => (
+              <Link
+                href={item.link}
+                key={index}
+                className="px-3 block font-medium  cursor-pointer min-w-[15rem]  hover:bg-green-300 py-2"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+          <p onClick={handleLogout} className="px-3 block font-medium  cursor-pointer min-w-[15rem]  hover:bg-green-300 py-2">
+            Log out
+          </p>
         </main>
       </div>
     </section>

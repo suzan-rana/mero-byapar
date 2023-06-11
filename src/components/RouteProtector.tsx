@@ -2,23 +2,21 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/context/hooks";
+import Cookies from "js-cookie";
 
 function isAuth<T>(Component: React.ComponentType<T>) {
   return (props: T) => {
     const router = useRouter();
 
-    const { isAuthenticated, user, isLoading } = useAuthContext();
+    const { isAuthenticated, user, isLoading, isFetching } = useAuthContext();
     useEffect(() => {
-      if (!isLoading && (!isAuthenticated || !user)) {
-        console.log('IS LOADING...', isLoading)
-        console.log('IS authenticated...', isAuthenticated)
-        console.log('IS user...', user)
+      if (!Cookies.get("token")) {
         router.push("/login");
       }
     }, [router, isAuthenticated]);
-    if (isLoading) {
+    if (isLoading || isFetching) {
       return <p>Loading...</p>;
-    }
+    } 
     return (
       <>
         <Component {...props!} />

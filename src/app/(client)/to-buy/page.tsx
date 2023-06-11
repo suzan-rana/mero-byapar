@@ -7,7 +7,7 @@ import AddBuyingItem from "./AddBuyingItem";
 
 type Props = {};
 
-const ToBuyPage = (props: Props) => {
+const ToBuyPage = (props: Props) => { 
   return (
     <main>
       <PageTitle>Products to Buy</PageTitle>

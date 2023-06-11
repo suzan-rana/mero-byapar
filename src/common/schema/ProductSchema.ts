@@ -8,6 +8,7 @@ export const CreateProductSchema = z.object({
   description: z.string(),
   categoryId: z.string(),
   businessId: z.string(),
+  toBuyId: z.string()
 });
 export type CreateProductType = z.infer<typeof CreateProductSchema>;
 

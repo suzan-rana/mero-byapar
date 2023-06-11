@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     body as CreateNewUserType;
   const user = await prisma.user.create({
     data: {
-      positionId: positionId,
+      roleId: positionId,
       businessId,
       contact_number,
       email,
@@ -45,7 +45,6 @@ export async function PATCH(request: NextRequest) {
   if (!toBeUpdatedUser.success) {
     NextResponse.json(toBeUpdatedUser);
   }
-
   await prisma.user
     .update({
       data: {
@@ -55,7 +54,7 @@ export async function PATCH(request: NextRequest) {
         id: body.id,
       },
     })
-    .then((response) => {
+    .then(() => {
       NextResponse.json(
         {
           message: "User updated successfully.",
