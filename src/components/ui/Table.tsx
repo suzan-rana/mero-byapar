@@ -3,7 +3,7 @@ import React from "react";
 
 type Props = {
   headingArray: Array<string>;
-  bodyArray: Array<
+  bodyArray?: Array<
     Record<Props["headingArray"][number], string | number | React.ReactNode>
   >;
   renderCustomBody?: boolean;
@@ -35,7 +35,7 @@ const Table = ({
             customBody
           ) : (
             <>
-              {bodyArray.map((row, idx) => (
+              {bodyArray?.map((row, idx) => (
                 <TRow key={idx}>
                   {Object.keys(row).map((col, i) => (
                     <TData key={i}>{row[col]}</TData>

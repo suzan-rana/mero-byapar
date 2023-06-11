@@ -51,8 +51,9 @@ export async function POST(request: NextRequest) {
   });
   return NextResponse.json(
     {
+      // should not have done this instead: data: {token}
       token,
-      message: 'User logged in successfully.'
+      message: "User logged in successfully.",
     },
     {
       status: 200,

@@ -3,24 +3,34 @@ import {
   CreateCategorySchema,
   DeleteCategorySchema,
   EditCategorySchema,
-  GetCategorySchema,
 } from "@/common/schema/CategorySchema";
 import prisma from "@/lib/prisma";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
-  const body = request.json();
-  const parsedBody = GetCategorySchema.safeParse(body);
-  if (!parsedBody.success) {
-    return NextResponse.json(parsedBody.error, {
-      status: 400,
-    });
+  const businessId = request.nextUrl.searchParams.get("businessId");
+  if (!businessId) {
+    return NextResponse.json(
+      {
+        message: "BusinessId is required.",
+      },
+      {
+        status: 400,
+      }
+    );
   }
   // starts from here.
   try {
     const categories = await prisma.category.findMany({
       where: {
-        businessId: parsedBody.data.businessId,
+        businessId: businessId,
+      },
+      include: {
+        _count: {
+          select: {
+            products: true,
+          },
+        },
       },
     });
     return NextResponse.json(
@@ -35,8 +45,10 @@ export async function GET(request: NextRequest) {
   }
 }
 export async function POST(request: NextRequest) {
-  const body = request.json();
+  const body = await request.json();
+  console.log("BODY...", body);
   const parsedBody = CreateCategorySchema.safeParse(body);
+  console.log("PARSED BODY..", parsedBody);
   if (!parsedBody.success) {
     return NextResponse.json(parsedBody.error, {
       status: 400,
@@ -65,7 +77,7 @@ export async function POST(request: NextRequest) {
   }
 }
 export async function DELETE(request: NextRequest) {
-  const body = request.json();
+  const body = await request.json();
   const parsedBody = DeleteCategorySchema.safeParse(body);
   if (!parsedBody.success) {
     return NextResponse.json(parsedBody.error, {
@@ -111,7 +123,7 @@ export async function DELETE(request: NextRequest) {
 }
 
 export async function PATCH(request: NextRequest) {
-  const body = request.json();
+  const body = await request.json();
   const parsedBody = EditCategorySchema.safeParse(body);
   if (!parsedBody.success) {
     return NextResponse.json(parsedBody.error, {
