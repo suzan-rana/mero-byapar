@@ -25,4 +25,18 @@ export type TUpdateToBuy = z.infer<typeof UpdateToBuySchema>;
 export const DeleteToBuySchema = z.object({
   toBuyId: z.string(),
 });
-export type TDeleteToBuy = z.infer<typeof DeleteToBuySchema>
+export type TDeleteToBuy = z.infer<typeof DeleteToBuySchema>;
+
+// response from get to buy
+export const FetchToBuySchema = z.array(
+  z.object({
+    id: z.string(),
+    product_name: z.string(),
+    product_price: z.number(),
+    quantity: z.number(),
+    buy_from: z.number(),
+    created_at: z.date(),
+    buyerId: z.string(),
+    businessId: z.string(),
+  })
+);
