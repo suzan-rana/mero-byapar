@@ -93,8 +93,8 @@ model Sale {
 model SoldTo {
   id             String @id @default(cuid())
   name           String
-  email          String @unique
-  contact_number Int
+  email          String
+  contact_number String
   saleId         String @unique
   sale           Sale   @relation(fields: [saleId], references: [id])
 }

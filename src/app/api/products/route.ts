@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../lib/prisma";
 import {
   CreateProductSchema,
-  CreateProductType,
   GetProductSchema,
 } from "@/common/schema/ProductSchema";
 import prismaErrorHandler from "@/common/error";
