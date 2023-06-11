@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Icons from "./ui/Icon";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { useAuthContext } from "@/context/hooks";
 
 type Props = {};
 
@@ -11,6 +12,7 @@ const Sidebar = (props: Props) => {
   const toggleSideMenu = () => {
     setShowSideMenu((prev) => !prev);
   };
+  const { user } = useAuthContext()
 
   useEffect(() => {
     const currentWidth = window.innerWidth;
@@ -39,7 +41,7 @@ const Sidebar = (props: Props) => {
           "sm:w-auto sm:opacity-100"
         )}
       >
-        <h1 className="hidden sm:block text-center text-2xl mb-6 font-bold text-green-700">Mero Byapar</h1>
+        <h1 className="hidden sm:block text-center text-2xl mb-6 font-bold text-green-700">{user?.business.name}</h1>
         <main
           className={cn(
             "opacity-0 gap-2 pt-2 sm:opacity-100 sm:flex sm:flex-col transition-all",
