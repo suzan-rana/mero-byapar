@@ -6,28 +6,60 @@ import {
   UpdateUserSchema,
   UpdateUserType,
 } from "@/common/schema/UserSchema";
+import { encryptPassword } from "@/lib/bcrypt";
+export async function GET(request: NextRequest) {
+  const businessId = request.nextUrl.searchParams.get("businessId");
+  if (!businessId) {
+    return NextResponse.json(
+      {
+        message: "BusinessId is required.",
+      },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const user = await prisma.user.findMany({
+    where: {
+      id: businessId,
+    },
+  });
+  return NextResponse.json(
+    {
+      message: "User  created successfully.",
+      data: user,
+    },
+    {
+      status: 200,
+      statusText: "User  created successfully.",
+    }
+  );
+}
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  const toBeCreatedUser = CreateNewUserSchema.safeParse(body);
-  if (!toBeCreatedUser.success) {
-    NextResponse.json(toBeCreatedUser);
+  const parsedBody = CreateNewUserSchema.safeParse(body);
+  if (!parsedBody.success) {
+    return NextResponse.json(parsedBody, {
+      status: 400,
+    });
   }
 
   // we have email,
-  const { contact_number, email, name, positionId, password, businessId } =
-    body as CreateNewUserType;
+  const { contact_number, email, name, roleId, password, businessId } =
+    parsedBody.data;
   const user = await prisma.user.create({
     data: {
-      roleId: positionId,
+      roleId,
       businessId,
       contact_number,
       email,
       name,
-      password,
+      password: await encryptPassword(password),
     },
   });
-  NextResponse.json(
+  return NextResponse.json(
     {
       message: "User  created successfully.",
       data: user,
@@ -41,21 +73,23 @@ export async function POST(request: NextRequest) {
 
 export async function PATCH(request: NextRequest) {
   const body = (await request.json()) as UpdateUserType;
-  const toBeUpdatedUser = UpdateUserSchema.safeParse(body);
-  if (!toBeUpdatedUser.success) {
-    NextResponse.json(toBeUpdatedUser);
+  const parsedBody = UpdateUserSchema.safeParse(body);
+  if (!parsedBody.success) {
+    return NextResponse.json(parsedBody, {
+      status: 400,
+    });
   }
-  await prisma.user
+  return await prisma.user
     .update({
       data: {
-        ...body,
+        ...parsedBody.data,
       },
       where: {
         id: body.id,
       },
     })
     .then(() => {
-      NextResponse.json(
+      return NextResponse.json(
         {
           message: "User updated successfully.",
         },
@@ -65,7 +99,7 @@ export async function PATCH(request: NextRequest) {
       );
     })
     .catch((error) => {
-      NextResponse.json(error?.message, {
+      return NextResponse.json(error?.message, {
         status: 400,
       });
     });

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { TUserRole, UserRoleUnionSchema } from "../../types/index";
+import { UserRoleUnionSchema } from "../../types/index";
 
 export const LoginUserSchema = z.object({
   email: z.string().email(),
@@ -27,7 +27,7 @@ export const CreateNewUserSchema = z.object({
   name: z.string(),
   contact_number: z.string().min(10),
   businessId: z.string(),
-  positionId: z.string(),
+  roleId: z.string(),
 });
 export type CreateNewUserType = z.infer<typeof CreateNewUserSchema>;
 
