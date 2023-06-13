@@ -70,15 +70,21 @@ const Sidebar = (props: Props) => {
             ))}
             <SidebarTeam />
           </div>
-          <p
-            onClick={handleLogout}
-            className={cn(
-              "px-3 flex gap-4 items-center font-medium  cursor-pointer min-w-[15rem]  hover:bg-green-300 py-2"
-            )}
-          >
-            {/* {Icons.logout} */}
-            <span>Log out</span>
-          </p>
+          <div className="sm:flex flex-col gap-2">
+            <SidebarElement
+              link="/profile"
+              name="Profile"
+              isActive={pathName === "/profile"}
+            />
+            <p
+              onClick={handleLogout}
+              className={cn(
+                "px-3 flex gap-4 items-center font-medium  cursor-pointer min-w-[15rem]  hover:bg-green-300 py-2"
+              )}
+            >
+              <span>Log out</span>
+            </p>
+          </div>
         </main>
       </div>
     </section>
@@ -91,8 +97,8 @@ const SidebarElement = ({
   isActive,
   link,
   name,
-  // icon,
-}: {
+}: // icon,
+{
   name: string;
   link: string;
   isActive: boolean;
@@ -156,7 +162,12 @@ const BusinessName = () => {
       {isLoading || isFetching ? (
         <Skeleton className="my-4 h-[1.75rem]" count={1} />
       ) : (
-        <h1 className={cn("hidden sm:block cursor-pointer text-center text-xl mb-6 italic font-semibold", font.className)}>
+        <h1
+          className={cn(
+            "hidden sm:block cursor-pointer text-center text-xl mb-6 italic font-semibold",
+            font.className
+          )}
+        >
           {user?.business.name}
         </h1>
       )}

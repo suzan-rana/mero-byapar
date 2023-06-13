@@ -52,14 +52,14 @@ const ProductItemPage = (props: Props) => {
                 className="sm:py-1 text-green-900 italic"
               />
             </section>
-            {/* <ButtonGroup className="flex-row w-[100%]  mt-6 gap-6 "> */}
-              <Button variant={"outline"} >
-                <Link href={"/to-buy"} className="w-full h-full block">
+            <ButtonGroup className="flex-row w-[100%]  mt-6 gap-6 ">
+              <Button variant={"primary"} >
+                <Link href={"/products"} className="w-full h-full block">
                   Back
                 </Link>
               </Button>
               
-            {/* </ButtonGroup> */}
+            </ButtonGroup>
           </>
         )}
       </Card>

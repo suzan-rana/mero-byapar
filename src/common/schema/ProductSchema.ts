@@ -56,6 +56,6 @@ export const ResponseFetchProductItemByProductIdSchema = z.object({
     role: z.object({
       role_name: z.string(),
     }),
-    contact_number: z.number(),
+    contact_number: z.string(),
   }),
 });
