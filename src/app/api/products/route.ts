@@ -19,12 +19,11 @@ export async function POST(request: NextRequest) {
     categoryId,
     description,
     price,
-    product_code,
     product_name,
     quantity,
     toBuyId,
+
   } = parsedBody.data;
-  console.log("hello", parsedBody.data);
 
   try {
     await prisma.$transaction([
@@ -32,11 +31,12 @@ export async function POST(request: NextRequest) {
         data: {
           description,
           price,
-          product_code: `${product_name.slice(0,3)}-${Math.random() * 1234}` ,
+          product_code: `${product_name.slice(0, 3)}-${Math.random() * 1234}`,
           product_name,
           quantity,
           businessId: businessId,
           categoryId,
+          
         },
       }),
       prisma.toBuy.delete({
@@ -58,17 +58,21 @@ export async function POST(request: NextRequest) {
   }
 }
 export async function GET(request: NextRequest) {
-  const body = await request.json();
-  const parsedBody = GetProductSchema.safeParse(body);
-  if (!parsedBody.success) {
-    return NextResponse.json(parsedBody.error, {
-      status: 400,
-    });
+  const businessId = request.nextUrl.searchParams.get("businessId");
+  if (!businessId) {
+    return NextResponse.json(
+      {
+        message: "BusinessId is required.",
+      },
+      {
+        status: 400,
+      }
+    );
   }
   try {
     const products = prisma.product.findMany({
       where: {
-        businessId: parsedBody.data.businessId,
+        businessId: businessId,
       },
     });
     return NextResponse.json(

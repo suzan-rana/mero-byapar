@@ -13,20 +13,21 @@ datasource db {
 //   Products, Orders, Buy, Sales, Employees 
 
 model User {
-  id             String   @id @default(cuid())
-  name           String
-  email          String   @unique
-  password       String
+  id              String    @id @default(cuid())
+  name            String
+  email           String    @unique
+  password        String
   oneTimePassword String?
-  contact_number String
-  created_at     DateTime @default(now())
-  updated_at     DateTime @updatedAt
-  roleId         String
-  role           Role     @relation(fields: [roleId], references: [id])
-  businessId     String
-  business       Business @relation(fields: [businessId], references: [id])
-  sales          Sale[]
-  toBuy          ToBuy[]
+  contact_number  String
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+  roleId          String
+  role            Role      @relation(fields: [roleId], references: [id])
+  businessId      String
+  business        Business  @relation(fields: [businessId], references: [id])
+  sales           Sale[]
+  toBuy           ToBuy[]
+  products        Product[]
 }
 
 model Role {
@@ -62,6 +63,8 @@ model Product {
   updated_at   DateTime @updatedAt
   categoryId   String
   category     Category @relation(fields: [categoryId], references: [id])
+  buyerId      String
+  buyer        User     @relation(fields: [buyerId], references: [id])
   businessId   String
   business     Business @relation(fields: [businessId], references: [id])
   sales        Sale[]
@@ -85,7 +88,7 @@ model ToBuy {
   quantity      Int
   buy_from      String
   deadline_date DateTime
-  description String
+  description   String
   created_at    DateTime @default(now())
   categoryId    String
   category      Category @relation(fields: [categoryId], references: [id])

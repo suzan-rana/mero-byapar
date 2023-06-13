@@ -19,6 +19,7 @@ const useFetchToBuyByToBuyId = (toBuyId: string) => {
       price: data.product_price,
       quantity: data.quantity,
       toBuyId: data.id,
+      buyerId: data.buyerId
     } as CreateProductType);
   return { data, isLoading, isFetching, productDetails };
 };

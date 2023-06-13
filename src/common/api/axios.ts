@@ -21,6 +21,11 @@ instance.interceptors.response.use(
     return res;
   },
   (error) => {
+    if (error.response.status === 401) {
+      toast.error(
+        "You are not authorized to perform the action. Contact admin!"
+      );
+    }
     return Promise.reject(error?.response?.data);
   }
 );
