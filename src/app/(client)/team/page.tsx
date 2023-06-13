@@ -10,11 +10,14 @@ import Link from "next/link";
 type Props = {};
 
 const EmployeePage = (props: Props) => {
-  const { data, isLoading, isFetching } = useFetchUsers();
+  const { data, isLoading, isFetching, isError } = useFetchUsers();
   return (
     <main>
       <PageTitle>Team Members</PageTitle>
       <Table
+        isError={isError}
+        length={data?.length}
+        isLoading={isLoading || isFetching}
         renderCustomBody={true}
         customBody={data?.map((row, index) => (
           <TRow key={row.id}>

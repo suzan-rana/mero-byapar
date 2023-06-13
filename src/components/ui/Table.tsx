@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import React from "react";
+import SkeletonTable from "./Skeleton/SkeletonTable";
 
 type Props = {
   headingArray: Array<string>;
@@ -9,6 +10,9 @@ type Props = {
   renderCustomBody?: boolean;
   customBody?: React.ReactNode;
   additionalNode?: (id?: string) => React.ReactNode;
+  isLoading?: boolean;
+  isError?: boolean;
+  length?: number;
 };
 
 const Table = ({
@@ -17,14 +21,28 @@ const Table = ({
   renderCustomBody = false,
   customBody,
   additionalNode,
+  isLoading = false,
+  length,
+  isError = false,
 }: Props) => {
+  if (isLoading) {
+    return <SkeletonTable row_count={5} column_count={headingArray.length} />;
+  }
+
+  if (isError || !length) {
+    return <NoDataFound />;
+  }
+
   return (
     <div className="overflow-x-auto">
       <table className="w-full px-5 border-collapse border  bg-gray-200 rounded-md my-8 border-gray-300">
         <thead>
-          <tr >
+          <tr>
             {headingArray.map((item, index) => (
-              <th className="py-3 sm:py-5  px-3 text-sm sm:text-base font-semibold" key={index}>
+              <th
+                className="py-3 sm:py-5  px-3 text-sm sm:text-base font-semibold"
+                key={index}
+              >
                 {item}
               </th>
             ))}
@@ -83,5 +101,15 @@ export const TData = ({ className, ...restProps }: TDataProps) => {
       )}
       {...restProps}
     ></td>
+  );
+};
+
+const NoDataFound = () => {
+  return (
+    <section className="w-full px-5 sm:h-[15rem] flex justify-center items-center border-collapse border  bg-gray-200 rounded-md my-8 border-gray-300">
+      <p className="py-3 text-center sm:py-5 text-green-600  px-3 text-sm sm:text-base font-semibold">
+        Sorry, no data found, Try reloading...
+      </p>
+    </section>
   );
 };

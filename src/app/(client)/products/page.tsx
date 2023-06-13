@@ -6,16 +6,17 @@ import React from "react";
 import Categories from "./categories";
 import PageTitle from "@/components/PageTitle";
 import useFetchProducts from "@/common/data-fetching-hooks/products/useFetchProducts";
+import Skeleton from "react-loading-skeleton";
 
 type Props = {};
 
 const ProductsPage = (props: Props) => {
-  const { data, isLoading, isFetching } = useFetchProducts();
+  const { data, isLoading, isFetching, isError } = useFetchProducts();
+
   return (
     <main>
       <PageTitle>Available Products</PageTitle>
       <Table
-        // bodyArray={productRows}
         headingArray={[
           "Index",
           "Name",
@@ -26,6 +27,9 @@ const ProductsPage = (props: Props) => {
           "Bought By",
           "Actions",
         ]}
+        isError={isError}
+        length={data?.length}
+        isLoading={isLoading || isFetching}
         renderCustomBody={true}
         customBody={data?.map((row, index) => (
           <TRow key={row.id}>
@@ -41,7 +45,9 @@ const ProductsPage = (props: Props) => {
 
             <TData>{row.buyer.name}</TData>
             <TData className="underline text-green-600">
-              <Link href={`/products/${row.id}`} className="block" >View</Link>
+              <Link href={`/products/${row.id}`} className="block">
+                View
+              </Link>
             </TData>
           </TRow>
         ))}

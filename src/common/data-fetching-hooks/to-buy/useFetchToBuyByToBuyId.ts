@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchUserByUserId } from "@/common/api/user.api";
 import { fetchToBuyByToBuyId } from "@/common/api/to-buy.api";
 import { CreateProductType } from "@/common/schema/ProductSchema";
 

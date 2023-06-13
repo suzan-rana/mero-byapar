@@ -20,7 +20,7 @@ const ToBuyItemPage = (props: Props) => {
   }
   return (
     <div>
-      <Card>
+      <Card isLoading={isFetching || isLoading}>
         <div className="flex justify-between items-start sm:items-center">
           <CardTitle title={data?.product_name} />
           <CardText

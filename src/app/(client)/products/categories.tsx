@@ -13,7 +13,7 @@ import React from "react";
 type Props = {};
 
 const Categories = (props: Props) => {
-  const { data } = useFetchCategories();
+  const { data, isFetching, isLoading, isError } = useFetchCategories();
 
   return (
     <section>
@@ -26,8 +26,10 @@ const Categories = (props: Props) => {
         </Button>
       </div>
       <Table
+        isError={isError}
+        length={data?.length}
         headingArray={["Index", "Name", "Code", "Total Products", "Actions"]}
-        // bodyArray={categoryRows}
+        isLoading={isLoading || isFetching}
         renderCustomBody={true}
         customBody={data?.map((row, i) => (
           <TRow key={row.id}>

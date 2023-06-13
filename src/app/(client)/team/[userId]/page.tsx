@@ -12,7 +12,7 @@ type Props = {};
 
 const UserPage = (props: Props) => {
   const { userId } = useParams();
-  const { data } = useFetchUserByUserId(userId);
+  const { data, isFetching, isLoading } = useFetchUserByUserId(userId);
   if (!data) {
     return <></>;
   }
@@ -23,7 +23,7 @@ const UserPage = (props: Props) => {
   };
   return (
     <div>
-      <Card>
+      <Card isLoading={isFetching || isLoading}>
         <div className="flex items-start sm:items-center justify-between">
           {" "}
           <CardTitle title={data?.name} />

@@ -1,15 +1,17 @@
 import { TResponseFetchUserByUserId } from "@/common/schema/UserSchema";
 import { cn } from "@/lib/utils";
 import React from "react";
+import SkeletonCard from "./ui/Skeleton/SkeletonCard";
 
 interface CardProps {
   children: React.ReactNode;
+  isLoading: boolean;
 }
 
-const Card = ({ children }: CardProps) => {
+const Card = ({ children, isLoading }: CardProps) => {
   return (
     <article className="border sm:w-[50%] mt-8 px-4 py-4 border-gray-200 rounded-md bg-gray-200 transition-colors  hover:border-green-500">
-      {children}
+      {isLoading ? <SkeletonCard /> : children}
     </article>
   );
 };

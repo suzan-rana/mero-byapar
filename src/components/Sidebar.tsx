@@ -65,7 +65,11 @@ const Sidebar = (props: Props) => {
         >
           <div className="sm:flex flex-col gap-2">
             {sidebarElements.map((item, index) => (
-              <SidebarElement key={index} {...item} isActive={pathName === item.link} />
+              <SidebarElement
+                key={index}
+                {...item}
+                isActive={pathName === item.link}
+              />
             ))}
             {user?.role.role_name === "ADMIN" && (
               <SidebarElement
@@ -107,7 +111,7 @@ const SidebarElement = ({
         isActive && "bg-green-300"
       )}
     >
-      <Link className="block" href={link}>
+      <Link className="block w-full h-full" href={link}>
         {name}
       </Link>
     </p>

@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/context/hooks";
 import Cookies from "js-cookie";
+import 'react-loading-skeleton/dist/skeleton.css'
 
 function isAuth<T>(Component: React.ComponentType<T>) {
   return (props: T) => {

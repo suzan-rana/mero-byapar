@@ -10,16 +10,17 @@ import Link from "next/link";
 type Props = {};
 
 const ToBuyPage = (props: Props) => {
-  const { data, isLoading, isFetching } = useFetchToBuy();
-  if(!data){
-    return <></>
+  const { data, isLoading, isFetching, isError } = useFetchToBuy();
+  if (!data) {
+    return <></>;
   }
-  console.log('DATA...DATA', data)
-  return (  
+  return (
     <main>
       <PageTitle>Products to Buy</PageTitle>
       <Table
-        // bodyArray={toBuyItemArray}
+        length={data?.length}
+        isError={isError}
+        isLoading={isLoading || isFetching}
         customBody={data?.map((row, idx) => (
           <TRow key={row.id}>
             <TData>{idx + 1}</TData>
@@ -30,9 +31,7 @@ const ToBuyPage = (props: Props) => {
             <TData>{row.quantity}</TData>
 
             <TData>{row.buy_from}</TData>
-            <TData>
-             {row.deadline_date.toLocaleDateString()}
-            </TData>
+            <TData>{row.deadline_date.toLocaleDateString()}</TData>
 
             <TData className="underline text-green-600">
               <Link href={`/to-buy/${row.id}`}>View</Link>

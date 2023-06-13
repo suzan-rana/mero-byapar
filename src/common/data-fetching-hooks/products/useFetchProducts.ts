@@ -5,10 +5,10 @@ import { fetchAllProducts } from "@/common/api/product.api";
 const useFetchProducts = () => {
   const { user } = useAuthContext();
 
-  const { data, isLoading, isFetching } = useQuery({
+  const { data, isLoading, isFetching , isError, error} = useQuery({
     queryKey: ["fetch-products", user?.business.id],
     queryFn: () => fetchAllProducts(user?.business.id!),
   });
-  return { data, isLoading, isFetching };
+  return { data, isLoading, isFetching, isError, error };
 };
 export default useFetchProducts;
