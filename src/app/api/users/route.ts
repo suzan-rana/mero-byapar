@@ -7,6 +7,7 @@ import {
   UpdateUserType,
 } from "@/common/schema/UserSchema";
 import { encryptPassword } from "@/lib/bcrypt";
+import prismaErrorHandler from "@/common/error";
 export async function GET(request: NextRequest) {
   const businessId = request.nextUrl.searchParams.get("businessId");
   if (!businessId) {
@@ -22,17 +23,25 @@ export async function GET(request: NextRequest) {
 
   const user = await prisma.user.findMany({
     where: {
-      id: businessId,
+      businessId,
+    },
+    include: {
+      role: {
+        select: {
+          role_name: true,
+        },
+      },
     },
   });
+  console.log("USER", user);
   return NextResponse.json(
     {
-      message: "User  created successfully.",
+      message: "User  retreived successfully.",
       data: user,
     },
     {
       status: 200,
-      statusText: "User  created successfully.",
+      statusText: "User  retreived successfully.",
     }
   );
 }
@@ -47,28 +56,46 @@ export async function POST(request: NextRequest) {
   }
 
   // we have email,
-  const { contact_number, email, name, roleId, password, businessId } =
-    parsedBody.data;
-  const user = await prisma.user.create({
-    data: {
-      roleId,
-      businessId,
-      contact_number,
-      email,
-      name,
-      password: await encryptPassword(password),
-    },
-  });
-  return NextResponse.json(
-    {
-      message: "User  created successfully.",
-      data: user,
-    },
-    {
-      status: 200,
-      statusText: "User  created successfully.",
-    }
-  );
+  try {
+    const { role_name, businessId, ...rest } = parsedBody.data;
+    await prisma.user.create({
+      include: {
+        business: true,
+        role: true,
+      },
+      data: {
+        ...rest,
+        password: await encryptPassword(rest.password),
+        business: {
+          connect: {
+            id: businessId,
+          },
+        },
+        role: {
+          connectOrCreate: {
+            create: {
+              role_name: role_name,
+            },
+            where: {
+              role_name: role_name,
+            },
+          },
+        },
+      },
+    });
+
+    return NextResponse.json(
+      {
+        message: "User  created successfully.",
+      },
+      {
+        status: 201,
+        statusText: "User  created successfully.",
+      }
+    );
+  } catch (error) {
+    return prismaErrorHandler(error);
+  }
 }
 
 export async function PATCH(request: NextRequest) {
