@@ -25,7 +25,7 @@ const Sidebar = (props: Props) => {
 
   const handleLogout = () => {
     queryClient.clear();
-    Cookies.remove('token')
+    Cookies.remove("token");
     window.location.href = "/login";
   };
 
@@ -71,7 +71,10 @@ const Sidebar = (props: Props) => {
               </Link>
             ))}
           </div>
-          <p onClick={handleLogout} className="px-3 block font-medium  cursor-pointer min-w-[15rem]  hover:bg-green-300 py-2">
+          <p
+            onClick={handleLogout}
+            className="px-3 block font-medium  cursor-pointer min-w-[15rem]  hover:bg-green-300 py-2"
+          >
             Log out
           </p>
         </main>
@@ -92,13 +95,14 @@ const sidebarElements = [
     link: "/products",
   },
   {
-    name: "Orders",
-    link: "/orders",
-  },
-  {
     name: "To Buy",
     link: "/to-buy",
   },
+  {
+    name: "Orders",
+    link: "/orders",
+  },
+
   {
     name: "Sales",
     link: "/sales",
