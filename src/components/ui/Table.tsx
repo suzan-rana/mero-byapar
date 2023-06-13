@@ -48,7 +48,7 @@ const Table = ({
             ))}
           </tr>
         </thead>
-        <tbody className="mx-5 overflow-x-scroll ">
+        <tbody className="mx-5 overflow-x-scroll">
           {renderCustomBody ? (
             customBody
           ) : (

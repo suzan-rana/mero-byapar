@@ -5,6 +5,7 @@ import {
   TCreateCategory,
 } from "@/common/schema/CategorySchema";
 import PageTitle from "@/components/PageTitle";
+import { queryClient } from "@/components/ReactQueryProvider";
 import Button from "@/components/ui/Button";
 import ButtonGroup from "@/components/ui/ButtonGroup";
 import Input from "@/components/ui/Input";
@@ -22,7 +23,7 @@ type Props = {};
 
 const CategoryPage = (props: Props) => {
   const { user } = useAuthContext();
-  const router = useRouter()
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -38,11 +39,13 @@ const CategoryPage = (props: Props) => {
   const { mutate } = useMutation({
     mutationFn: createCategory,
     onSuccess(data, variables, context) {
-      toast.success(data?.data?.message);
-      router.push('/products')
+      queryClient.invalidateQueries({
+        queryKey: ["fetch-category"],
+      });
+      router.push("/products");
     },
     onError(error: any, variables, context) {
-      toast.error(error?.response?.error)
+      toast.error(error?.response?.error);
     },
   });
   console.log("ERRORS", errors);
