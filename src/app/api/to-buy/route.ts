@@ -25,6 +25,14 @@ export async function GET(request: NextRequest) {
       where: {
         businessId,
       },
+      include: {
+        category: {
+          select: {
+            id: true,
+            category_name: true,
+          },
+        },
+      },
     });
     return NextResponse.json(
       {
@@ -67,6 +75,7 @@ export async function POST(request: NextRequest) {
       data: {
         ...parsedBody.data,
         buyerId: decoded?.id,
+        deadline_date: parsedBody.data.deadline_date,
       },
     });
     return NextResponse.json(

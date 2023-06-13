@@ -1,5 +1,6 @@
 "use client";
 import { fetchCategory } from "@/common/api/category.api";
+import useFetchCategories from "@/common/data-fetching-hooks/categories/useFetchCategories";
 import PageSubtitle from "@/components/PageSubtitle";
 import Button from "@/components/ui/Button";
 import Table, { TData, TRow } from "@/components/ui/Table";
@@ -12,12 +13,8 @@ import React from "react";
 type Props = {};
 
 const Categories = (props: Props) => {
-  const { user } = useAuthContext();
+  const { data } = useFetchCategories();
 
-  const { data, isLoading } = useQuery({
-    queryKey: ['fetch-category'],
-    queryFn: () => fetchCategory({ businessId: user?.business.id! }),
-  });
   return (
     <section>
       <div className="flex items-start justify-between">

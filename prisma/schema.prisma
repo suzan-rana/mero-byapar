@@ -74,6 +74,23 @@ model Category {
   businessId    String
   business      Business  @relation(fields: [businessId], references: [id])
   products      Product[]
+  toBuys        ToBuy[]
+}
+
+model ToBuy {
+  id            String   @id @default(cuid())
+  product_name  String
+  product_price Int
+  quantity      Int
+  buy_from      String
+  deadline_date DateTime
+  created_at    DateTime @default(now())
+  categoryId    String
+  category      Category @relation(fields: [categoryId], references: [id])
+  buyerId       String
+  buyer         User     @relation(fields: [buyerId], references: [id])
+  businessId    String
+  business      Business @relation(fields: [businessId], references: [id])
 }
 
 model Sale {
@@ -99,27 +116,14 @@ model SoldTo {
   sale           Sale   @relation(fields: [saleId], references: [id])
 }
 
-model ToBuy {
-  id            String   @id @default(cuid())
-  product_name  String
-  product_price Int
-  quantity      Int
-  buy_from      String
-  created_at    DateTime @default(now())
-  buyerId       String
-  buyer         User     @relation(fields: [buyerId], references: [id])
-  businessId    String
-  business      Business @relation(fields: [businessId], references: [id])
-}
-
 model Order {
-  id             String   @id @default(cuid())
-  productId      String
-  product        Product  @relation(fields: [productId], references: [id])
+  id                      String   @id @default(cuid())
+  productId               String
+  product                 Product  @relation(fields: [productId], references: [id])
   customer_name           String
   customer_email          String   @unique
   customer_contact_number String
-  created_at     DateTime @default(now())
-  businessId     String
-  business       Business @relation(fields: [businessId], references: [id])
+  created_at              DateTime @default(now())
+  businessId              String
+  business                Business @relation(fields: [businessId], references: [id])
 }

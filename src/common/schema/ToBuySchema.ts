@@ -1,11 +1,16 @@
 import { z } from "zod";
 
 export const CreateToBuySchema = z.object({
-  product_name: z.string(),
-  product_price: z.number(),
-  quantity: z.number(),
-  buy_from: z.string(),
-  businessId: z.string(),
+  product_name: z.string().nonempty(),
+  product_price: z.preprocess((val) => Number(val), z.number().min(1)),
+  quantity: z.preprocess((val) => Number(val), z.number().min(1)),
+  buy_from: z.string().nonempty(),
+  deadline_date: z
+    .string()
+    .transform((val) => new Date(val))
+    .pipe(z.date()),
+  businessId: z.string().nonempty(),
+  categoryId: z.string().nonempty(),
 });
 export type TCreateToBuy = z.infer<typeof CreateToBuySchema>;
 export const UpdateToBuySchema = CreateToBuySchema.partial({
@@ -34,9 +39,15 @@ export const FetchToBuySchema = z.array(
     product_name: z.string(),
     product_price: z.number(),
     quantity: z.number(),
-    buy_from: z.number(),
-    created_at: z.date(),
-    buyerId: z.string(),
+    buy_from: z.string(),
     businessId: z.string(),
+    deadline_date: z
+      .string()
+      .transform((val) => new Date(val))
+      .pipe(z.date()),
+    category: z.object({
+      id: z.string(),
+      category_name: z.string(),
+    }),
   })
 );
