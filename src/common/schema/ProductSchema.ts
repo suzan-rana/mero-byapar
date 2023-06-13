@@ -34,3 +34,28 @@ export const ResponseFetchProductsSchema = z.array(
     }),
   })
 );
+export const ResponseFetchProductItemByProductIdSchema = z.object({
+  id: z.string(),
+  product_name: z.string().min(3),
+  quantity: z.number().min(1),
+  price: z.number().min(1),
+  description: z.string(),
+  categoryId: z.string(),
+  businessId: z.string(),
+  created_at: z.string().datetime(),
+  product_code: z.string(),
+
+  category: z.object({
+    id: z.string(),
+    category_name: z.string(),
+  }),
+  buyer: z.object({
+    id: z.string(),
+    name: z.string(),
+    email: z.string(),
+    role: z.object({
+      role_name: z.string(),
+    }),
+    contact_number: z.number(),
+  }),
+});
