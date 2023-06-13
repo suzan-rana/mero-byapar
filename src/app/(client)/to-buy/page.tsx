@@ -11,9 +11,6 @@ type Props = {};
 
 const ToBuyPage = (props: Props) => {
   const { data, isLoading, isFetching, isError } = useFetchToBuy();
-  if (!data) {
-    return <></>;
-  }
   return (
     <main>
       <PageTitle>Products to Buy</PageTitle>
