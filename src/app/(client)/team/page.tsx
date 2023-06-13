@@ -29,7 +29,7 @@ const EmployeePage = (props: Props) => {
             <TData>{row.role.role_name}</TData>
 
             <TData className="underline text-green-600">
-              <Link href={`/employees/${row.id}`}>View</Link>
+              <Link href={`/team/${row.id}`}>View</Link>
             </TData>
           </TRow>
         ))}

@@ -14,19 +14,34 @@ export async function POST(request: NextRequest) {
       status: 400,
     });
   }
-  const { businessId, categoryId, ...restItems } = parsedBody.data;
+  const {
+    businessId,
+    categoryId,
+    description,
+    price,
+    product_code,
+    product_name,
+    quantity,
+    toBuyId,
+  } = parsedBody.data;
+  console.log("hello", parsedBody.data);
+
   try {
     await prisma.$transaction([
       prisma.product.create({
         data: {
-          ...restItems,
+          description,
+          price,
+          product_code: `${product_name.slice(0,3)}-${Math.random() * 1234}` ,
+          product_name,
+          quantity,
           businessId: businessId,
           categoryId,
         },
       }),
       prisma.toBuy.delete({
         where: {
-          id: restItems.toBuyId,
+          id: toBuyId,
         },
       }),
     ]);

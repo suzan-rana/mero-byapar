@@ -6,10 +6,12 @@ import Link from "next/link";
 import { useAuthContext } from "@/context/hooks";
 import { queryClient } from "./ReactQueryProvider";
 import Cookies from "js-cookie";
+import { usePathname } from "next/navigation";
 
 type Props = {};
 
 const Sidebar = (props: Props) => {
+  const pathName = usePathname();
   const [showSideMenu, setShowSideMenu] = useState(false);
   const toggleSideMenu = () => {
     setShowSideMenu((prev) => !prev);
@@ -28,6 +30,7 @@ const Sidebar = (props: Props) => {
     Cookies.remove("token");
     window.location.href = "/login";
   };
+  console.log(pathName);
 
   return (
     <section
@@ -62,18 +65,21 @@ const Sidebar = (props: Props) => {
         >
           <div className="sm:flex flex-col gap-2">
             {sidebarElements.map((item, index) => (
-              <Link
-                href={item.link}
-                key={index}
-                className="px-3 block font-medium  cursor-pointer min-w-[15rem]  hover:bg-green-300 py-2"
-              >
-                {item.name}
-              </Link>
+              <SidebarElement {...item} isActive={pathName === item.link} />
             ))}
+            {user?.role.role_name === "ADMIN" && (
+              <SidebarElement
+                name="Team"
+                link="/team"
+                isActive={pathName === "/team"}
+              />
+            )}
           </div>
           <p
             onClick={handleLogout}
-            className="px-3 block font-medium  cursor-pointer min-w-[15rem]  hover:bg-green-300 py-2"
+            className={cn(
+              "px-3 block font-medium  cursor-pointer min-w-[15rem]  hover:bg-green-300 py-2"
+            )}
           >
             Log out
           </p>
@@ -84,6 +90,29 @@ const Sidebar = (props: Props) => {
 };
 
 export default Sidebar;
+
+const SidebarElement = ({
+  isActive,
+  link,
+  name,
+}: {
+  name: string;
+  link: string;
+  isActive: boolean;
+}) => {
+  return (
+    <p
+      className={cn(
+        "px-3 block font-medium  cursor-pointer min-w-[15rem]  hover:bg-green-300 py-2",
+        isActive && "bg-green-300"
+      )}
+    >
+      <Link className="block" href={link}>
+        {name}
+      </Link>
+    </p>
+  );
+};
 
 const sidebarElements = [
   {
@@ -106,9 +135,5 @@ const sidebarElements = [
   {
     name: "Sales",
     link: "/sales",
-  },
-  {
-    name: "Employees",
-    link: "/employees",
   },
 ];

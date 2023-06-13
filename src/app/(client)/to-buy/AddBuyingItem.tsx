@@ -9,6 +9,7 @@ import ButtonGroup from "@/components/ui/ButtonGroup";
 import Input from "@/components/ui/Input";
 import Label from "@/components/ui/Label";
 import Select from "@/components/ui/Select";
+import TextArea from "@/components/ui/TextArea";
 import { useAuthContext } from "@/context/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { QueryErrorResetBoundary, useMutation } from "@tanstack/react-query";
@@ -95,6 +96,13 @@ const AddBuyingItem = (props: Props) => {
             type="number"
             placeholder="12"
             {...register("quantity")}
+          />
+        </Label>
+        <Label spanClassName="font-normal" name="Description" >
+          <TextArea
+            error={errors.description}
+            placeholder="Write a description of your product in more than 10 words."
+            {...register("description")}
           />
         </Label>
         <Label spanClassName="font-normal" name="Buy From">

@@ -1,10 +1,11 @@
 import { z } from "zod";
 
 export const CreateToBuySchema = z.object({
-  product_name: z.string().nonempty(),
+  product_name: z.string().nonempty().min(3),
   product_price: z.preprocess((val) => Number(val), z.number().min(1)),
   quantity: z.preprocess((val) => Number(val), z.number().min(1)),
   buy_from: z.string().nonempty(),
+  description: z.string().min(10),
   deadline_date: z
     .string()
     .transform((val) => new Date(val))
@@ -41,6 +42,7 @@ export const FetchToBuySchema = z.array(
     quantity: z.number(),
     buy_from: z.string(),
     businessId: z.string(),
+    description: z.string(),
     deadline_date: z
       .string()
       .transform((val) => new Date(val))
@@ -51,3 +53,29 @@ export const FetchToBuySchema = z.array(
     }),
   })
 );
+export const ResponseFetchToBuyByToBuyIdSchema = z.object({
+  id: z.string(),
+  product_name: z.string(),
+  product_price: z.number(),
+  quantity: z.number(),
+  buy_from: z.string(),
+  deadline_date: z.string(),
+  created_at: z.string(),
+  categoryId: z.string(),
+  buyerId: z.string(),
+  businessId: z.string(),
+  description: z.string(),
+  buyer: z.object({
+    id: z.string(),
+    name: z.string(),
+    email: z.string().email(),
+    contact_number: z.string(),
+    role: z.object({
+      role_name: z.string(),
+    }),
+  }),
+  category: z.object({
+    category_name: z.string(),
+    category_code: z.string(),
+  }),
+});

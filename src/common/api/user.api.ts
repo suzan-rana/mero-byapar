@@ -2,6 +2,7 @@ import {
   CreateNewUserType,
   CreateRootUserType,
   CurrentUserSchema,
+  ResponseFetchUserByUserIdSchema,
   ResponseFetchUserSchema,
   ResponseLoginUserSchema,
   loginUserType,
@@ -28,8 +29,14 @@ export const fetchCurrentUser = async () =>
 export const createNewUser = async (userData: CreateNewUserType) =>
   await axios.post(`/api/users`, userData);
 
-// register the root user and business
+// fetch users 
 export const fetchUsers = async ({ businessId }: { businessId: string }) =>
   await axios
     .get(`/api/users?businessId=${businessId}`)
     .then((res) => ResponseFetchUserSchema.parse(res.data?.data));
+
+// fetch user by userId
+export const fetchUserByUserId = async (userId: string) =>
+  await axios
+    .get(`/api/users/${userId}`)
+    .then((res) => ResponseFetchUserByUserIdSchema.parse(res.data?.data));

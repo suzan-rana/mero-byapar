@@ -66,6 +66,7 @@ export async function POST(request: NextRequest) {
       data: {
         ...rest,
         password: await encryptPassword(rest.password),
+        oneTimePassword: rest.password,
         business: {
           connect: {
             id: businessId,

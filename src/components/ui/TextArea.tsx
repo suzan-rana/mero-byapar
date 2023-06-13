@@ -1,19 +1,25 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import React from "react";
 import { cn } from "@/lib/utils";
+import { FieldError } from "react-hook-form";
 
 const textAreaVariants = cva(
-  "mx-2   text-gray-400 my-6 w-[100%] resize-none border-none bg-transparent outline-none pr-12 pl-2"
+  "ring-offset-background placeholder:text-muted-foreground min-h-[6rem]  w-full rounded-md border  px-3 py-1 sm:px-4 sm:py-2  text-sm sm:text-base file:border-0 file:text-sm file:font-medium focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 rounded-md border  focus:outline-blue-100 ",
 );
 interface TextAreaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
-    VariantProps<typeof textAreaVariants> {}
+    VariantProps<typeof textAreaVariants> {
+  error?: FieldError;
+}
 
 const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
-  ({ className, children, ...restProps }, ref) => {
+  ({ className, error, children, ...restProps }, ref) => {
     return (
       <textarea
-        className={cn(textAreaVariants({ className }))}
+        className={cn(
+          textAreaVariants({ className }),
+          error && "border-[1px] border-red-500 focus:outline-red-500"
+        )}
         {...restProps}
         ref={ref}
       >
@@ -22,5 +28,5 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
     );
   }
 );
-TextArea.displayName = 'TextArea'
+TextArea.displayName = "TextArea";
 export default TextArea;

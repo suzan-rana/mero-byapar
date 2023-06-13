@@ -13,6 +13,8 @@ function isAuth<T>(Component: React.ComponentType<T>) {
       if (!Cookies.get("token")) {
         router.push("/login");
       }
+      
+
     }, [router, isAuthenticated]);
     if (isLoading || isFetching) {
       return <p>Loading...</p>;

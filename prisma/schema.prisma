@@ -17,6 +17,7 @@ model User {
   name           String
   email          String   @unique
   password       String
+  oneTimePassword String?
   contact_number String
   created_at     DateTime @default(now())
   updated_at     DateTime @updatedAt
@@ -84,6 +85,7 @@ model ToBuy {
   quantity      Int
   buy_from      String
   deadline_date DateTime
+  description String
   created_at    DateTime @default(now())
   categoryId    String
   category      Category @relation(fields: [categoryId], references: [id])

@@ -69,6 +69,25 @@ export const ResponseFetchUserSchema = z.array(
     role: UserRoleUnionSchema,
     businessId: z.string(),
     created_at: z.string(),
-    updated_at: z.string()
+    updated_at: z.string(),
   })
 );
+export const ResponseFetchUserByUserIdSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  email: z.string(),
+  contact_number: z.string(),
+  password: z.string(),
+  oneTimePassword: z.string().optional().nullable(),
+  role: z.object({
+    id: z.string(),
+    role_name: z.string(),
+  }),
+  business: z.object({
+    id: z.string(),
+    name: z.string(),
+  }),
+});
+export type TResponseFetchUserByUserId = z.infer<
+  typeof ResponseFetchUserByUserIdSchema
+>;
