@@ -40,7 +40,7 @@ const Table = ({
           <tr>
             {headingArray.map((item, index) => (
               <th
-                className="py-3 sm:py-5  px-3 text-sm sm:text-base font-semibold"
+                className="py-3 sm:py-5 sm:pb-4  px-3 text-sm sm:text-base font-semibold"
                 key={index}
               >
                 {item}
@@ -96,7 +96,7 @@ export const TData = ({ className, ...restProps }: TDataProps) => {
   return (
     <td
       className={cn(
-        "sm:table-cell text-sm sm:text-base py-2 sm:py-4  px-2 text-center min-w-[9rem]",
+        "sm:table-cell text-sm sm:text-base py-2 sm:py-3  px-2 text-center min-w-[9rem]",
         className
       )}
       {...restProps}

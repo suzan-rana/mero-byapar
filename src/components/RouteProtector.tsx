@@ -9,7 +9,7 @@ function isAuth<T>(Component: React.ComponentType<T>) {
   return (props: T) => {
     const router = useRouter();
 
-    const { isAuthenticated, user, isLoading, isFetching } = useAuthContext();
+    const { isAuthenticated } = useAuthContext();
     useEffect(() => {
       if (!Cookies.get("token")) {
         router.push("/login");
@@ -17,9 +17,6 @@ function isAuth<T>(Component: React.ComponentType<T>) {
       
 
     }, [router, isAuthenticated]);
-    if (isLoading || isFetching) {
-      return <p>Loading...</p>;
-    } 
     return (
       <>
         <Component {...props!} />

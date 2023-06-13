@@ -7,6 +7,7 @@ import { useAuthContext } from "@/context/hooks";
 import { queryClient } from "./ReactQueryProvider";
 import Cookies from "js-cookie";
 import { usePathname } from "next/navigation";
+import Skeleton from "react-loading-skeleton";
 
 type Props = {};
 
@@ -16,7 +17,6 @@ const Sidebar = (props: Props) => {
   const toggleSideMenu = () => {
     setShowSideMenu((prev) => !prev);
   };
-  const { user } = useAuthContext();
 
   useEffect(() => {
     const currentWidth = window.innerWidth;
@@ -30,7 +30,6 @@ const Sidebar = (props: Props) => {
     Cookies.remove("token");
     window.location.href = "/login";
   };
-  console.log(pathName);
 
   return (
     <section
@@ -52,9 +51,7 @@ const Sidebar = (props: Props) => {
           "sm:w-auto sm:opacity-100"
         )}
       >
-        <h1 className="hidden sm:block text-center text-2xl mb-6 font-bold text-green-700">
-          {user?.business.name}
-        </h1>
+        <BusinessName />
         <main
           className={cn(
             "opacity-0 justify-between h-[80vh] gap-2 pt-2 sm:opacity-100 sm:flex sm:flex-col transition-all",
@@ -71,21 +68,16 @@ const Sidebar = (props: Props) => {
                 isActive={pathName === item.link}
               />
             ))}
-            {user?.role.role_name === "ADMIN" && (
-              <SidebarElement
-                name="Team"
-                link="/team"
-                isActive={pathName === "/team"}
-              />
-            )}
+            <SidebarTeam />
           </div>
           <p
             onClick={handleLogout}
             className={cn(
-              "px-3 block font-medium  cursor-pointer min-w-[15rem]  hover:bg-green-300 py-2"
+              "px-3 flex gap-4 items-center font-medium  cursor-pointer min-w-[15rem]  hover:bg-green-300 py-2"
             )}
           >
-            Log out
+            {/* {Icons.logout} */}
+            <span>Log out</span>
           </p>
         </main>
       </div>
@@ -99,10 +91,12 @@ const SidebarElement = ({
   isActive,
   link,
   name,
+  // icon,
 }: {
   name: string;
   link: string;
   isActive: boolean;
+  // icon: React.ReactNode;
 }) => {
   return (
     <p
@@ -111,8 +105,9 @@ const SidebarElement = ({
         isActive && "bg-green-300"
       )}
     >
-      <Link className="block w-full h-full" href={link}>
-        {name}
+      <Link className="flex gap-4 items-center w-full h-full" href={link}>
+        {/* {icon} */}
+        <span>{name}</span>
       </Link>
     </p>
   );
@@ -122,22 +117,71 @@ const sidebarElements = [
   {
     name: "Dashboard",
     link: "/",
+    // icon: Icons.home,
   },
   {
     name: "Products",
     link: "/products",
+    // icon: Icons.product,
   },
   {
     name: "To Buy",
     link: "/to-buy",
+    // icon: Icons.toBuy,
   },
   {
     name: "Orders",
     link: "/orders",
+    // icon: Icons.order,
   },
 
   {
     name: "Sales",
     link: "/sales",
+    // icon: Icons.sales,
   },
 ];
+
+import { Raleway } from "next/font/google";
+const font = Raleway({
+  weight: "500",
+  subsets: ["latin"],
+});
+
+const BusinessName = () => {
+  const { user, isLoading, isFetching } = useAuthContext();
+
+  return (
+    <>
+      {isLoading || isFetching ? (
+        <Skeleton className="my-4 h-[1.75rem]" count={1} />
+      ) : (
+        <h1 className={cn("hidden sm:block cursor-pointer text-center text-xl mb-6 italic font-semibold", font.className)}>
+          {user?.business.name}
+        </h1>
+      )}
+    </>
+  );
+};
+
+const SidebarTeam = () => {
+  const { user, isLoading, isFetching } = useAuthContext();
+  const pathName = usePathname();
+
+  if (isLoading || isFetching) {
+    return <Skeleton className="my-4 h-[1.75rem]" count={1} />;
+  }
+
+  return (
+    <>
+      {user?.role.role_name === "ADMIN" && (
+        <SidebarElement
+          name="Team"
+          link="/team"
+          isActive={pathName === "/team"}
+          // icon={Icons.team}
+        />
+      )}
+    </>
+  );
+};
