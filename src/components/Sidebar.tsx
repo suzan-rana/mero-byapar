@@ -65,7 +65,7 @@ const Sidebar = (props: Props) => {
         >
           <div className="sm:flex flex-col gap-2">
             {sidebarElements.map((item, index) => (
-              <SidebarElement {...item} isActive={pathName === item.link} />
+              <SidebarElement key={index} {...item} isActive={pathName === item.link} />
             ))}
             {user?.role.role_name === "ADMIN" && (
               <SidebarElement

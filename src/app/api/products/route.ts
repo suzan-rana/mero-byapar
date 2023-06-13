@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     product_name,
     quantity,
     toBuyId,
-
+    buyerId,
   } = parsedBody.data;
 
   try {
@@ -31,12 +31,12 @@ export async function POST(request: NextRequest) {
         data: {
           description,
           price,
-          product_code: `${product_name.slice(0, 3)}-${Math.random() * 1234}`,
+          product_code: `${product_name.slice(0, 3)}-${Math.ceil(Math.random() * 1234)}`,
           product_name,
           quantity,
           businessId: businessId,
           categoryId,
-          
+          buyerId,
         },
       }),
       prisma.toBuy.delete({
@@ -70,10 +70,18 @@ export async function GET(request: NextRequest) {
     );
   }
   try {
-    const products = prisma.product.findMany({
+    const products = await prisma.product.findMany({
       where: {
         businessId: businessId,
       },
+      include: {
+        buyer: {
+          select: {
+            id: true,
+            name: true
+          }
+        }
+      }
     });
     return NextResponse.json(
       {
