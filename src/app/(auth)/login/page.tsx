@@ -26,13 +26,9 @@ const LoginPage = (props: Props) => {
   const { mutate } = useMutation({
     mutationFn: loginUser,
     onSuccess(data, variables, context) {
-      toast.success(data?.message);
       setIsAuthenticated(true)
       Cookies.set("token", data.token);
       router.push('/home')
-    },
-    onError(error: any, variables, context) {
-      toast.error(error.message)
     },
   });
   const onSubmit = (data: loginUserType) => {

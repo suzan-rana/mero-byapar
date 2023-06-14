@@ -11,7 +11,7 @@ const SkeletonCard = ({ count = 5 }: Props) => {
       {Array(count)
         .fill(1)
         .map((i, j) => (
-          <Skeleton className="h-[2rem]  w-full my-3" />
+          <Skeleton key={j} className="h-[2rem]  w-full my-3" />
         ))}
     </article>
   );
