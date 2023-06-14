@@ -52,7 +52,6 @@ const AddBuyingItem = (props: Props) => {
       }
     });
   };
-  console.log("ERRORS...", errors, ".............DATA..", getValues());
 
   return (
     <section>
@@ -68,6 +67,13 @@ const AddBuyingItem = (props: Props) => {
             error={errors.product_name}
             placeholder="Clinic Plus"
             {...register("product_name")}
+          />
+        </Label>
+        <Label spanClassName="font-normal" name="Product Code">
+          <Input
+            error={errors.product_code}
+            placeholder="SHA-123"
+            {...register("product_code")}
           />
         </Label>
         <Label spanClassName="font-normal" name="Product Price">

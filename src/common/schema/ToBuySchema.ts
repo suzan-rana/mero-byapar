@@ -3,6 +3,7 @@ import { z } from "zod";
 export const CreateToBuySchema = z.object({
   product_name: z.string().nonempty().min(3),
   product_price: z.preprocess((val) => Number(val), z.number().min(1)),
+  product_code: z.string().nonempty().trim().toUpperCase(),
   quantity: z.preprocess((val) => Number(val), z.number().min(1)),
   buy_from: z.string().nonempty(),
   description: z.string().min(10),

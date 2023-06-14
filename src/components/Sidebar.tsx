@@ -65,7 +65,7 @@ const Sidebar = (props: Props) => {
               <SidebarElement
                 key={index}
                 {...item}
-                isActive={pathName === item.link}
+                isActive={pathName.startsWith(item.link)}
               />
             ))}
             <SidebarTeam />
@@ -122,7 +122,7 @@ const SidebarElement = ({
 const sidebarElements = [
   {
     name: "Dashboard",
-    link: "/",
+    link: "/home",
     // icon: Icons.home,
   },
   {
@@ -189,7 +189,7 @@ const SidebarTeam = () => {
         <SidebarElement
           name="Team"
           link="/team"
-          isActive={pathName === "/team"}
+          isActive={pathName.startsWith('/team')}
           // icon={Icons.team}
         />
       )}

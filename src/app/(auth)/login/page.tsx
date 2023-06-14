@@ -20,7 +20,7 @@ const LoginPage = (props: Props) => {
   const { setIsAuthenticated } = useAuthContext();
 
   const router = useRouter()
-  const { register, handleSubmit, formState } = useForm<loginUserType>({
+  const { register, handleSubmit, formState: { errors} } = useForm<loginUserType>({
     resolver: zodResolver(LoginUserSchema),
   });
   const { mutate } = useMutation({
@@ -29,7 +29,7 @@ const LoginPage = (props: Props) => {
       toast.success(data?.message);
       setIsAuthenticated(true)
       Cookies.set("token", data.token);
-      router.push('/')
+      router.push('/home')
     },
     onError(error: any, variables, context) {
       toast.error(error.message)
@@ -45,11 +45,11 @@ const LoginPage = (props: Props) => {
         MeroByapar Login
       </h1>{" "}
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
-        <Label name="Username">
-          <Input placeholder="suzan-rana" {...register("email")} />
+        <Label name="Email">
+          <Input error={errors.email} placeholder="dev.suzanrana@gmail.com" {...register("email")} />
         </Label>
         <Label name="Password">
-          <Input {...register("password")} placeholder="********" />
+          <Input error={errors.password} {...register("password")} placeholder="********" />
         </Label>
         <ButtonGroup>
           <Button type="submit" variant={"primary"}>
