@@ -35,6 +35,7 @@ const UserPage = (props: Props) => {
             <RevealPassword
               password={data.password}
               className="break-all"
+              oneTimePassword={data.oneTimePassword!}
             ></RevealPassword>
             <ButtonGroup className="flex-row w-[100%]  mt-6 gap-6 ">
               <Button variant={"outline"} className="grow">

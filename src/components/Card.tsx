@@ -40,9 +40,11 @@ export const CardText = ({
 export const RevealPassword = ({
   password,
   className,
+  oneTimePassword
 }: {
   password: string;
   className?: string;
+  oneTimePassword: string;
 }) => {
   return (
     <>
@@ -55,7 +57,7 @@ export const RevealPassword = ({
       >
         {password}
         <div className="invisible absolute cursor-move top-[-2.5rem] right-0 bg-green-300 rounded-lg px-3 py-2 group-hover:visible">
-          <span>Password:</span> <span>HelloWorld123@</span>
+          <span>OneTimePassword:</span> <span>{oneTimePassword}</span>
         </div>
       </article>
       <p className="sm:hidden text-green-800 italic py-2">
