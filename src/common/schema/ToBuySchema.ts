@@ -19,13 +19,17 @@ export const UpdateToBuySchema = CreateToBuySchema.partial({
   product_name: true,
   product_price: true,
   quantity: true,
+  buy_from: true,
+  description: true,
 })
-  .extend({
-    toBuyId: z.string(),
-  })
   .omit({
     businessId: true,
-    buy_from: true,
+    product_code: true,
+    categoryId: true,
+    deadline_date: true
+  })
+  .extend({
+    toBuyId: z.string(),
   });
 export type TUpdateToBuy = z.infer<typeof UpdateToBuySchema>;
 

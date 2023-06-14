@@ -151,44 +151,4 @@ export async function PATCH(request: NextRequest) {
   }
 }
 
-export async function DELETE(request: NextRequest) {
-  let decoded;
-  try {
-    decoded = validateUser(request);
-  } catch (error) {
-    return NextResponse.json(
-      {
-        message: "Unauthorized",
-        error: error,
-      },
-      {
-        status: 401,
-      }
-    );
-  }
-  const body = await request.json();
-  const parsedBody = DeleteToBuySchema.safeParse(body);
-  if (!parsedBody.success) {
-    return NextResponse.json(parsedBody.error, {
-      status: 400,
-    });
-  }
-  const { toBuyId } = parsedBody.data;
-  try {
-    await prisma.toBuy.delete({
-      where: {
-        id: toBuyId,
-      },
-    });
-    return NextResponse.json(
-      {
-        message: "ToBuy deleted successfully.",
-      },
-      {
-        status: 201,
-      }
-    );
-  } catch (error) {
-    return prismaErrorHandler(error);
-  }
-}
+

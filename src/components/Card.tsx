@@ -6,11 +6,17 @@ import SkeletonCard from "./ui/Skeleton/SkeletonCard";
 interface CardProps {
   children: React.ReactNode;
   isLoading: boolean;
+  className?: string;
 }
 
-const Card = ({ children, isLoading }: CardProps) => {
+const Card = ({ children, isLoading, className }: CardProps) => {
   return (
-    <article className="border sm:w-[50%] mt-8 px-4 py-4 border-gray-200 rounded-md bg-gray-200 transition-colors  hover:border-green-500">
+    <article
+      className={cn(
+        "border sm:w-[50%] mt-8 px-4 py-4 border-gray-200 rounded-md bg-gray-200 transition-colors  hover:border-green-500",
+        className
+      )}
+    >
       {isLoading ? <SkeletonCard /> : children}
     </article>
   );
@@ -40,7 +46,7 @@ export const CardText = ({
 export const RevealPassword = ({
   password,
   className,
-  oneTimePassword
+  oneTimePassword,
 }: {
   password: string;
   className?: string;

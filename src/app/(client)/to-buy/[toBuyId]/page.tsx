@@ -7,6 +7,8 @@ import ButtonGroup from "@/components/ui/ButtonGroup";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import React from "react";
+import EditToBuyItem from "./EditToBuyItem";
+import useDeleteToBuy from "@/common/data-fetching-hooks/to-buy/useDeleteToBuy";
 
 type Props = {};
 
@@ -15,6 +17,7 @@ const ToBuyItemPage = (props: Props) => {
   const { data, isLoading, isFetching, productDetails } =
     useFetchToBuyByToBuyId(params.toBuyId);
   const { handleMarkAsBought } = useCreateProduct(productDetails!);
+  const { handleDelete, isLoading: isDeleting} = useDeleteToBuy(params.toBuyId)
   return (
     <div>
       <Card isLoading={isFetching || isLoading}>
@@ -69,6 +72,24 @@ const ToBuyItemPage = (props: Props) => {
             </ButtonGroup>
           </>
         )}
+      </Card>
+      {productDetails && data && (
+        <EditToBuyItem {...productDetails} buy_from={data?.buy_from} />
+      )}
+      <Card className=" hover:border-red-500" isLoading={isDeleting || isFetching || isLoading}>
+        <CardTitle className="text-red-500" title={"Delete this To buy item"} />
+        <CardText className="text-red-600"
+          text={`Deleting this item will mean you will never gain the access back.`}
+        />
+        <ButtonGroup className="flex-row w-[100%]  mt-6 gap-6 ">
+          <Button
+            variant={"primary"}
+            onClick={handleDelete}
+            className="grow bg-red-400 text-white hover:bg-red-300"
+          >
+            Delete
+          </Button>
+        </ButtonGroup>
       </Card>
     </div>
   );

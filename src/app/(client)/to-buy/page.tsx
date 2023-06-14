@@ -15,6 +15,7 @@ const ToBuyPage = (props: Props) => {
   const { data, isLoading, isFetching, isError, totalItems, totalPages } =
     useFetchToBuy(paginationProps.currentPage, 10);
 
+  
   return (
     <main>
       <PageTitle>Products to Buy</PageTitle>
@@ -50,9 +51,9 @@ const ToBuyPage = (props: Props) => {
           "Actions",
         ]}
       />
-      {totalPages && (
+      {(data && totalItems && totalPages) ? (
         <Pagination {...paginationProps} totalPages={totalPages} />
-      )}
+      ): null}
       <AddBuyingItem />
     </main>
   );

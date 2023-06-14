@@ -12,9 +12,7 @@ import Select from "@/components/ui/Select";
 import TextArea from "@/components/ui/TextArea";
 import { useAuthContext } from "@/context/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { QueryErrorResetBoundary, useMutation } from "@tanstack/react-query";
-import { error } from "console";
-import Link from "next/link";
+import { useMutation } from "@tanstack/react-query";
 import React from "react";
 import { useForm } from "react-hook-form";
 
@@ -74,6 +72,7 @@ const AddBuyingItem = (props: Props) => {
             error={errors.product_code}
             placeholder="SHA-123"
             {...register("product_code")}
+            className="uppercase"
           />
         </Label>
         <Label spanClassName="font-normal" name="Product Price">

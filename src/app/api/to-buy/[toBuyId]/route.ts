@@ -1,4 +1,5 @@
 import prismaErrorHandler from "@/common/error";
+import { validateUser } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -38,6 +39,43 @@ export async function GET(
       message: "ToBuy Item found",
       data: toBuyItem,
     });
+  } catch (error) {
+    return prismaErrorHandler(error);
+  }
+}
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { toBuyId: string } }
+) {
+  let decoded;
+  try {
+    decoded = validateUser(request);
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: "Unauthorized",
+        error: error,
+      },
+      {
+        status: 401,
+      }
+    );
+  }
+  try {
+    const { toBuyId } = params;
+    await prisma.toBuy.delete({
+      where: {
+        id: toBuyId,
+      },
+    });
+    return NextResponse.json(
+      {
+        message: "ToBuy deleted successfully.",
+      },
+      {
+        status: 201,
+      }
+    );
   } catch (error) {
     return prismaErrorHandler(error);
   }

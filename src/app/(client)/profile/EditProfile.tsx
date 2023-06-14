@@ -2,8 +2,6 @@ import PageSubtitle from "@/components/PageSubtitle";
 import Button from "@/components/ui/Button";
 import ButtonGroup from "@/components/ui/ButtonGroup";
 import Label from "@/components/ui/Label";
-import Select from "@/components/ui/Select";
-import { errors } from "jose";
 import React from "react";
 import Input from "@/components/ui/Input";
 import { useAuthContext } from "@/context/hooks";
