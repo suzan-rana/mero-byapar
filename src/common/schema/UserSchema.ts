@@ -91,3 +91,14 @@ export const ResponseFetchUserByUserIdSchema = z.object({
 export type TResponseFetchUserByUserId = z.infer<
   typeof ResponseFetchUserByUserIdSchema
 >;
+export const ResetPasswordSchema = z.object({
+  old_password: z.string(),
+  new_password: z.string(),
+});
+export type TResetPassword = z.infer<typeof ResetPasswordSchema>
+
+export const UpdateProfileSchema = z.object({
+  name: z.string(),
+  contact_number: z.string()
+})
+export type TUpdateProfile = z.infer<typeof UpdateProfileSchema>
