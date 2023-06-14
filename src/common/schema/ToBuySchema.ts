@@ -67,6 +67,7 @@ export const ResponseFetchToBuyByToBuyIdSchema = z.object({
   id: z.string(),
   product_name: z.string(),
   product_price: z.number(),
+  product_code: z.string().toUpperCase(),
   quantity: z.number(),
   buy_from: z.string(),
   deadline_date: z.string(),

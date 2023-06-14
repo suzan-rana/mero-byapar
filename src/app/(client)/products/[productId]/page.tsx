@@ -21,14 +21,24 @@ const ProductItemPage = (props: Props) => {
           <>
             <div className="flex justify-between items-start sm:items-center">
               <CardTitle title={data?.product_name} />
-              <CardText
-                text={data.category.category_name}
-                className="bg-green-300 inline-block px-2   rounded-md text-gray-800 lowercase"
-              ></CardText>
+              <div className="flex gap-3">
+                <CardText
+                  text={`${data.product_code}`}
+                  className="inline-block border border-green-600 cursor-pointer text-green-700 px-2   rounded-md uppercase"
+                ></CardText>
+                <CardText
+                  text={data.category.category_name}
+                  className="bg-green-300 inline-block px-2   rounded-md text-gray-800 lowercase"
+                ></CardText>
+              </div>
             </div>
             <CardText text={`Price per item: ${data?.price}`} />
             <CardText text={`Quantity: ${data?.quantity}`} />
-            <CardText text={`Bought at: ${new Date(data?.created_at).toLocaleDateString()}`} />
+            <CardText
+              text={`Bought at: ${new Date(
+                data?.created_at
+              ).toLocaleDateString()}`}
+            />
             <CardText text={data.description} />
 
             <section className="my-4 px-4 py-3 border bg-green-300 rounded-lg">
@@ -53,17 +63,17 @@ const ProductItemPage = (props: Props) => {
               />
             </section>
             <ButtonGroup className="flex-row w-[100%]  mt-6 gap-6 ">
-              <Button variant={"primary"} >
+              <Button variant={"primary"}>
                 <Link href={"/products"} className="w-full h-full block">
                   Back
                 </Link>
               </Button>
-              
             </ButtonGroup>
           </>
         )}
       </Card>
     </div>
-  );};
+  );
+};
 
 export default ProductItemPage;

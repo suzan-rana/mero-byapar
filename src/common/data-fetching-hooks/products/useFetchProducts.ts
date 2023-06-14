@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAuthContext } from "@/context/hooks";
-import { fetchAllProducts } from "@/common/api/product.api";
+import { fetchAllProductsWithPagination } from "@/common/api/product.api";
 
 const useFetchProducts = (page: number, limit: number) => {
   const { user } = useAuthContext();
@@ -13,7 +13,7 @@ const useFetchProducts = (page: number, limit: number) => {
     error,
   } = useQuery({
     queryKey: ["fetch-products", user?.business.id, page, limit],
-    queryFn: () => fetchAllProducts(user?.business.id!, page, limit),
+    queryFn: () => fetchAllProductsWithPagination(user?.business.id!, page, limit),
   });
   return {
     data: response?.data,

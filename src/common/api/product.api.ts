@@ -1,5 +1,6 @@
 import {
   CreateProductType,
+  ResponseFetchAllProducts,
   ResponseFetchProductItemByProductIdSchema,
   ResponseFetchProductsSchema,
 } from "../schema/ProductSchema";
@@ -9,9 +10,21 @@ export const createNewProduct = async (productDetails: CreateProductType) => {
   return await axios.post("/api/products", productDetails);
 };
 
-export const fetchAllProducts = async (businessId: string, page: number = 1, limit: number = 10) => {
+export const fetchAllProducts = async (businessId: string) => {
   return await axios
-    .get("/api/products" + `?businessId=${businessId}&page=${page}&limit=${limit}`)
+    .get("/api/products/all" + `?businessId=${businessId}`)
+    .then((res) => ResponseFetchAllProducts.parse(res.data?.data));
+};
+
+export const fetchAllProductsWithPagination = async (
+  businessId: string,
+  page: number = 1,
+  limit: number = 10
+) => {
+  return await axios
+    .get(
+      "/api/products" + `?businessId=${businessId}&page=${page}&limit=${limit}`
+    )
     .then((res) => ResponseFetchProductsSchema.parse(res.data));
 };
 

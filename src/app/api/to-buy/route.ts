@@ -85,13 +85,48 @@ export async function POST(request: NextRequest) {
       status: 400,
     });
   }
+  const {
+    businessId,
+    buy_from,
+    categoryId,
+    deadline_date,
+    description,
+    product_code,
+    product_name,
+    product_price,
+    quantity,
+  } = parsedBody.data;
+  const existingToBuyItem = await prisma.toBuy.findFirstOrThrow({
+    where: {
+      product_code: parsedBody.data.product_code,
+      businessId: parsedBody.data.businessId,
+    },
+  });
   try {
-    console.log("PARSED BODY", parsedBody);
-    await prisma.toBuy.create({
-      data: {
-        ...parsedBody.data,
+    await prisma.toBuy.upsert({
+      create: {
+        businessId,
+        buy_from,
+        categoryId,
+        deadline_date,
+        description,
+        product_code,
+        product_name,
+        product_price,
+        quantity,
         buyerId: decoded?.id,
-        deadline_date: parsedBody.data.deadline_date,
+      },
+      where: {
+        id: existingToBuyItem.id,
+      },
+      update: {
+        quantity: +quantity + +existingToBuyItem.quantity,
+        product_name,
+        product_price,
+        description,
+        deadline_date,
+        buy_from,
+        categoryId,
       },
     });
     return NextResponse.json(
@@ -150,5 +185,3 @@ export async function PATCH(request: NextRequest) {
     return prismaErrorHandler(error);
   }
 }
-
-

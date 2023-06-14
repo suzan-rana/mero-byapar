@@ -17,7 +17,9 @@ const ToBuyItemPage = (props: Props) => {
   const { data, isLoading, isFetching, productDetails } =
     useFetchToBuyByToBuyId(params.toBuyId);
   const { handleMarkAsBought } = useCreateProduct(productDetails!);
-  const { handleDelete, isLoading: isDeleting} = useDeleteToBuy(params.toBuyId)
+  const { handleDelete, isLoading: isDeleting } = useDeleteToBuy(
+    params.toBuyId
+  );
   return (
     <div>
       <Card isLoading={isFetching || isLoading}>
@@ -25,10 +27,16 @@ const ToBuyItemPage = (props: Props) => {
           <>
             <div className="flex justify-between items-start sm:items-center">
               <CardTitle title={data?.product_name} />
-              <CardText
-                text={data.category.category_name}
-                className="bg-green-300 inline-block px-2   rounded-md text-gray-800 lowercase"
-              ></CardText>
+              <div className="flex gap-3">
+                <CardText
+                  text={`${data.product_code}`}
+                  className="inline-block border border-green-600 cursor-pointer text-green-700 px-2   rounded-md uppercase"
+                ></CardText>
+                <CardText
+                  text={data.category.category_name}
+                  className="bg-green-300 inline-block px-2   rounded-md text-gray-800 lowercase"
+                ></CardText>
+              </div>
             </div>
             <CardText text={`Price per item: ${data?.product_price}`} />
             <CardText text={`Quantity: ${data?.quantity}`} />
@@ -76,9 +84,13 @@ const ToBuyItemPage = (props: Props) => {
       {productDetails && data && (
         <EditToBuyItem {...productDetails} buy_from={data?.buy_from} />
       )}
-      <Card className=" hover:border-red-500" isLoading={isDeleting || isFetching || isLoading}>
+      <Card
+        className=" hover:border-red-500"
+        isLoading={isDeleting || isFetching || isLoading}
+      >
         <CardTitle className="text-red-500" title={"Delete this To buy item"} />
-        <CardText className="text-red-600"
+        <CardText
+          className="text-red-600"
           text={`Deleting this item will mean you will never gain the access back.`}
         />
         <ButtonGroup className="flex-row w-[100%]  mt-6 gap-6 ">

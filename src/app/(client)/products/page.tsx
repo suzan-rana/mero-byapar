@@ -40,7 +40,7 @@ const ProductsPage = (props: Props) => {
           <TRow key={row.id}>
             <TData>{index + 1}</TData>
             <TData>{row.product_name}</TData>
-            <TData>{row.product_code}</TData>
+            <TData className="uppercase">{row.product_code}</TData>
 
             <TData>{row.quantity}</TData>
 
