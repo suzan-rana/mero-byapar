@@ -35,25 +35,30 @@ export const DeleteToBuySchema = z.object({
 export type TDeleteToBuy = z.infer<typeof DeleteToBuySchema>;
 
 // response from get to buy
-export const FetchToBuySchema = z.array(
-  z.object({
-    id: z.string(),
-    product_name: z.string(),
-    product_price: z.number(),
-    quantity: z.number(),
-    buy_from: z.string(),
-    businessId: z.string(),
-    description: z.string(),
-    deadline_date: z
-      .string()
-      .transform((val) => new Date(val))
-      .pipe(z.date()),
-    category: z.object({
+export const FetchToBuySchema = z.object({
+  data: z.array(
+    z.object({
       id: z.string(),
-      category_name: z.string(),
-    }),
-  })
-);
+      product_name: z.string(),
+      product_price: z.number(),
+      quantity: z.number(),
+      buy_from: z.string(),
+      businessId: z.string(),
+      description: z.string(),
+      deadline_date: z
+        .string()
+        .transform((val) => new Date(val))
+        .pipe(z.date()),
+      category: z.object({
+        id: z.string(),
+        category_name: z.string(),
+      }),
+    })
+  ),
+  message: z.string(),
+  totalPages: z.number(),
+  totalItems: z.number(),
+});
 export const ResponseFetchToBuyByToBuyIdSchema = z.object({
   id: z.string(),
   product_name: z.string(),

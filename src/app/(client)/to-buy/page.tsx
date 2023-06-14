@@ -6,11 +6,15 @@ import React from "react";
 import AddBuyingItem from "./AddBuyingItem";
 import useFetchToBuy from "@/common/data-fetching-hooks/to-buy/useFetchToBuy";
 import Link from "next/link";
+import Pagination, { usePagination } from "@/components/ui/Pagination";
 
 type Props = {};
 
 const ToBuyPage = (props: Props) => {
-  const { data, isLoading, isFetching, isError } = useFetchToBuy();
+  const paginationProps = usePagination();
+  const { data, isLoading, isFetching, isError, totalItems, totalPages } =
+    useFetchToBuy(paginationProps.currentPage, 10);
+
   return (
     <main>
       <PageTitle>Products to Buy</PageTitle>
@@ -46,6 +50,9 @@ const ToBuyPage = (props: Props) => {
           "Actions",
         ]}
       />
+      {totalPages && (
+        <Pagination {...paginationProps} totalPages={totalPages} />
+      )}
       <AddBuyingItem />
     </main>
   );

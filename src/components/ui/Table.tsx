@@ -34,8 +34,8 @@ const Table = ({
   }
 
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full px-5 border-collapse border  bg-gray-200 rounded-md my-8 border-gray-300">
+    <div className="overflow-x-auto ">
+      <table className="w-full px-5 border-collapse border   bg-gray-200 rounded-md mt-8 border-gray-300">
         <thead>
           <tr>
             {headingArray.map((item, index) => (
@@ -50,7 +50,12 @@ const Table = ({
         </thead>
         <tbody className="mx-5 overflow-x-scroll">
           {renderCustomBody ? (
-            customBody
+            <>
+              {customBody}
+              <TRow>
+                <TData>&nbsp;</TData>
+              </TRow>
+            </>
           ) : (
             <>
               {bodyArray?.map((row, idx) => (

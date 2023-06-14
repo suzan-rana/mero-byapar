@@ -17,23 +17,28 @@ export const GetProductSchema = z.object({
 });
 export type TGetProduct = z.infer<typeof GetProductSchema>;
 
-export const ResponseFetchProductsSchema = z.array(
-  z.object({
-    id: z.string(),
-    product_name: z.string().min(3),
-    quantity: z.number().min(1),
-    price: z.number().min(1),
-    description: z.string(),
-    categoryId: z.string(),
-    businessId: z.string(),
-    created_at: z.string().datetime(),
-    product_code: z.string(),
-    buyer: z.object({
+export const ResponseFetchProductsSchema = z.object({
+  totalPages: z.number(),
+  totalItems: z.number(),
+  data: z.array(
+    z.object({
       id: z.string(),
-      name: z.string(),
-    }),
-  })
-);
+      product_name: z.string().min(3),
+      quantity: z.number().min(1),
+      price: z.number().min(1),
+      description: z.string(),
+      categoryId: z.string(),
+      businessId: z.string(),
+      created_at: z.string().datetime(),
+      product_code: z.string(),
+      buyer: z.object({
+        id: z.string(),
+        name: z.string(),
+      }),
+    })
+  ),
+  message: z.string(),
+});
 export const ResponseFetchProductItemByProductIdSchema = z.object({
   id: z.string(),
   product_name: z.string().min(3),

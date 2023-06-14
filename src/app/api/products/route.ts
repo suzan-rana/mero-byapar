@@ -59,6 +59,8 @@ export async function POST(request: NextRequest) {
 }
 export async function GET(request: NextRequest) {
   const businessId = request.nextUrl.searchParams.get("businessId");
+  const page = +request.nextUrl.searchParams.get("page")! || 1;
+  const limit = +request.nextUrl.searchParams.get("limit")! || 10;
   if (!businessId) {
     return NextResponse.json(
       {
@@ -74,6 +76,11 @@ export async function GET(request: NextRequest) {
       where: {
         businessId: businessId,
       },
+      take: limit,
+      skip: (page - 1) * limit,
+      orderBy: {
+        created_at: "desc",
+      },
       include: {
         buyer: {
           select: {
@@ -83,9 +90,16 @@ export async function GET(request: NextRequest) {
         }
       }
     });
+    const totalItems = await prisma.product.count({
+      where: {
+        businessId,
+      },
+    });
     return NextResponse.json(
       {
         data: products,
+        totalPages: Math.ceil(totalItems / limit),
+        totalItems,
         message: "Products retrieved successfully.",
       },
       { status: 200 }

@@ -60,18 +60,23 @@ export const ResponseLoginUserSchema = z.object({
   message: z.string(),
 });
 
-export const ResponseFetchUserSchema = z.array(
-  z.object({
-    id: z.string(),
-    name: z.string(),
-    email: z.string(),
-    contact_number: z.string(),
-    role: UserRoleUnionSchema,
-    businessId: z.string(),
-    created_at: z.string(),
-    updated_at: z.string(),
-  })
-);
+export const ResponseFetchUserSchema = z.object({
+  data: z.array(
+    z.object({
+      id: z.string(),
+      name: z.string(),
+      email: z.string(),
+      contact_number: z.string(),
+      role: UserRoleUnionSchema,
+      businessId: z.string(),
+      created_at: z.string(),
+      updated_at: z.string(),
+    })
+  ),
+  message: z.string(),
+  totalPages: z.number(),
+  totalItems: z.number()
+});
 export const ResponseFetchUserByUserIdSchema = z.object({
   id: z.string(),
   name: z.string(),

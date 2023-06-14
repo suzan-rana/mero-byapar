@@ -10,6 +10,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   const businessId = request.nextUrl.searchParams.get("businessId");
+  const page = +request.nextUrl.searchParams.get("page")! || 1;
+  const limit = +request.nextUrl.searchParams.get("limit")! || 10;
+
   if (!businessId) {
     return NextResponse.json(
       {
@@ -25,6 +28,11 @@ export async function GET(request: NextRequest) {
       where: {
         businessId,
       },
+      take: limit,
+      skip: (page - 1) * limit,
+      orderBy: {
+        created_at: "desc",
+      },
       include: {
         category: {
           select: {
@@ -34,10 +42,17 @@ export async function GET(request: NextRequest) {
         },
       },
     });
+    const totalItems = await prisma.toBuy.count({
+      where: {
+        businessId,
+      },
+    });
     return NextResponse.json(
       {
         message: "ToBuy retrieved successfully.",
         data: toBuyItems,
+        totalPages: Math.ceil(totalItems / limit),
+        totalItems,
       },
       {
         status: 200,
@@ -71,7 +86,7 @@ export async function POST(request: NextRequest) {
     });
   }
   try {
-    console.log('PARSED BODY', parsedBody)
+    console.log("PARSED BODY", parsedBody);
     await prisma.toBuy.create({
       data: {
         ...parsedBody.data,

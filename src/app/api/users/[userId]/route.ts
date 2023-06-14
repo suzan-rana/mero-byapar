@@ -23,6 +23,7 @@ export async function GET(
         email: true,
         name: true,
         contact_number: true,
+        oneTimePassword: true,
         password: true,
         role: {
           select: {

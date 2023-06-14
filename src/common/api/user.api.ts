@@ -32,10 +32,10 @@ export const createNewUser = async (userData: CreateNewUserType) =>
   await axios.post(`/api/users`, userData);
 
 // fetch users
-export const fetchUsers = async ({ businessId }: { businessId: string }) =>
+export const fetchUsers = async ({ businessId, page, limit }: { businessId: string, page: number, limit: number }) =>
   await axios
-    .get(`/api/users?businessId=${businessId}`)
-    .then((res) => ResponseFetchUserSchema.parse(res.data?.data));
+    .get(`/api/users?businessId=${businessId}&page=${page}&limit=${limit}`)
+    .then((res) => ResponseFetchUserSchema.parse(res.data));
 
 // fetch user by userId
 export const fetchUserByUserId = async (userId: string) =>

@@ -6,11 +6,16 @@ import React from "react";
 import AddEmployees from "./AddEmployees";
 import useFetchUsers from "@/common/data-fetching-hooks/users/useFetchUsers";
 import Link from "next/link";
+import Pagination, { usePagination } from "@/components/ui/Pagination";
 
 type Props = {};
 
 const EmployeePage = (props: Props) => {
-  const { data, isLoading, isFetching, isError } = useFetchUsers();
+  const paginationProps = usePagination();
+  const { data, isLoading, isFetching, isError, totalPages } = useFetchUsers(
+    paginationProps.currentPage,
+    10
+  );
   return (
     <main>
       <PageTitle>Team Members</PageTitle>
@@ -46,6 +51,9 @@ const EmployeePage = (props: Props) => {
           "Actions",
         ]}
       />
+      {totalPages && (
+        <Pagination {...paginationProps} totalPages={totalPages! || 1} />
+      )}
       <AddEmployees />
     </main>
   );

@@ -2,13 +2,19 @@ import { useQuery } from "@tanstack/react-query";
 import { useAuthContext } from "@/context/hooks";
 import { fetchToBuy } from "@/common/api/to-buy.api";
 
-const useFetchToBuy = () => {
+const useFetchToBuy = (page: number, limit: number) => {
   const { user } = useAuthContext();
 
-  const { data, isLoading, isFetching, isError } = useQuery({
-    queryKey: ["fetch-to-buy", user?.business.id],
-    queryFn: () => fetchToBuy({ businessId: user?.business.id! }),
+  const {
+    data: response,
+    isLoading,
+    isFetching,
+    isError,
+  } = useQuery({
+    queryKey: ["fetch-to-buy", user?.business.id, page, limit],
+    queryFn: () =>
+      fetchToBuy({ businessId: user?.business.id!, page, limit}),
   });
-  return { data, isLoading, isFetching, isError };
+  return { data: response?.data, totalItems: response?.totalItems, totalPages: response?.totalPages, isLoading, isFetching, isError };
 };
 export default useFetchToBuy;

@@ -7,11 +7,16 @@ import Categories from "./categories";
 import PageTitle from "@/components/PageTitle";
 import useFetchProducts from "@/common/data-fetching-hooks/products/useFetchProducts";
 import Skeleton from "react-loading-skeleton";
+import Pagination, { usePagination } from "@/components/ui/Pagination";
 
 type Props = {};
 
 const ProductsPage = (props: Props) => {
-  const { data, isLoading, isFetching, isError } = useFetchProducts();
+  const paginationProps = usePagination();
+  const { data, isLoading, isFetching, isError, totalPages } = useFetchProducts(
+    paginationProps.currentPage,
+    10
+  );
 
   return (
     <main>
@@ -52,6 +57,9 @@ const ProductsPage = (props: Props) => {
           </TRow>
         ))}
       />
+      {totalPages && (
+        <Pagination {...paginationProps} totalPages={totalPages} />
+      )}
       <Categories />
     </main>
   );

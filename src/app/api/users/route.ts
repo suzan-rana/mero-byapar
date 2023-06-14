@@ -10,6 +10,9 @@ import { encryptPassword } from "@/lib/bcrypt";
 import prismaErrorHandler from "@/common/error";
 export async function GET(request: NextRequest) {
   const businessId = request.nextUrl.searchParams.get("businessId");
+  const page = +request.nextUrl.searchParams.get("page")! || 1;
+  const limit = +request.nextUrl.searchParams.get("limit")! || 10;
+
   if (!businessId) {
     return NextResponse.json(
       {
@@ -25,6 +28,11 @@ export async function GET(request: NextRequest) {
     where: {
       businessId,
     },
+    take: limit,
+    skip: (page - 1) * limit,
+    orderBy: {
+      created_at: "desc",
+    },
     include: {
       role: {
         select: {
@@ -33,11 +41,16 @@ export async function GET(request: NextRequest) {
       },
     },
   });
-  console.log("USER", user);
-  return NextResponse.json(
+  const totalItems = await prisma.user.count({
+    where: {
+      businessId,
+    },
+  });  return NextResponse.json(
     {
       message: "User  retreived successfully.",
       data: user,
+      totalPages: Math.ceil(totalItems / limit),
+      totalItems,
     },
     {
       status: 200,
