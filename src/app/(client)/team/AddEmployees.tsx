@@ -63,21 +63,21 @@ const AddEmployees = (props: Props) => {
         onSubmit={handleSubmit(onSubmit)}
         className="sm:w-[50%] grid grid-cols-1  gap-y-8 my-8"
       >
-        <Label spanClassName="font-normal" name="Name">
+        <Label   error={errors.name} spanClassName="font-normal" name="Name">
           <Input
             error={errors.name}
             placeholder="Suzan Rana"
             {...register("name")}
           />
         </Label>
-        <Label spanClassName="font-normal" name="Email">
+        <Label   error={errors.email} spanClassName="font-normal" name="Email">
           <Input
             error={errors.email}
             placeholder="dev.suzanrana@gmail.com"
             {...register("email")}
           />
         </Label>
-        <Label spanClassName="font-normal" name="Password">
+        <Label error={errors.password} spanClassName="font-normal" name="Password">
           <PasswordInputElement
             error={errors.password}
             type="password"
@@ -85,7 +85,7 @@ const AddEmployees = (props: Props) => {
             {...register("password")}
           />
         </Label>
-        <Label spanClassName="font-normal" name="Contact">
+        <Label  error={errors.contact_number} spanClassName="font-normal" name="Contact">
           <Input
             error={errors.contact_number}
             type="number"
@@ -94,7 +94,7 @@ const AddEmployees = (props: Props) => {
           />
         </Label>
 
-        <Label spanClassName="font-normal" name="Position">
+        <Label error={errors.role_name}  spanClassName="font-normal" name="Position">
           <Select error={errors.role_name} {...register("role_name")}>
             <option>Select role</option>
             <option value={"ADMIN"}>Admin</option>

@@ -68,14 +68,16 @@ const CategoryPage = (props: Props) => {
         onSubmit={handleSubmit(onSubmit)}
         className="sm:w-[50%] grid grid-cols-1  gap-y-8 my-8"
       >
-        <Label spanClassName="font-normal" name="Category Name">
+        <Label           error={errors.category_name}
+ spanClassName="font-normal" name="Category Name">
           <Input
+          error={errors.category_name}
             placeholder="Science and Technology"
             {...register("category_name")}
           />
         </Label>
-        <Label spanClassName="font-normal" name="Category Code">
-          <Input
+        <Label error={errors.category_code} spanClassName="font-normal" name="Category Code">
+          <Input error={errors.category_code}
             placeholder="UQ123"
             className="uppercase"
             {...register("category_code")}

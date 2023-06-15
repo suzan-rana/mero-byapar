@@ -43,10 +43,10 @@ const LoginPage = (props: Props) => {
         MeroByapar Login
       </h1>{" "}
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
-        <Label name="Email">
+        <Label error={errors.email} name="Email">
           <Input error={errors.email} placeholder="dev.suzanrana@gmail.com" {...register("email")} />
         </Label>
-        <Label name="Password">
+        <Label error={errors.password} name="Password">
           <PasswordInputElement error={errors.password} {...register("password")} placeholder="********" />
         </Label>
         <ButtonGroup>

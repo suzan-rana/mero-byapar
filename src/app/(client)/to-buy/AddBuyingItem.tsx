@@ -67,14 +67,14 @@ const AddBuyingItem = (props: Props) => {
         onSubmit={handleSubmit(onSubmit)}
         className="sm:w-[50%] grid grid-cols-1  gap-y-8 my-8"
       >
-        <Label spanClassName="font-normal" name="Product Name">
+        <Label error={errors.product_name} spanClassName="font-normal" name="Product Name">
           <Input
             error={errors.product_name}
             placeholder="Clinic Plus"
             {...register("product_name")}
           />
         </Label>
-        <Label spanClassName="font-normal" name="Product Code">
+        <Label  error={errors.product_code} spanClassName="font-normal" name="Product Code">
           <Input
             error={errors.product_code}
             placeholder="SHA-123"
@@ -82,7 +82,7 @@ const AddBuyingItem = (props: Props) => {
             className="uppercase"
           />
         </Label>
-        <Label spanClassName="font-normal" name="Product Price">
+        <Label error={errors.product_price} spanClassName="font-normal" name="Product Price">
           <Input
             error={errors.product_price}
             placeholder="Clinic Plus"
@@ -90,7 +90,7 @@ const AddBuyingItem = (props: Props) => {
             type="number"
           />
         </Label>
-        <Label spanClassName="font-normal" name="Product Category">
+        <Label  error={errors.categoryId}  spanClassName="font-normal" name="Product Category">
           <Select error={errors.categoryId} {...register("categoryId")}>
             <option unselectable={"on"} value={""}>
               Select Category
@@ -102,7 +102,7 @@ const AddBuyingItem = (props: Props) => {
             ))}
           </Select>
         </Label>
-        <Label spanClassName="font-normal" name="Minimum Quantity">
+        <Label error={errors.quantity} spanClassName="font-normal" name="Minimum Quantity">
           <Input
             error={errors.quantity}
             type="number"
@@ -110,21 +110,21 @@ const AddBuyingItem = (props: Props) => {
             {...register("quantity")}
           />
         </Label>
-        <Label spanClassName="font-normal" name="Description">
+        <Label  error={errors.description} spanClassName="font-normal" name="Description">
           <TextArea
             error={errors.description}
             placeholder="Write a description of your product in more than 10 words."
             {...register("description")}
           />
         </Label>
-        <Label spanClassName="font-normal" name="Buy From">
+        <Label error={errors.buy_from} spanClassName="font-normal" name="Buy From">
           <Input
             error={errors.buy_from}
             placeholder="Clinic Plus"
             {...register("buy_from")}
           />
         </Label>
-        <Label spanClassName="font-normal" name="Deadline to buy">
+        <Label error={errors.deadline_date} spanClassName="font-normal" name="Deadline to buy">
           <Input
             error={errors.deadline_date}
             type="date"

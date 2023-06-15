@@ -60,42 +60,46 @@ const RegisterPage = (props: Props) => {
         }}
         className="grid w-[90%] mx-auto sm:w-auto sm:mx-0 sm:grid-cols-2 gap-5"
       >
-        <Label name="Name">
-          <Input placeholder="suzan-rana" {...register("name")} />
+        <Label error={errors.name} name="Name">
+          <Input error={errors.name} placeholder="suzan-rana" {...register("name")} />
         </Label>
-        <Label name="Email">
-          <Input placeholder="suzan-rana" {...register("email")} />
+        <Label error={errors.email} name="Email">
+          <Input  error={errors.email} placeholder="suzan-rana" {...register("email")} />
         </Label>
-        <Label name="Password">
-          <PasswordInputElement placeholder="********" {...register("password")} />
+        <Label error={errors.password} name="Password">
+          <PasswordInputElement error={errors.password} placeholder="********" {...register("password")} />
         </Label>
-        <Label name="Contact">
+        <Label           error={errors.contact_number}
+ name="Contact">
           <Input
+          error={errors.contact_number}
             type="number"
             placeholder="suzan-rana"
             {...register("contact_number")}
           />
         </Label>
-        <Label name="Business Name">
-          <Input placeholder="suzan-rana" {...register("business.name")} />
+        <Label error={errors.business.name} name="Business Name">
+          <Input error={errors.business.name} placeholder="suzan-rana" {...register("business.name")} />
         </Label>
-        <Label name="Business Email">
+        <Label error={errors.business.email} name="Business Email">
           <Input
+          error={errors.business.email}
             type="email"
             placeholder="suzan-rana"
             {...register("business.email")}
           />
         </Label>
-        <Label name="Contact Number">
-          <Input
+        <Label error={errors.business.contact_number} name="Contact Number">
+          <Input error={errors.business.contact_number}
             type="number"
             placeholder="suzan-rana"
             {...register("business.contact_number")}
           />
         </Label>
-        <Label name="Description">
+        <Label             error={errors.business.description}
+ name="Description">
           <Input
-            // type="number"
+            error={errors.business.description}
             placeholder="suzan-rana"
             {...register("business.description")}
           />

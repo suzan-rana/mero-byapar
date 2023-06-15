@@ -56,17 +56,17 @@ const EditToBuyItem = (props: CreateProductType & { buy_from: string }) => {
         onSubmit={handleSubmit(onSubmit)}
         className="sm:w-[50%] grid grid-cols-1  gap-y-8 my-8"
       >
-        <Label spanClassName="font-normal" name="Product Name">
+        <Label error={errors.product_name} spanClassName="font-normal" name="Product Name">
           <Input
             error={errors.product_name}
             placeholder="Suzan Rana"
             {...register("product_name")}
           />
         </Label>
-        <Label spanClassName="font-normal" name="Product Price">
+        <Label error={errors.product_price} spanClassName="font-normal" name="Product Price">
           <Input error={errors.product_price} {...register("product_price")} />
         </Label>
-        <Label spanClassName="font-normal" name="Minimum Quantity">
+        <Label error={errors.quantity} spanClassName="font-normal" name="Minimum Quantity">
           <Input
             error={errors.quantity}
             type="number"

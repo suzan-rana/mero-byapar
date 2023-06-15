@@ -60,14 +60,14 @@ const EditProfile = (props: Props) => {
         onSubmit={handleSubmit(onSubmit)}
         className="sm:w-[50%] grid grid-cols-1  gap-y-8 my-8"
       >
-        <Label spanClassName="font-normal" name="Name">
+        <Label error={errors.name} spanClassName="font-normal" name="Name">
           <Input
             error={errors.name}
             placeholder="Suzan Rana"
             {...register("name")}
           />
         </Label>
-        <Label spanClassName="font-normal" name="Contact">
+        <Label  error={errors.contact_number} spanClassName="font-normal" name="Contact">
           <Input
             error={errors.contact_number}
             type="number"

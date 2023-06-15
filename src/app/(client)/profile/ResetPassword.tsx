@@ -54,14 +54,14 @@ const ResetPassword = (props: Props) => {
         onSubmit={handleSubmit(onSubmit)}
         className="sm:w-[50%] grid grid-cols-1  gap-y-8 my-8"
       >
-        <Label spanClassName="font-normal" name="Old Password">
+        <Label   error={errors.old_password} spanClassName="font-normal" name="Old Password">
           <PasswordInputElement
             error={errors.old_password}
             placeholder="Old Password"
             {...register("old_password")}
           />
         </Label>
-        <Label spanClassName="font-normal" name="New Password">
+        <Label error={errors.new_password} spanClassName="font-normal" name="New Password">
           <PasswordInputElement
             error={errors.new_password}
             placeholder="New Password"
