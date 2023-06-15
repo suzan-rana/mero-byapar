@@ -14,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { updateProfile } from "@/common/api/user.api";
 import { queryClient } from "@/components/ReactQueryProvider";
+import useLoader from "@/common/hooks/useLoader";
 
 type Props = {};
 
@@ -32,7 +33,7 @@ const EditProfile = (props: Props) => {
     },
     resolver: zodResolver(UpdateProfileSchema),
   });
-  const { mutateAsync } = useMutation({
+  const { mutateAsync, isLoading } = useMutation({
     mutationFn: ({
       id,
       profileDetails,
@@ -41,6 +42,7 @@ const EditProfile = (props: Props) => {
       profileDetails: TUpdateProfile;
     }) => updateProfile(id, profileDetails),
   });
+  useLoader(isLoading)
   const onSubmit = (data: TUpdateProfile) => {
     mutateAsync({ id: user?.id!, profileDetails: data }).then((response) => {
       if (response.status === 201) {

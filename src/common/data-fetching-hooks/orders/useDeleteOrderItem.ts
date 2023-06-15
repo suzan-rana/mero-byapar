@@ -1,4 +1,5 @@
 import { deleteOrder } from "@/common/api/order.api";
+import useLoader from "@/common/hooks/useLoader";
 import { queryClient } from "@/components/ReactQueryProvider";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -18,6 +19,8 @@ const useDeleteOrderById = (orderId: string) => {
       }
     });
   };
+  useLoader(isLoading)
+
   return { handleDelete, isLoading };
 };
 export default useDeleteOrderById;

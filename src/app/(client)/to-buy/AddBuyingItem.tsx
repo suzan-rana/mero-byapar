@@ -1,6 +1,7 @@
 "use client";
 import { createToBuy } from "@/common/api/to-buy.api";
 import useFetchCategories from "@/common/data-fetching-hooks/categories/useFetchCategories";
+import useLoader from "@/common/hooks/useLoader";
 import { CreateToBuySchema, TCreateToBuy } from "@/common/schema/ToBuySchema";
 import PageSubtitle from "@/components/PageSubtitle";
 import { queryClient } from "@/components/ReactQueryProvider";
@@ -13,8 +14,9 @@ import TextArea from "@/components/ui/TextArea";
 import { useAuthContext } from "@/context/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 type Props = {};
 
@@ -23,7 +25,6 @@ const AddBuyingItem = (props: Props) => {
   const {
     register,
     handleSubmit,
-    getValues,
     formState: { errors },
     reset,
   } = useForm<Omit<TCreateToBuy, "businessId">>({
@@ -34,9 +35,14 @@ const AddBuyingItem = (props: Props) => {
     ),
   });
   const { data } = useFetchCategories();
-  const { mutateAsync, isLoading } = useMutation({
+  const {
+    mutateAsync,
+    isLoading: isMutating,
+    isError,
+  } = useMutation({
     mutationFn: createToBuy,
   });
+  useLoader(isMutating)
   const onSubmit = (data: Omit<TCreateToBuy, "businessId">) => {
     mutateAsync({
       ...data,
@@ -50,6 +56,7 @@ const AddBuyingItem = (props: Props) => {
       }
     });
   };
+
 
   return (
     <section>
@@ -103,7 +110,7 @@ const AddBuyingItem = (props: Props) => {
             {...register("quantity")}
           />
         </Label>
-        <Label spanClassName="font-normal" name="Description" >
+        <Label spanClassName="font-normal" name="Description">
           <TextArea
             error={errors.description}
             placeholder="Write a description of your product in more than 10 words."

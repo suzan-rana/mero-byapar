@@ -16,6 +16,7 @@ import axios from "axios";
 import { createRootUser } from "@/common/api/user.api";
 import { toast }from 'react-toastify'
 import { useRouter } from "next/navigation";
+import useLoader from "@/common/hooks/useLoader";
 
 type Props = {};
 
@@ -42,6 +43,7 @@ const RegisterPage = (props: Props) => {
       toast.error(error?.error)
     }
   });
+  useLoader(isLoading)
 
   const onSubmit = (data: CreateRootUserType) => {
     mutate(data)

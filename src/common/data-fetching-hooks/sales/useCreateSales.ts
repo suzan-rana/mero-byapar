@@ -1,4 +1,5 @@
 import { createSales } from "@/common/api/sale.apis";
+import useLoader from "@/common/hooks/useLoader";
 import { TCreateSales } from "@/common/schema/SaleSchema";
 import { queryClient } from "@/components/ReactQueryProvider";
 import { useMutation } from "@tanstack/react-query";
@@ -32,6 +33,8 @@ const useCreateSales = (saleDetails: TCreateSales) => {
       }
     });
   };
+  useLoader(isSelling)
+
   return { handleMarkAsSold, isSelling };
 };
 export default useCreateSales;

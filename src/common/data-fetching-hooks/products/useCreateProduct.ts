@@ -1,4 +1,5 @@
 import { createNewProduct } from "@/common/api/product.api";
+import useLoader from "@/common/hooks/useLoader";
 import { CreateProductType } from "@/common/schema/ProductSchema";
 import { queryClient } from "@/components/ReactQueryProvider";
 import { useMutation } from "@tanstack/react-query";
@@ -6,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 export const useCreateProduct = (productDetails: CreateProductType) => {
   const router = useRouter();
-  const { mutateAsync } = useMutation({
+  const { mutateAsync, isLoading } = useMutation({
     mutationFn: createNewProduct,
   });
   const handleMarkAsBought = () => {
@@ -22,5 +23,7 @@ export const useCreateProduct = (productDetails: CreateProductType) => {
       }
     });
   };
+  useLoader(isLoading)
+
   return { handleMarkAsBought };
 };

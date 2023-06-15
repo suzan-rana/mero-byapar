@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
     product_price,
     quantity,
   } = parsedBody.data;
-  const existingToBuyItem = await prisma.toBuy.findFirstOrThrow({
+  const existingToBuyItem = await prisma.toBuy.findFirst({
     where: {
       product_code: parsedBody.data.product_code,
       businessId: parsedBody.data.businessId,
@@ -117,10 +117,10 @@ export async function POST(request: NextRequest) {
         buyerId: decoded?.id,
       },
       where: {
-        id: existingToBuyItem.id,
+        id: existingToBuyItem?.id || '',
       },
       update: {
-        quantity: +quantity + +existingToBuyItem.quantity,
+        quantity: +quantity + +existingToBuyItem?.quantity! || 0,
         product_name,
         product_price,
         description,

@@ -13,6 +13,7 @@ import TextArea from "@/components/ui/TextArea";
 import { CreateProductType } from "@/common/schema/ProductSchema";
 import { queryClient } from "@/components/ReactQueryProvider";
 import { useRouter } from "next/navigation";
+import useLoader from "@/common/hooks/useLoader";
 
 const EditToBuyItem = (props: CreateProductType & { buy_from: string }) => {
   const router = useRouter()
@@ -20,7 +21,6 @@ const EditToBuyItem = (props: CreateProductType & { buy_from: string }) => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
     control
   } = useForm<TUpdateToBuy>({
     defaultValues: {
@@ -29,9 +29,11 @@ const EditToBuyItem = (props: CreateProductType & { buy_from: string }) => {
     },
     resolver: zodResolver(UpdateToBuySchema),
   });
-  const { mutateAsync } = useMutation({
+  const { mutateAsync, isLoading } = useMutation({
     mutationFn: updateToBuyItem,
   });
+  useLoader(isLoading)
+
   const onSubmit = (data: TUpdateToBuy) => {
     mutateAsync({
       ...data,

@@ -15,6 +15,7 @@ const ToBuyPage = (props: Props) => {
   const { data, isLoading, isFetching, isError, totalItems, totalPages } =
     useFetchToBuy(paginationProps.currentPage, 10);
 
+    
   
   return (
     <main>

@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/context/hooks";
+import useLoader from "@/common/hooks/useLoader";
 type Props = {};
 
 const LoginPage = (props: Props) => {
@@ -23,7 +24,7 @@ const LoginPage = (props: Props) => {
   const { register, handleSubmit, formState: { errors} } = useForm<loginUserType>({
     resolver: zodResolver(LoginUserSchema),
   });
-  const { mutate } = useMutation({
+  const { mutate, isLoading, } = useMutation({
     mutationFn: loginUser,
     onSuccess(data, variables, context) {
       setIsAuthenticated(true)
@@ -31,6 +32,7 @@ const LoginPage = (props: Props) => {
       router.push('/home')
     },
   });
+  useLoader(isLoading)
   const onSubmit = (data: loginUserType) => {
     mutate(data);
   };

@@ -14,6 +14,7 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { resetPassword } from "@/common/api/user.api";
 import { useAuthContext } from "@/context/hooks";
+import useLoader from "@/common/hooks/useLoader";
 
 type Props = {};
 
@@ -28,7 +29,7 @@ const ResetPassword = (props: Props) => {
   } = useForm<TResetPassword>({
     resolver: zodResolver(ResetPasswordSchema),
   });
-  const { mutateAsync } = useMutation({
+  const { mutateAsync, isLoading } = useMutation({
     mutationFn: ({
       id,
       passwordDetails,
@@ -37,6 +38,8 @@ const ResetPassword = (props: Props) => {
       passwordDetails: TResetPassword;
     }) => resetPassword(id, passwordDetails),
   });
+  useLoader(isLoading)
+
   const onSubmit = (data: TResetPassword) => {
     mutateAsync({ id: user?.id!, passwordDetails: data }).then((response) => {
       if (response.status === 201) {

@@ -17,6 +17,7 @@ import { useMutation } from "@tanstack/react-query";
 import Select from "@/components/ui/Select";
 import { createNewUser } from "@/common/api/user.api";
 import { queryClient } from "@/components/ReactQueryProvider";
+import useLoader from "@/common/hooks/useLoader";
 type Props = {};
 
 const AddEmployees = (props: Props) => {
@@ -38,6 +39,8 @@ const AddEmployees = (props: Props) => {
   const { mutateAsync, isLoading } = useMutation({
     mutationFn: createNewUser,
   });
+  useLoader(isLoading)
+
   const onSubmit = (data: Omit<CreateNewUserType, "businessId">) => {
     mutateAsync({
       ...data,

@@ -1,5 +1,6 @@
 "use client";
 import { createCategory } from "@/common/api/category.api";
+import useLoader from "@/common/hooks/useLoader";
 import {
   CreateCategorySchema,
   TCreateCategory,
@@ -36,12 +37,14 @@ const CategoryPage = (props: Props) => {
       })
     ),
   });
-  const { mutateAsync } = useMutation({
+  const { mutateAsync, isLoading } = useMutation({
     mutationFn: createCategory,
     onError(error: any, variables, context) {
       toast.error(error?.response?.error);
     },
   });
+  useLoader(isLoading)
+
   const onSubmit = (
     data: Pick<TCreateCategory, "category_code" | "category_name">
   ) => {
