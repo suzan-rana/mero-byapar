@@ -128,7 +128,7 @@ model Order {
   order_quantity                Int
   product                 Product  @relation(fields: [productId], references: [id])
   customer_name           String
-  customer_email          String   @unique
+  customer_email          String   
   customer_contact_number String
   created_at              DateTime @default(now())
   businessId              String

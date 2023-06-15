@@ -18,6 +18,9 @@ export async function GET(request: NextRequest) {
     const products = await prisma.product.findMany({
       where: {
         businessId: businessId,
+        quantity: {
+          gte: 1
+        }
       },
       orderBy: {
         created_at: "desc",

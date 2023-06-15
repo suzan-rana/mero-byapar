@@ -2,6 +2,7 @@
 import useDeleteOrderById from "@/common/data-fetching-hooks/orders/useDeleteOrderItem";
 import useFetchOrderByOrderId from "@/common/data-fetching-hooks/orders/useFetchOrderItem";
 import useFetchProductByProductId from "@/common/data-fetching-hooks/products/useFetchProductItem";
+import useCreateSales from "@/common/data-fetching-hooks/sales/useCreateSales";
 import Card, { CardText, CardTitle } from "@/components/Card";
 import Button from "@/components/ui/Button";
 import ButtonGroup from "@/components/ui/ButtonGroup";
@@ -13,29 +14,20 @@ type Props = {};
 
 const ProductItemPage = (props: Props) => {
   const params = useParams();
-  const { data, isLoading, isFetching } = useFetchOrderByOrderId(
+  const { data, isLoading, isFetching, salesDetails } = useFetchOrderByOrderId(
     params.orderId
   );
   const { handleDelete, isLoading: isDeleting } = useDeleteOrderById(
     params.orderId
   );
+  const { handleMarkAsSold, isSelling } = useCreateSales(salesDetails!);
   return (
     <div>
-      <Card isLoading={isFetching || isLoading}>
+      <Card isLoading={isFetching || isLoading || isSelling}>
         {data && (
           <>
             <div className="flex justify-between items-start sm:items-center">
               <CardTitle title={data?.customer_name} />
-              {/* <div className="flex gap-3">
-                <CardText
-                  text={`${data.customer_email}`}
-                  className="inline-block border border-green-600 cursor-pointer text-green-700 px-2   rounded-md uppercase"
-                ></CardText>
-                <CardText
-                  text={data.category.category_name}
-                  className="bg-green-300 inline-block px-2   rounded-md text-gray-800 lowercase"
-                ></CardText>
-              </div> */}
             </div>
             <CardText text={`Customer Email: ${data?.customer_email}`} />
             <CardText text={`Contact: ${data?.customer_contact_number}`} />
@@ -78,10 +70,17 @@ const ProductItemPage = (props: Props) => {
               />
             </section>
             <ButtonGroup className="flex-row w-[100%]  mt-6 gap-6 ">
-              <Button variant={"primary"}>
-                <Link href={"/products"} className="w-full h-full block">
+              <Button variant={"outline"} className="grow">
+                <Link href={"/products"} className="w-full  h-full block">
                   Back
                 </Link>
+              </Button>
+              <Button
+                variant={"primary"}
+                onClick={handleMarkAsSold}
+                className="grow"
+              >
+                Mark as sold
               </Button>
             </ButtonGroup>
           </>

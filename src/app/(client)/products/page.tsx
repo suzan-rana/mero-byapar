@@ -17,6 +17,7 @@ const ProductsPage = (props: Props) => {
     paginationProps.currentPage,
     10
   );
+  console.log('DATA...', data)
 
   return (
     <main>

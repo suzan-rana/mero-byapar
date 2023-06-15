@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const prismaErrorHandler = (err: any) => {
+const prismaErrorHandler = (err: any, entity?: string) => {
   if (err.code) {
     // Handle Prisma error instances
     switch (err.code) {
@@ -8,8 +8,8 @@ const prismaErrorHandler = (err: any) => {
         // Unique constraint violation error
         return NextResponse.json(
           {
-            error: "Duplicate entry",
-            message: err.message,
+            message: `${entity} already exists.`,
+            erro: err.message,
             statusCode: 400,
           },
           {
@@ -20,8 +20,8 @@ const prismaErrorHandler = (err: any) => {
         // Record not found error
         return NextResponse.json(
           {
-            error: "Record not found",
-            message: err.message,
+            message: `${entity} not found.`,
+            error: err.message,
             statusCode: 404,
           },
           {
@@ -32,8 +32,8 @@ const prismaErrorHandler = (err: any) => {
         // Invalid JSON value error
         return NextResponse.json(
           {
-            error: "Invalid JSON value",
-            message: err.message,
+            message: `Invalid ${entity} value was sent.`,
+            error: err.message,
             statusCode: 400,
           },
           {
@@ -45,8 +45,8 @@ const prismaErrorHandler = (err: any) => {
         // Handle other Prisma error codes
         return NextResponse.json(
           {
-            error: "Internal Server Error",
-            message: err.message,
+            message: "Internal Server Error",
+            error: err.message,
             statusCode: 500,
           },
           {

@@ -24,7 +24,7 @@ export const ResponseFetchProductsSchema = z.object({
     z.object({
       id: z.string(),
       product_name: z.string().min(3),
-      quantity: z.number().min(1),
+      quantity: z.number(),
       price: z.number().min(1),
       description: z.string(),
       categoryId: z.string(),

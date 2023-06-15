@@ -3,6 +3,7 @@ import useCreateOrder from "@/common/data-fetching-hooks/orders/useCreateOrder";
 import useFetchAllProducts from "@/common/data-fetching-hooks/products/useFetchAllProducts";
 import { CreateOrderSchema, TCreateOrder } from "@/common/schema/OrderSchema";
 import PageSubtitle from "@/components/PageSubtitle";
+import { queryClient } from "@/components/ReactQueryProvider";
 import Button from "@/components/ui/Button";
 import ButtonGroup from "@/components/ui/ButtonGroup";
 import Input from "@/components/ui/Input";
@@ -12,6 +13,7 @@ import SkeletonCard from "@/components/ui/Skeleton/SkeletonCard";
 import { useAuthContext } from "@/context/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
@@ -45,17 +47,24 @@ const AddOrder = (props: Props) => {
       })
     ),
   });
+  const router = useRouter()
 
   const { isCreating, mutateAsync } = useCreateOrder();
 
-  console.log('ERRORS...', errors)
   if (!data || isFetching || isLoading) {
     return <SkeletonCard />;
   }
   const onSubmit = (data: TCreateOrder) => {
     mutateAsync(data).then((response) => {
       if (response.status === 201) {
-        reset();
+        queryClient.invalidateQueries({
+          queryKey: ["fetch-orders"],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["fetch-all-products"],
+        })
+        reset()
+        router.refresh()
       }
     });
   };
@@ -161,6 +170,7 @@ const AddOrder = (props: Props) => {
                   +getValues("price") * +event.target.value
                 );
                 if (event.target.value > selectedProduct?.quantity!) {
+                  console.log('SELECTED PRODUCT', selectedProduct)
                   setError("quantity", {
                     message: `Maximum quantity can only be upto ${selectedProduct?.quantity}`,
                   });

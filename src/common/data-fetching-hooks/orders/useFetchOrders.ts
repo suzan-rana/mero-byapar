@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAuthContext } from "@/context/hooks";
-import { fetchAllProductsWithPagination } from "@/common/api/product.api";
 import { fetchAllOrdersWithPagination } from "@/common/api/order.api";
 
 const useFetchOrders = (page: number, limit: number) => {

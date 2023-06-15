@@ -96,6 +96,21 @@ export async function POST(request: NextRequest) {
   } = parsedBody.data;
 
   try {
+    const selectedProduct = await prisma.product.findFirst({
+      where: {
+        id: productId,
+      },
+    });
+    if (Number(selectedProduct?.quantity) < quantity) {
+      return NextResponse.json(
+        {
+          message: "Not enough products",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
     await prisma.order.create({
       data: {
         customer_contact_number,
@@ -106,6 +121,7 @@ export async function POST(request: NextRequest) {
         order_quantity: quantity,
       },
     });
+    console.log('ORDERED...')
     return NextResponse.json(
       {
         message: "Order created successfully.",
@@ -162,4 +178,3 @@ export async function PATCH(request: NextRequest) {
     return prismaErrorHandler(error);
   }
 }
-
