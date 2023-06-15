@@ -169,7 +169,6 @@ const AddOrder = (props: Props) => {
                   +getValues("price") * +event.target.value
                 );
                 if (event.target.value > selectedProduct?.quantity!) {
-                  console.log('SELECTED PRODUCT', selectedProduct)
                   setError("quantity", {
                     message: `Maximum quantity can only be upto ${selectedProduct?.quantity}`,
                   });

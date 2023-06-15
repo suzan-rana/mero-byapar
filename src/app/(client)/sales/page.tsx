@@ -20,7 +20,6 @@ const SalesPage = (props: Props) => {
     totalItems,
     totalPages,
   } = useFetchSales(paginationProps.currentPage, 10);
-  console.log("DATA", data);
   return (
     <main>
       <PageTitle>Sales</PageTitle>
