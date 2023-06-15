@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/context/hooks";
 import Cookies from "js-cookie";
 import 'react-loading-skeleton/dist/skeleton.css'
-
+// eslint-disable-next-line react/display-name
 function isAuth<T>(Component: React.ComponentType<T>) {
   return (props: T) => {
     const router = useRouter();
@@ -14,8 +14,6 @@ function isAuth<T>(Component: React.ComponentType<T>) {
       if (!Cookies.get("token")) {
         router.push("/login");
       }
-      
-
     }, [router, isAuthenticated]);
     return (
       <>
@@ -27,4 +25,5 @@ function isAuth<T>(Component: React.ComponentType<T>) {
 const RouteProtector = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
+
 export default isAuth(RouteProtector);
