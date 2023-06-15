@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
   let { contact_number, email, name, password, business } =
     toBeCreatedUser.data;
   try {
-    const user = await prisma.user.create({
+    await prisma.user.create({
       data: {
         role: {
           connectOrCreate: {
@@ -52,7 +52,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         message: "User and business created successfully.",
-        data: user,
       },
       {
         status: 200,
