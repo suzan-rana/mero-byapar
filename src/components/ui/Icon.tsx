@@ -1,35 +1,27 @@
-import { AiFillCloseCircle,  } from "react-icons/ai";
+import {
+  AiFillCloseCircle,
+  AiOutlineFundProjectionScreen,
+  AiOutlineLogout,
+  AiOutlineUser,
+} from "react-icons/ai";
 import { CgMenuLeftAlt } from "react-icons/cg";
-// import { HiTemplate } from "react-icons/hi";
-// import { MdFavoriteBorder, MdProductionQuantityLimits } from "react-icons/md";
-// import { SiSalesforce } from "react-icons/si";
-// import { BsMicrosoftTeams } from "react-icons/bs";
-// import { RiLockPasswordFill, RiLogoutCircleRFill } from "react-icons/ri";
-
+import { RxDashboard } from "react-icons/rx";
+import { BsCloudDrizzle } from "react-icons/bs";
+import { CiStar } from "react-icons/ci";
+import {
+  MdOutlineFavoriteBorder,
+  MdProductionQuantityLimits,
+} from "react-icons/md";
 const Icons = {
   close: AiFillCloseCircle,
   menu: <CgMenuLeftAlt className="w-7 h-7 cursor-pointer text-green-800" />,
-  // home: <AiFillHome className="w-7 h-7 cursor-pointer hover:text-green-800" />,
-  // product: (
-  //   <HiTemplate className="w-7 h-7 cursor-pointer hover:text-green-800" />
-  // ),
-  // toBuy: (
-  //   <MdProductionQuantityLimits className="w-7 h-7 cursor-pointer hover:text-green-800" />
-  // ),
-  // order: (
-  //   <MdFavoriteBorder className="w-7 h-7 cursor-pointer hover:text-green-800" />
-  // ),
-  // sales: (
-  //   <SiSalesforce className="w-7 h-7 cursor-pointer hover:text-green-800" />
-  // ),
-  // team: (
-  //   <BsMicrosoftTeams className="w-7 h-7 cursor-pointer hover:text-green-800" />
-  // ),
-  // logout: (
-  //   <RiLogoutCircleRFill className="w-7 h-7 cursor-pointer hover:text-green-800" />
-  // ),
-  // resetPassword: (
-  //   <RiLockPasswordFill className="w-7 h-7 cursor-pointer hover:text-green-800" />
-  // ),
+  dashboard: <RxDashboard className="w-5 h-5   cursor-pointer" />,
+  product: <MdProductionQuantityLimits className="w-5 h-5   cursor-pointer" />,
+  toBuy: <AiOutlineFundProjectionScreen className="w-5 h-5   cursor-pointer" />,
+  order: <MdOutlineFavoriteBorder className="w-5 h-5   cursor-pointer" />,
+  sales: <BsCloudDrizzle className="w-5 h-5   cursor-pointer" />,
+  team: <CiStar className="w-5 h-5   cursor-pointer" />,
+  profile: <AiOutlineUser className="w-5 h-5   cursor-pointer" />,
+  logout: <AiOutlineLogout className="w-5 h-5   cursor-pointer" />,
 };
 export default Icons;

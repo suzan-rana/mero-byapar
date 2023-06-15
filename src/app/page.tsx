@@ -1,11 +1,15 @@
-import React from 'react'
+"use client";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 
-type Props = {}
+type Props = {};
 
 const IndexPage = (props: Props) => {
-  return (
-    <div>IndexPage</div>
-  )
-}
+  const router = useRouter();
+  useEffect(() => {
+    router.push("/home");
+  }, [router]);
+  return <div>Hello, world!</div>;
+};
 
-export default IndexPage
+export default IndexPage;

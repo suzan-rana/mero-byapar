@@ -3,7 +3,7 @@ import { loginUser } from "@/common/api/user.api";
 import { LoginUserSchema, loginUserType } from "@/common/schema/UserSchema";
 import Button from "@/components/ui/Button";
 import ButtonGroup from "@/components/ui/ButtonGroup";
-import Input from "@/components/ui/Input";
+import Input, { PasswordInputElement } from "@/components/ui/Input";
 import Label from "@/components/ui/Label";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -45,7 +45,7 @@ const LoginPage = (props: Props) => {
           <Input error={errors.email} placeholder="dev.suzanrana@gmail.com" {...register("email")} />
         </Label>
         <Label name="Password">
-          <Input error={errors.password} {...register("password")} placeholder="********" />
+          <PasswordInputElement error={errors.password} {...register("password")} placeholder="********" />
         </Label>
         <ButtonGroup>
           <Button type="submit" variant={"primary"}>

@@ -1,7 +1,7 @@
 "use client";
 import Button from "@/components/ui/Button";
 import ButtonGroup from "@/components/ui/ButtonGroup";
-import Input from "@/components/ui/Input";
+import Input, { PasswordInputElement } from "@/components/ui/Input";
 import Label from "@/components/ui/Label";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
@@ -67,7 +67,7 @@ const RegisterPage = (props: Props) => {
           <Input placeholder="suzan-rana" {...register("email")} />
         </Label>
         <Label name="Password">
-          <Input placeholder="********" {...register("password")} />
+          <PasswordInputElement placeholder="********" {...register("password")} />
         </Label>
         <Label name="Contact">
           <Input

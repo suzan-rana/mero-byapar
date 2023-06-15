@@ -75,6 +75,7 @@ const Sidebar = (props: Props) => {
               link="/profile"
               name="Profile"
               isActive={pathName === "/profile"}
+              icon={Icons.profile}
             />
             <p
               onClick={handleLogout}
@@ -82,6 +83,7 @@ const Sidebar = (props: Props) => {
                 "px-3 flex gap-4 items-center font-medium  cursor-pointer min-w-[15rem]  hover:bg-green-300 py-2"
               )}
             >
+              {Icons.logout}
               <span>Log out</span>
             </p>
           </div>
@@ -97,22 +99,23 @@ const SidebarElement = ({
   isActive,
   link,
   name,
+  icon,
 }: // icon,
 {
   name: string;
   link: string;
   isActive: boolean;
-  // icon: React.ReactNode;
+  icon?: React.ReactNode;
 }) => {
   return (
     <p
       className={cn(
         "px-3 block font-medium  cursor-pointer min-w-[15rem]  hover:bg-green-300 py-2",
-        isActive && "bg-green-300"
+        isActive && "bg-green-300 font-bold"
       )}
     >
-      <Link className="flex gap-4 items-center w-full h-full" href={link}>
-        {/* {icon} */}
+      <Link className="flex gap-4 items-center  w-full h-full" href={link}>
+        {icon}
         <span>{name}</span>
       </Link>
     </p>
@@ -123,28 +126,28 @@ const sidebarElements = [
   {
     name: "Dashboard",
     link: "/home",
-    // icon: Icons.home,
+    icon: Icons.dashboard,
   },
   {
     name: "Products",
     link: "/products",
-    // icon: Icons.product,
+    icon: Icons.product,
   },
   {
     name: "To Buy",
     link: "/to-buy",
-    // icon: Icons.toBuy,
+    icon: Icons.toBuy,
   },
   {
     name: "Orders",
     link: "/orders",
-    // icon: Icons.order,
+    icon: Icons.order,
   },
 
   {
     name: "Sales",
     link: "/sales",
-    // icon: Icons.sales,
+    icon: Icons.sales,
   },
 ];
 
@@ -189,8 +192,8 @@ const SidebarTeam = () => {
         <SidebarElement
           name="Team"
           link="/team"
-          isActive={pathName.startsWith('/team')}
-          // icon={Icons.team}
+          isActive={pathName.startsWith("/team")}
+          icon={Icons.team}
         />
       )}
     </>

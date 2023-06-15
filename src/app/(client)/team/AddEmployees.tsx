@@ -2,7 +2,7 @@
 import PageSubtitle from "@/components/PageSubtitle";
 import Button from "@/components/ui/Button";
 import ButtonGroup from "@/components/ui/ButtonGroup";
-import Input from "@/components/ui/Input";
+import Input, { PasswordInputElement } from "@/components/ui/Input";
 import Label from "@/components/ui/Label";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
@@ -75,7 +75,7 @@ const AddEmployees = (props: Props) => {
           />
         </Label>
         <Label spanClassName="font-normal" name="Password">
-          <Input
+          <PasswordInputElement
             error={errors.password}
             type="password"
             placeholder="**********"
