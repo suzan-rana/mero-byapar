@@ -34,13 +34,11 @@ const RegisterPage = (props: Props) => {
   const { isLoading, mutate } = useMutation({
     mutationFn: createRootUser,
    onSuccess(data, variables, context) {
-      console.log('DATA', data)
       toast.success(data.data?.message)
       router.push('/login')
     },
     onError(error: any){
-      console.log('ERROR', error)
-      toast.error(error?.error)
+      toast.error(error?.response.message)
     }
   });
   useLoader(isLoading)
@@ -112,9 +110,7 @@ const RegisterPage = (props: Props) => {
             Register
           </Button>
           <Button type="button" variant={"outline"}>
-            {/* <Link href={"/login"} className="w-[100%] block h-[100%]"> */}
             Login
-            {/* </Link> */}
           </Button>
         </ButtonGroup>
       </form>
