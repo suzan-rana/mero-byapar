@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 //   Products, Orders, Buy, Sales, Employees 
@@ -125,10 +126,10 @@ model SoldTo {
 model Order {
   id                      String   @id @default(cuid())
   productId               String
-  order_quantity                Int
+  order_quantity          Int
   product                 Product  @relation(fields: [productId], references: [id])
   customer_name           String
-  customer_email          String   
+  customer_email          String
   customer_contact_number String
   created_at              DateTime @default(now())
   businessId              String

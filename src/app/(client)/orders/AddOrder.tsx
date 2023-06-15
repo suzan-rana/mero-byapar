@@ -64,7 +64,6 @@ const AddOrder = (props: Props) => {
           queryKey: ["fetch-all-products"],
         })
         reset()
-        router.refresh()
       }
     });
   };
@@ -203,7 +202,7 @@ const AddOrder = (props: Props) => {
         </Label>
         <ButtonGroup>
           <Button type="submit" variant={"primary"}>
-            Create
+            {isCreating ? 'Creating...': 'Create'}
           </Button>
           <Button type="reset" variant={"outline"}>
             Clear

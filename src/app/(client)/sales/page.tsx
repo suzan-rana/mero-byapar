@@ -33,6 +33,7 @@ const SalesPage = (props: Props) => {
           <TRow key={sale.id}>
             <TData>{index + 1}</TData>
             <TData>{sale.product.product_name}</TData>
+            <TData>{sale.product.product_code}</TData>
             <TData>{sale.soldTo.name}</TData>
 
             <TData>{sale.sold_quantity}</TData>
@@ -43,20 +44,21 @@ const SalesPage = (props: Props) => {
 
             <TData>{sale.seller.name}</TData>
 
-            <TData className="text-green-500 underline">
+            {/* <TData className="text-green-500 underline">
               <Link href={`/sales/${sale.id}`}>View</Link>
-            </TData>
+            </TData> */}
           </TRow>
         ))} 
         headingArray={[
           "Index",
           "Product Name",
+          "Code",
           "Sold to",
           "Quantity",
           "Price",
           "Sold Date",
           "Sold By",
-          "Actions",
+          // "Actions",
         ]}
       />
       {data && totalPages ? (

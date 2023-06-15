@@ -14,10 +14,10 @@ const ReactToastify = (props: Props) => {
       position="top-center"
       closeButton={false}
       hideProgressBar
-      limit={4}
+      limit={1}
       role="alert"
-      autoClose={1500}
-      // transition={}
+      autoClose={1500} 
+           
     />
   );
 };
