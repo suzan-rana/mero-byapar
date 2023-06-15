@@ -8,6 +8,7 @@ import AddOrder from "./AddOrder";
 type Props = {};
 
 const OrdersPage = (props: Props) => {
+  
   return (
     <main>
       <PageTitle>Customer Orders</PageTitle>

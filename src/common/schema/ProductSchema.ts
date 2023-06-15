@@ -64,9 +64,11 @@ export const ResponseFetchProductItemByProductIdSchema = z.object({
     contact_number: z.string(),
   }),
 });
-export const ResponseFetchAllProducts = z.object({
-  id: z.string(),
-  product_name: z.string(),
-  price: z.number(),
-  quantity: z.number(),
-});
+export const ResponseFetchAllProducts = z.array(
+  z.object({
+    id: z.string(),
+    product_name: z.string(),
+    price: z.number(),
+    quantity: z.number(),
+  })
+);

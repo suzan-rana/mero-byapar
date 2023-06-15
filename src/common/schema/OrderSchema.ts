@@ -5,6 +5,8 @@ export const CreateOrderSchema = z.object({
   customer_name: z.string(),
   customer_email: z.string().email(),
   customer_contact_number: z.string(),
+  quantity: z.number(),
+  price: z.number(),
   businessId: z.string(),
 });
 export type TCreateOrder = z.infer<typeof CreateOrderSchema>;

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchAllProducts } from "@/common/api/product.api";
 
-const useFetchProductByProductId = (businessId: string) => {
+const useFetchAllProducts = (businessId: string) => {
   const { data, isLoading, isFetching } = useQuery({
     queryKey: ["fetch-all-products"],
     queryFn: () => fetchAllProducts(businessId),
@@ -9,4 +9,4 @@ const useFetchProductByProductId = (businessId: string) => {
   });
   return { data, isLoading, isFetching };
 };
-export default useFetchProductByProductId;
+export default useFetchAllProducts;
