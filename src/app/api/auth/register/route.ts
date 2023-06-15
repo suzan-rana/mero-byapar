@@ -16,8 +16,7 @@ export async function POST(request: NextRequest) {
 
   // we have email,
   let { contact_number, email, name, password, business } =
-    body as CreateRootUserType;
-  password = await encryptPassword(password);
+    toBeCreatedUser.data;
   try {
     const user = await prisma.user.create({
       data: {
@@ -47,7 +46,7 @@ export async function POST(request: NextRequest) {
         contact_number: contact_number,
         email,
         name,
-        password,
+        password: await encryptPassword(password),
       },
     });
     return NextResponse.json(
@@ -61,6 +60,6 @@ export async function POST(request: NextRequest) {
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error, 'User');
+    return prismaErrorHandler(error, "User");
   }
 }
