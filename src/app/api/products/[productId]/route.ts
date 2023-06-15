@@ -39,6 +39,6 @@ export async function GET(
       data: product,
     });
   } catch (error) {
-    return prismaErrorHandler(error);
+    return prismaErrorHandler(error, 'Product');
   }
 }

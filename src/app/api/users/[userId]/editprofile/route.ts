@@ -38,6 +38,6 @@ export async function PATCH(
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error);
+    return prismaErrorHandler(error, 'Profile');
   }
 }

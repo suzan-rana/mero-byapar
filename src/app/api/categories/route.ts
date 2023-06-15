@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    return prismaErrorHandler(error);
+    return prismaErrorHandler(error, 'Categories');
   }
 }
 export async function POST(request: NextRequest) {
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error);
+    return prismaErrorHandler(error, 'Categories');
   }
 }
 export async function DELETE(request: NextRequest) {
@@ -116,7 +116,7 @@ export async function DELETE(request: NextRequest) {
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error);
+    return prismaErrorHandler(error, 'Categories');
   }
 }
 
@@ -146,6 +146,6 @@ export async function PATCH(request: NextRequest) {
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error);
+    return prismaErrorHandler(error, 'Categories');
   }
 }

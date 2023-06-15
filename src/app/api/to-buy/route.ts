@@ -138,7 +138,7 @@ export async function POST(request: NextRequest) {
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error);
+    return prismaErrorHandler(error, 'To buy item');
   }
 }
 export async function PATCH(request: NextRequest) {

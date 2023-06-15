@@ -24,7 +24,7 @@ const Categories = (props: Props) => {
       <Table
         isError={isError}
         length={data?.length}
-        headingArray={["Index", "Name", "Code", "Total Products", "Actions"]}
+        headingArray={["Index", "Name", "Code", "Total Products"]}
         isLoading={isLoading || isFetching}
         renderCustomBody={true}
         customBody={data?.map((row, i) => (
@@ -33,7 +33,6 @@ const Categories = (props: Props) => {
             <TData>{row.category_name}</TData>
             <TData>{row.category_code}</TData>
             <TData>{row._count.products || 0}</TData>
-            <TData>Edit / Delete</TData>
           </TRow>
         ))}
       />

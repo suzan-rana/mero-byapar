@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error);
+    return prismaErrorHandler(error, 'Order');
   }
 }
 
@@ -121,7 +121,6 @@ export async function POST(request: NextRequest) {
         order_quantity: quantity,
       },
     });
-    console.log('ORDERED...')
     return NextResponse.json(
       {
         message: "Order created successfully.",
@@ -131,7 +130,7 @@ export async function POST(request: NextRequest) {
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error);
+    return prismaErrorHandler(error, 'Order');
   }
 }
 export async function PATCH(request: NextRequest) {
@@ -175,6 +174,6 @@ export async function PATCH(request: NextRequest) {
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error);
+    return prismaErrorHandler(error, 'Order');
   }
 }

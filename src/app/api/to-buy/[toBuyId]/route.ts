@@ -40,7 +40,7 @@ export async function GET(
       data: toBuyItem,
     });
   } catch (error) {
-    return prismaErrorHandler(error);
+    return prismaErrorHandler(error, 'To buy item');
   }
 }
 export async function DELETE(
@@ -77,6 +77,6 @@ export async function DELETE(
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error);
+    return prismaErrorHandler(error, 'To buy item');
   }
 }

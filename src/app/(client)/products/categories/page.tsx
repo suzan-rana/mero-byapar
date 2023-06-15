@@ -36,25 +36,25 @@ const CategoryPage = (props: Props) => {
       })
     ),
   });
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn: createCategory,
-    onSuccess(data, variables, context) {
-      queryClient.invalidateQueries({
-        queryKey: ["fetch-category"],
-      });
-      router.push("/products");
-    },
     onError(error: any, variables, context) {
       toast.error(error?.response?.error);
     },
   });
-  console.log("ERRORS", errors);
   const onSubmit = (
     data: Pick<TCreateCategory, "category_code" | "category_name">
   ) => {
-    mutate({
+    mutateAsync({
       ...data,
       businessId: user?.business.id as string,
+    }).then((response) => {
+      if (response.status === 201) {
+        queryClient.invalidateQueries({
+          queryKey: ["fetch-category"],
+        });
+        router.push("/products");
+      }
     });
   };
 

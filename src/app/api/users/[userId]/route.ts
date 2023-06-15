@@ -41,6 +41,6 @@ export async function GET(
       },
     });
   } catch (error) {
-    return prismaErrorHandler(error);
+    return prismaErrorHandler(error, 'User');
   }
 }

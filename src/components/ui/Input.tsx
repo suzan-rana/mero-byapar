@@ -47,7 +47,7 @@ export const PasswordInputElement = React.forwardRef<
   const [showPassword, setShowPassword] = useState(false);
   return (
     <div
-      className={`flex items-center justify-between  rounded-md border border-slate-800 bg-gray-950 px-3 py-2 text-sm shadow-sm focus:outline-blue-400 md:text-base ${
+      className={`flex items-center justify-between  rounded-md border bg-white px-3 py-2 text-sm shadow-sm focus:outline-blue-400 md:text-base ${
         error ? "border-[1px] border-red-500 focus:outline-red-500" : ""
       }`}
     >

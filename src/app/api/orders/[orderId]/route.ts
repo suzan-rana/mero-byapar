@@ -42,7 +42,7 @@ export async function GET(
       data: order,
     });
   } catch (error) {
-    return prismaErrorHandler(error);
+    return prismaErrorHandler(error, 'Order');
   }
 }
 
@@ -81,6 +81,6 @@ export async function DELETE(
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error);
+    return prismaErrorHandler(error, 'Order');
   }
 }
