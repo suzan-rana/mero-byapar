@@ -1,4 +1,5 @@
 "use client";
+import useCreateOrder from "@/common/data-fetching-hooks/orders/useCreateOrder";
 import useFetchAllProducts from "@/common/data-fetching-hooks/products/useFetchAllProducts";
 import { CreateOrderSchema, TCreateOrder } from "@/common/schema/OrderSchema";
 import PageSubtitle from "@/components/PageSubtitle";
@@ -13,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { z } from "zod";
 type Props = {};
 
 const AddOrder = (props: Props) => {
@@ -21,39 +23,92 @@ const AddOrder = (props: Props) => {
     user?.business.id!
   );
   const {
-    watch,
     register,
     getValues,
     setValue,
     setError,
     control,
-    resetField,
     clearErrors,
+    handleSubmit,
     formState: { errors },
-  } = useForm<TCreateOrder>({
-    resolver: zodResolver(CreateOrderSchema),
+    reset,
+  } = useForm<TCreateOrder & { total_price: number }>({
+    defaultValues: {
+      businessId: user?.business.id,
+      price: 1,
+      quantity: 1,
+      total_price: 1,
+    },
+    resolver: zodResolver(
+      CreateOrderSchema.extend({
+        total_price: z.number().min(1),
+      })
+    ),
   });
-  console.log(getValues("productId"), "HI");
 
+  const { isCreating, mutateAsync } = useCreateOrder();
+
+  console.log('ERRORS...', errors)
   if (!data || isFetching || isLoading) {
     return <SkeletonCard />;
   }
+  const onSubmit = (data: TCreateOrder) => {
+    mutateAsync(data).then((response) => {
+      if (response.status === 201) {
+        reset();
+      }
+    });
+  };
+
   return (
     <section>
       <PageSubtitle className="text-green-600">
         Someone just ordered now, Create one!
       </PageSubtitle>
-      <form className="sm:w-[50%] grid grid-cols-1  gap-y-8 my-8">
-        <Label spanClassName="font-normal" name="Buyer Name">
-          <Input placeholder="Suzan Rana" />
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="sm:w-[50%] grid grid-cols-1  gap-y-8 my-8"
+      >
+        <Label
+          spanClassName="font-normal"
+          error={errors.customer_name}
+          name="Buyer Name"
+        >
+          <Input
+            placeholder="Suzan Rana"
+            error={errors.customer_name}
+            {...register("customer_name")}
+          />
         </Label>
-        <Label spanClassName="font-normal" name="Buyer Email">
-          <Input type="email" placeholder="dev.suzanrana@gmail.com" />
+        <Label
+          spanClassName="font-normal"
+          error={errors.customer_email}
+          name="Buyer Email"
+        >
+          <Input
+            type="email"
+            placeholder="dev.suzanrana@gmail.com"
+            error={errors.customer_email}
+            {...register("customer_email")}
+          />
         </Label>
-        <Label spanClassName="font-normal" name="Buyer Contact">
-          <Input type="number" placeholder="1234567890" />
+        <Label
+          spanClassName="font-normal"
+          error={errors.customer_contact_number}
+          name="Buyer Contact"
+        >
+          <Input
+            type="number"
+            placeholder="1234567890"
+            error={errors.customer_contact_number}
+            {...register("customer_contact_number")}
+          />
         </Label>
-        <Label spanClassName="font-normal" name="Product Name">
+        <Label
+          error={errors.productId}
+          spanClassName="font-normal"
+          name="Product Name"
+        >
           <Controller
             control={control}
             name="productId"
@@ -64,8 +119,15 @@ const AddOrder = (props: Props) => {
             }) => (
               <Select
                 onBlur={onBlur} // notify when input is touched
-                onChange={onChange} // send value to hook form
+                onChange={(event) => {
+                  const selectedProduct = data.find(
+                    (p, i) => p.id === event.target.value
+                  );
+                  setValue("price", selectedProduct?.price!);
+                  onChange(event);
+                }} // send value to hook form
                 ref={ref}
+                error={error}
               >
                 <option defaultChecked>Select a product</option>
                 {data.map((product, index) => (
@@ -77,36 +139,62 @@ const AddOrder = (props: Props) => {
             )}
           />
         </Label>
-        <Label spanClassName="font-normal" name="Quantity">
+        <Label
+          error={errors.quantity}
+          spanClassName="font-normal"
+          name="Quantity"
+        >
           <Input
             error={errors.quantity}
             type="number"
+            min={1}
             placeholder="12"
             {...register("quantity", {
+              min: 1,
+              valueAsNumber: true,
               onChange(event) {
                 const selectedProduct = data.find(
                   (p, i) => p.id === getValues("productId")
                 );
-                console.log("PRODUCT", selectedProduct);
+                setValue(
+                  "total_price",
+                  +getValues("price") * +event.target.value
+                );
                 if (event.target.value > selectedProduct?.quantity!) {
                   setError("quantity", {
                     message: `Maximum quantity can only be upto ${selectedProduct?.quantity}`,
                   });
                 } else {
-                  clearErrors('quantity')
+                  clearErrors("quantity");
                 }
               },
             })}
           />
         </Label>
         <Label spanClassName="font-normal" name="Price">
-          <Input type="number" placeholder="12" />
+          <Input
+            disabled
+            type="number"
+            min={1}
+            placeholder="12"
+            {...register("price", {
+              min: 1,
+            })}
+          />
         </Label>
         <Label spanClassName="font-normal" name="Total Price">
-          <Input type="number" placeholder="12" />
+          <Input
+            disabled
+            type="number"
+            min={1}
+            placeholder="12"
+            {...register("total_price", { min: 1 })}
+          />
         </Label>
         <ButtonGroup>
-          <Button variant={"primary"}>Create</Button>
+          <Button type="submit" variant={"primary"}>
+            Create
+          </Button>
           <Button type="reset" variant={"outline"}>
             Clear
           </Button>

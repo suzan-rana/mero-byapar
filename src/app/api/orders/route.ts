@@ -10,6 +10,8 @@ import { NextResponse, type NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
   const businessId = request.nextUrl.searchParams.get("businessId");
+  const page = +request.nextUrl.searchParams.get("page")! || 1;
+  const limit = +request.nextUrl.searchParams.get("limit")! || 10;
   if (!businessId) {
     return NextResponse.json(
       {
@@ -25,11 +27,33 @@ export async function GET(request: NextRequest) {
       where: {
         businessId,
       },
+      take: limit,
+      skip: (page - 1) * limit,
+      orderBy: {
+        created_at: "desc",
+      },
+      include: {
+        product: {
+          select: {
+            id: true,
+            product_name: true,
+            price: true,
+            product_code: true,
+          },
+        },
+      },
+    });
+    const totalItems = await prisma.product.count({
+      where: {
+        businessId,
+      },
     });
     return NextResponse.json(
       {
         message: "Order retrieved successfully.",
         data: orders,
+        totalPages: Math.ceil(totalItems / limit),
+        totalItems,
       },
       {
         status: 200,
@@ -62,10 +86,24 @@ export async function POST(request: NextRequest) {
       status: 400,
     });
   }
+  const {
+    businessId,
+    customer_contact_number,
+    customer_email,
+    customer_name,
+    productId,
+    quantity,
+  } = parsedBody.data;
+
   try {
     await prisma.order.create({
       data: {
-        ...parsedBody.data,
+        customer_contact_number,
+        customer_email,
+        customer_name,
+        businessId,
+        productId,
+        order_quantity: quantity,
       },
     });
     return NextResponse.json(
@@ -124,44 +162,4 @@ export async function PATCH(request: NextRequest) {
     return prismaErrorHandler(error);
   }
 }
-export async function DELETE(request: NextRequest) {
-  let decoded;
-  try {
-    decoded = validateUser(request);
-  } catch (error) {
-    return NextResponse.json(
-      {
-        message: "Unauthorized",
-        error: error,
-      },
-      {
-        status: 401,
-      }
-    );
-  }
-  const body = await request.json();
-  const parsedBody = DeleteOrderSchema.safeParse(body);
-  if (!parsedBody.success) {
-    return NextResponse.json(parsedBody.error, {
-      status: 400,
-    });
-  }
-  const { id } = parsedBody.data;
-  try {
-    await prisma.order.delete({
-      where: {
-        id,
-      },
-    });
-    return NextResponse.json(
-      {
-        message: "Order deleted successfully.",
-      },
-      {
-        status: 201,
-      }
-    );
-  } catch (error) {
-    return prismaErrorHandler(error);
-  }
-}
+
