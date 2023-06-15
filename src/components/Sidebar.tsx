@@ -65,7 +65,7 @@ const Sidebar = (props: Props) => {
               <SidebarElement
                 key={index}
                 {...item}
-                isActive={pathName.startsWith(item.link)}
+                isActive={pathName === item.link}
               />
             ))}
             <SidebarTeam />
@@ -125,7 +125,7 @@ const SidebarElement = ({
 const sidebarElements = [
   {
     name: "Dashboard",
-    link: "/home",
+    link: "/",
     icon: Icons.dashboard,
   },
   {
@@ -151,12 +151,6 @@ const sidebarElements = [
   },
 ];
 
-import { Raleway } from "next/font/google";
-const font = Raleway({
-  weight: "500",
-  subsets: ["latin"],
-});
-
 const BusinessName = () => {
   const { user, isLoading, isFetching } = useAuthContext();
 
@@ -167,8 +161,7 @@ const BusinessName = () => {
       ) : (
         <h1
           className={cn(
-            "hidden sm:block cursor-pointer text-center text-xl mb-6 italic font-semibold",
-            font.className
+            "hidden sm:block cursor-pointer text-center text-xl mb-6 italic font-semibold"
           )}
         >
           {user?.business.name}
@@ -192,7 +185,7 @@ const SidebarTeam = () => {
         <SidebarElement
           name="Team"
           link="/team"
-          isActive={pathName.startsWith("/team")}
+          isActive={pathName === "/team"}
           icon={Icons.team}
         />
       )}

@@ -29,7 +29,7 @@ const LoginPage = (props: Props) => {
     onSuccess(data, variables, context) {
       setIsAuthenticated(true)
       Cookies.set("token", data.token);
-      router.push('/home')
+      router.push('/')
     },
   });
   useLoader(isLoading)

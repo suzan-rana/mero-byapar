@@ -14,7 +14,7 @@ import {
 } from "@/common/schema/UserSchema";
 import axios from "axios";
 import { createRootUser } from "@/common/api/user.api";
-import { toast }from 'react-toastify'
+import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import useLoader from "@/common/hooks/useLoader";
 
@@ -28,23 +28,23 @@ const RegisterPage = (props: Props) => {
   } = useForm<CreateRootUserType>({
     resolver: zodResolver(CreateRootUserSchema),
   });
-  const router = useRouter()
+  const router = useRouter();
 
   // posting data to backend
   const { isLoading, mutate } = useMutation({
     mutationFn: createRootUser,
-   onSuccess(data, variables, context) {
-      toast.success(data.data?.message)
-      router.push('/login')
+    onSuccess(data, variables, context) {
+      toast.success(data.data?.message);
+      router.push("/login");
     },
-    onError(error: any){
-      toast.error(error?.response.message)
-    }
+    onError(error: any) {
+      toast.error(error?.response.message);
+    },
   });
-  useLoader(isLoading)
+  useLoader(isLoading);
 
   const onSubmit = (data: CreateRootUserType) => {
-    mutate(data)
+    mutate(data);
   };
 
   return (
@@ -61,45 +61,53 @@ const RegisterPage = (props: Props) => {
         className="grid w-[90%] mx-auto sm:w-auto sm:mx-0 sm:grid-cols-2 gap-5"
       >
         <Label error={errors.name} name="Name">
-          <Input error={errors.name} placeholder="suzan-rana" {...register("name")} />
+          <Input
+            error={errors.name}
+            placeholder="suzan-rana"
+            {...register("name")}
+          />
         </Label>
         <Label error={errors.email} name="Email">
-          <Input  error={errors.email} placeholder="suzan-rana" {...register("email")} />
+          <Input
+            error={errors.email}
+            placeholder="suzan-rana"
+            {...register("email")}
+          />
         </Label>
         <Label error={errors.password} name="Password">
-          <PasswordInputElement error={errors.password} placeholder="********" {...register("password")} />
+          <PasswordInputElement
+            error={errors.password}
+            placeholder="********"
+            {...register("password")}
+          />
         </Label>
-        <Label           error={errors.contact_number}
- name="Contact">
+        <Label error={errors.contact_number} name="Contact">
           <Input
-          error={errors.contact_number}
+            error={errors.contact_number}
             type="number"
             placeholder="suzan-rana"
             {...register("contact_number")}
           />
         </Label>
-        <Label error={errors.business.name} name="Business Name">
-          <Input error={errors.business.name} placeholder="suzan-rana" {...register("business.name")} />
+        <Label name="Business Name">
+          <Input placeholder="suzan-rana" {...register("business.name")} />
         </Label>
-        <Label error={errors.business.email} name="Business Email">
+        <Label name="Business Email">
           <Input
-          error={errors.business.email}
             type="email"
             placeholder="suzan-rana"
             {...register("business.email")}
           />
         </Label>
-        <Label error={errors.business.contact_number} name="Contact Number">
-          <Input error={errors.business.contact_number}
+        <Label name="Contact Number">
+          <Input
             type="number"
             placeholder="suzan-rana"
             {...register("business.contact_number")}
           />
         </Label>
-        <Label             error={errors.business.description}
- name="Description">
+        <Label name="Description">
           <Input
-            error={errors.business.description}
             placeholder="suzan-rana"
             {...register("business.description")}
           />

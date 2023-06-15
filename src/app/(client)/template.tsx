@@ -10,7 +10,7 @@ type Props = {
 const RootTemplate = ({ children }: Props) => {
     const pathName = usePathname()
   useEffect(() => {
-    // NProgress.configure( { easing: 'ease', minimum: 15})
+    NProgress.configure( { easing: 'ease', minimum: 15})
     NProgress.start();
     new Promise((resolve) => setTimeout(resolve, 500));
     NProgress.done();
