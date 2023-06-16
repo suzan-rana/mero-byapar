@@ -20,13 +20,15 @@ export async function GET(request: NextRequest) {
         FROM ToBuy WHERE businessId=${businessId};
 `);
   const orders = await prisma.$queryRaw<Order[]>(Prisma.sql`
-        SELECT 
-        SUM(p.price * o.order_quantity) AS total_order_price, 
-        SUM(o.order_quantity) AS total_order_quantity, 
-        COUNT(o.id) AS total_orders 
-        FROM "Order" AS o 
-        LEFT JOIN Product AS p ON o.productId = p.id WHERE p.businessId=${businessId};
+    SELECT 
+    SUM(p.price * o.order_quantity) AS total_order_price, 
+    SUM(o.order_quantity) AS total_order_quantity, 
+    COUNT(o.id) AS total_orders 
+    FROM \`Order\` AS o 
+    LEFT JOIN Product AS p ON o.productId = p.id 
+    WHERE p.businessId = ${businessId};
 `);
+
   const sales = await prisma.$queryRaw<Sale[]>(Prisma.sql`
         SELECT 
         SUM(s.sold_price * s.sold_quantity) AS total_sold_price, 
@@ -39,7 +41,7 @@ export async function GET(request: NextRequest) {
     {
       products: products[0],
       toBuyItems: toBuyItems[0],
-      orders: orders[0], 
+      orders: orders[0],
       sales: sales[0],
     },
     {

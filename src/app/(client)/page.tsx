@@ -15,35 +15,35 @@ const Home = (props: Props) => {
       <section className="flex flex-col sm:flex-row gap-10 gap-y-6 flex-wrap">
         <Card className="sm:max-w-[45%]" isLoading={isFetching || isLoading || !data}>
           <CardTitle title={"Products"} />
-          <CardText text={`Total products: ${data?.products.total_products}`} />
+          <CardText text={`Total products: ${data?.products.total_products || 0}`} />
           <CardText
-            text={`Total quantities: ${data?.products.total_quantity}`}
+            text={`Total quantities: ${data?.products.total_quantity || 0}`}
           />
-          <CardText text={`Total price: ${data?.products.total_price}`} />
+          <CardText text={`Total price: ${data?.products.total_price || 0}`} />
         </Card>
         <Card className="sm:max-w-[45%]" isLoading={isFetching || isLoading || !data}>
           <CardTitle title={"To Buy"} />
-          <CardText text={`Total items to buy: ${data?.toBuyItems.total_buying_items}`} />
+          <CardText text={`Total items to buy: ${data?.toBuyItems.total_buying_items || 0}`} />
           <CardText
-            text={`Total quantities: ${data?.toBuyItems.total_buying_quantity}`}
+            text={`Total quantities: ${data?.toBuyItems.total_buying_quantity || 0}`}
           />
-          <CardText text={`Total price: ${data?.toBuyItems.total_buying_price}`} />
+          <CardText text={`Total price: ${data?.toBuyItems.total_buying_price || 0}`} />
         </Card>
         <Card className="sm:max-w-[45%]" isLoading={isFetching || isLoading || !data}>
           <CardTitle title={"Sales"} />
-          <CardText text={`Total sales: ${data?.sales.total_sales}`} />
+          <CardText text={`Total sales: ${data?.sales.total_sales || 0}`} />
           <CardText
-            text={`Total quantities: ${data?.sales.total_sold_quantity}`}
+            text={`Total quantities: ${data?.sales.total_sold_quantity || 0}`}
           />
-          <CardText text={`Total price: ${data?.sales.total_sold_price}`} />
+          <CardText text={`Total price: ${data?.sales.total_sold_price || 0}`} />
         </Card>
         <Card className="sm:max-w-[45%]" isLoading={isFetching || isLoading || !data}>
           <CardTitle title={"Orders"} />
-          <CardText text={`Total orders: ${data?.orders.total_orders}`} />
+          <CardText text={`Total orders: ${data?.orders.total_orders || 0}`} />
           <CardText
-            text={`Total quantities: ${data?.orders.total_order_quantity}`}
+            text={`Total quantities: ${data?.orders.total_order_quantity || 0}`}
           />
-          <CardText text={`Total price: ${data?.orders.total_order_price}`} />
+          <CardText text={`Total price: ${data?.orders.total_order_price || 0}`} />
         </Card>
       </section>
     </main>
