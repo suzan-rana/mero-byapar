@@ -59,7 +59,15 @@ export async function GET(request: NextRequest) {
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error);
+    const e = prismaErrorHandler(error, "ToBuy");
+    return NextResponse.json(
+      {
+        ...e,
+      },
+      {
+        status: e?.statusCode,
+      }
+    );
   }
 }
 
@@ -117,7 +125,7 @@ export async function POST(request: NextRequest) {
         buyerId: decoded?.id,
       },
       where: {
-        id: existingToBuyItem?.id || '',
+        id: existingToBuyItem?.id || "",
       },
       update: {
         quantity: +quantity + +existingToBuyItem?.quantity! || 0,
@@ -138,7 +146,15 @@ export async function POST(request: NextRequest) {
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error, 'To buy item');
+    const e = prismaErrorHandler(error, "ToBuy item");
+    return NextResponse.json(
+      {
+        ...e,
+      },
+      {
+        status: e?.statusCode,
+      }
+    );
   }
 }
 export async function PATCH(request: NextRequest) {
@@ -182,6 +198,14 @@ export async function PATCH(request: NextRequest) {
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error);
+    const e = prismaErrorHandler(error, "ToBuy item");
+    return NextResponse.json(
+      {
+        ...e,
+      },
+      {
+        status: e?.statusCode,
+      }
+    );
   }
 }

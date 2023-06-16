@@ -39,6 +39,14 @@ export async function GET(
       data: product,
     });
   } catch (error) {
-    return prismaErrorHandler(error, 'Product');
+    const e = prismaErrorHandler(error, "Product");
+    return NextResponse.json(
+      {
+        ...e,
+      },
+      {
+        status: e?.statusCode,
+      }
+    );
   }
 }

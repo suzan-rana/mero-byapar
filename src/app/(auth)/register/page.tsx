@@ -32,9 +32,22 @@ const RegisterPage = (props: Props) => {
 
   // posting data to backend
   const { isLoading, mutate } = useMutation({
-    mutationFn: createRootUser,
+    mutationFn: (data: CreateRootUserType) =>
+      toast.promise(createRootUser(data), {
+        pending: "Loading...",
+        error: {
+          render(error: any) {
+            return error.data?.message
+          },
+        },
+        success: {
+          render(data) {
+            return data.data?.data.message;
+          },
+        },
+      }),
     onSuccess(data, variables, context) {
-      toast.success(data.data?.message);
+      // toast.success(data.data?.message);
       router.push("/login");
     },
     onError(error: any) {
@@ -122,7 +135,7 @@ const RegisterPage = (props: Props) => {
             Register
           </Button>
           <Button type="button" variant={"outline"}>
-            Login
+            <Link href={'/login'} >Login</Link>
           </Button>
         </ButtonGroup>
       </form>

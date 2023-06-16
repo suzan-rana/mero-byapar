@@ -1,7 +1,5 @@
 import prismaErrorHandler from "@/common/error";
-import {
-  UpdateProfileSchema,
-} from "@/common/schema/UserSchema";
+import { UpdateProfileSchema } from "@/common/schema/UserSchema";
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -38,6 +36,14 @@ export async function PATCH(
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error, 'Profile');
+    const e = prismaErrorHandler(error, "Profile");
+    return NextResponse.json(
+      {
+        ...e,
+      },
+      {
+        status: e?.statusCode,
+      }
+    );
   }
 }

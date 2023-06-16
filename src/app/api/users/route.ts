@@ -45,7 +45,8 @@ export async function GET(request: NextRequest) {
     where: {
       businessId,
     },
-  });  return NextResponse.json(
+  });
+  return NextResponse.json(
     {
       message: "User  retreived successfully.",
       data: user,
@@ -108,7 +109,15 @@ export async function POST(request: NextRequest) {
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error, 'User');
+    const e = prismaErrorHandler(error, "User");
+    return NextResponse.json(
+      {
+        ...e,
+      },
+      {
+        status: e?.statusCode,
+      }
+    );
   }
 }
 
@@ -140,8 +149,14 @@ export async function PATCH(request: NextRequest) {
       );
     })
     .catch((error) => {
-      return NextResponse.json(error?.message, {
-        status: 400,
-      });
+      const e = prismaErrorHandler(error, "User");
+      return NextResponse.json(
+        {
+          ...e,
+        },
+        {
+          status: e?.statusCode,
+        }
+      );
     });
 }

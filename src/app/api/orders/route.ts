@@ -60,7 +60,15 @@ export async function GET(request: NextRequest) {
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error, 'Order');
+    const e = prismaErrorHandler(error, "Order");
+    return NextResponse.json(
+      {
+        ...e,
+      },
+      {
+        status: e?.statusCode,
+      }
+    );
   }
 }
 
@@ -130,7 +138,15 @@ export async function POST(request: NextRequest) {
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error, 'Order');
+    const e = prismaErrorHandler(error, "Order");
+    return NextResponse.json(
+      {
+        ...e,
+      },
+      {
+        status: e?.statusCode,
+      }
+    );
   }
 }
 export async function PATCH(request: NextRequest) {
@@ -174,6 +190,14 @@ export async function PATCH(request: NextRequest) {
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error, 'Order');
+    const e = prismaErrorHandler(error, "Order");
+    return NextResponse.json(
+      {
+        ...e,
+      },
+      {
+        status: e?.statusCode,
+      }
+    );
   }
 }

@@ -41,7 +41,15 @@ export async function GET(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    return prismaErrorHandler(error, 'Categories');
+    const e = prismaErrorHandler(error, "Categories");
+    return NextResponse.json(
+      {
+        ...e,
+      },
+      {
+        status: e?.statusCode,
+      }
+    );
   }
 }
 export async function POST(request: NextRequest) {
@@ -71,7 +79,15 @@ export async function POST(request: NextRequest) {
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error, 'Categories');
+    const e = prismaErrorHandler(error, "Categories");
+    return NextResponse.json(
+      {
+        ...e,
+      },
+      {
+        status: e?.statusCode,
+      }
+    );
   }
 }
 export async function DELETE(request: NextRequest) {
@@ -116,7 +132,15 @@ export async function DELETE(request: NextRequest) {
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error, 'Categories');
+    const e = prismaErrorHandler(error, "Categories");
+    return NextResponse.json(
+      {
+        ...e,
+      },
+      {
+        status: e?.statusCode,
+      }
+    );
   }
 }
 
@@ -146,6 +170,14 @@ export async function PATCH(request: NextRequest) {
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error, 'Categories');
+    const e = prismaErrorHandler(error, "Categories");
+    return NextResponse.json(
+      {
+        ...e,
+      },
+      {
+        status: e?.statusCode,
+      }
+    );
   }
 }

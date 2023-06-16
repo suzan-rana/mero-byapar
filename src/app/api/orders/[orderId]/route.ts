@@ -42,7 +42,15 @@ export async function GET(
       data: order,
     });
   } catch (error) {
-    return prismaErrorHandler(error, 'Order');
+    const e = prismaErrorHandler(error, "Order");
+    return NextResponse.json(
+      {
+        ...e,
+      },
+      {
+        status: e?.statusCode,
+      }
+    );
   }
 }
 
@@ -81,6 +89,14 @@ export async function DELETE(
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error, 'Order');
+    const e = prismaErrorHandler(error, "Order");
+    return NextResponse.json(
+      {
+        ...e,
+      },
+      {
+        status: e?.statusCode,
+      }
+    );
   }
 }

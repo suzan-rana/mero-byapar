@@ -19,8 +19,8 @@ export async function GET(request: NextRequest) {
       where: {
         businessId: businessId,
         quantity: {
-          gte: 1
-        }
+          gte: 1,
+        },
       },
       orderBy: {
         created_at: "desc",
@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
         id: true,
         product_name: true,
         price: true,
-        quantity: true
+        quantity: true,
       },
     });
     return NextResponse.json(
@@ -40,6 +40,14 @@ export async function GET(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    return prismaErrorHandler(error, 'Product');
+    const e = prismaErrorHandler(error, "Product");
+    return NextResponse.json(
+      {
+        ...e,
+      },
+      {
+        status: e?.statusCode,
+      }
+    );
   }
 }

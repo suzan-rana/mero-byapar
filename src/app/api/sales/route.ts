@@ -115,7 +115,15 @@ export async function POST(request: NextRequest) {
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error, 'Sales');
+    const e = prismaErrorHandler(error, "Sales");
+    return NextResponse.json(
+      {
+        ...e,
+      },
+      {
+        status: e?.statusCode,
+      }
+    );
   }
 }
 export async function GET(request: NextRequest) {
@@ -183,6 +191,14 @@ export async function GET(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    return prismaErrorHandler(error, 'Sales');
+    const e = prismaErrorHandler(error, "Sales");
+    return NextResponse.json(
+      {
+        ...e,
+      },
+      {
+        status: e?.statusCode,
+      }
+    );
   }
 }

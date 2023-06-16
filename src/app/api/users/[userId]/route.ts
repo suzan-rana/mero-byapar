@@ -37,10 +37,18 @@ export async function GET(
       message: "User found",
       data: {
         ...user,
-        // decodedPassword: 
+        // decodedPassword:
       },
     });
   } catch (error) {
-    return prismaErrorHandler(error, 'User');
+    const e = prismaErrorHandler(error, "User");
+    return NextResponse.json(
+      {
+        ...e,
+      },
+      {
+        status: e?.statusCode,
+      }
+    );
   }
 }

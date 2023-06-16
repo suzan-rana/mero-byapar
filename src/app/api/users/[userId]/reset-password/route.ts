@@ -66,6 +66,14 @@ export async function PATCH(
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error);
+    const e = prismaErrorHandler(error, "Password");
+    return NextResponse.json(
+      {
+        ...e,
+      },
+      {
+        status: e?.statusCode,
+      }
+    );
   }
 }

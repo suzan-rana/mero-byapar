@@ -31,7 +31,9 @@ export async function POST(request: NextRequest) {
         data: {
           description,
           price,
-          product_code: `${product_name.slice(0, 3)}-${Math.ceil(Math.random() * 1234)}`,
+          product_code: `${product_name.slice(0, 3)}-${Math.ceil(
+            Math.random() * 1234
+          )}`,
           product_name,
           quantity,
           businessId: businessId,
@@ -54,7 +56,15 @@ export async function POST(request: NextRequest) {
       }
     );
   } catch (error) {
-    return prismaErrorHandler(error, 'Product');
+    const e = prismaErrorHandler(error, "Product");
+    return NextResponse.json(
+      {
+        ...e,
+      },
+      {
+        status: e?.statusCode,
+      }
+    );
   }
 }
 export async function GET(request: NextRequest) {
@@ -85,10 +95,10 @@ export async function GET(request: NextRequest) {
         buyer: {
           select: {
             id: true,
-            name: true
-          }
-        }
-      }
+            name: true,
+          },
+        },
+      },
     });
     const totalItems = await prisma.product.count({
       where: {
@@ -105,6 +115,14 @@ export async function GET(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    return prismaErrorHandler(error, 'Product');
+    const e = prismaErrorHandler(error, "Product");
+    return NextResponse.json(
+      {
+        ...e,
+      },
+      {
+        status: e?.statusCode,
+      }
+    );
   }
 }
