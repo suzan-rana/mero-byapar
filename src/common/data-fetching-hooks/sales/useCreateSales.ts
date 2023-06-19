@@ -10,9 +10,6 @@ const useCreateSales = (saleDetails: TCreateSales) => {
   const router = useRouter();
   const { mutateAsync, isLoading: isSelling } = useMutation({
     mutationFn: createSales,
-    onError(error: any, variables, context) {
-      toast.error(error?.message)
-    },
   });
   const handleMarkAsSold = () => {
     mutateAsync(saleDetails).then((res) => {

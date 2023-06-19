@@ -48,9 +48,7 @@ const CategoryPage = (props: Props) => {
         router.push("/products");
       }
     },
-    onError(error: any, variables, context) {
-      toast.error(error?.response?.error);
-    },
+
   });
   const queryClient = useQueryClient();
   useLoader(isLoading);

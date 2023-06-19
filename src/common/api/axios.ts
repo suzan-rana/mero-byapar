@@ -61,6 +61,9 @@ instance.interceptors.response.use(
         error.response.data.message ||
           "You are not authorized to perform the action!"
       );
+      window.location.href = "/login";
+      Cookies.remove("token");
+      localStorage.clear();
     }
 
     return Promise.reject(error?.response?.data);
